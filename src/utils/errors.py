@@ -13,7 +13,7 @@ class Errors:
         if not self.errors:
             return "No hay errores."
 
-        html = f'<html><head><title>Errores {nombre_archivo}</title></head><body>'
+        html = f'<html><head><title>Errores {nombre_archivo}</title><link rel="stylesheet" href="./css/styles.css"</head><body>'
         html += f'<h2 style="color: red;">Errores {nombre_archivo}</h2>'
         html += '<table border="1" style="width: 80%; margin: auto; text-align: left;">'
         html += '<tr><th>#</th><th>Descripción del Error</th></tr>'
