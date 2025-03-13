@@ -1,29 +1,35 @@
 import os
 import webbrowser
-class errors:
-    def __init__(self,error,message):
-        self.error = {
-            'error': error,
-            'message': message
-        }
 
-    def get_error(self, error, message):
-        self.error['error'] = error
-        self.error['message'] = message
-        return self.error
-    def errorHtml(self):
-        """Return lexic and sintactic errors as HTML."""
-        html= '<div style="border: 1px solid red; padding: 10px; margin: 10px; background-color: #f8d7da; color: #721c24;">'
-        html+= '<strong>Error:</strong> {self.error["error"]}<br>'
-        html+= '<strong> Message:</strong> {self.error["message"]}'
-        html+= '</div>'
+class Errors:
+    def __init__(self):
+        self.errors = []  # Lista de errores
 
-        os.makedirs('templates',exist_ok=True)
-        
-        file_path=os.path.join('templates',errors.html)
-        with open(file_path,'w') as file:
+    def encolar_error(self, error):
+        self.errors.append(error)  # Agregar error a la lista
+
+    def errorHtml(self, nombre_archivo):
+        """Genera un HTML con la lista de errores sintácticos y léxicos en una tabla"""
+        if not self.errors:
+            return "No hay errores."
+
+        html = f'<html><head><title>Errores {nombre_archivo}</title></head><body>'
+        html += f'<h2 style="color: red;">Errores {nombre_archivo}</h2>'
+        html += '<table border="1" style="width: 80%; margin: auto; text-align: left;">'
+        html += '<tr><th>#</th><th>Descripción del Error</th></tr>'
+
+        for i, error in enumerate(self.errors, start=1):
+            html += f'<tr><td>{i}</td><td>{error}</td></tr>'
+
+        html += '</table></body></html>'
+
+        # Guardar archivo
+        os.makedirs('templates', exist_ok=True)
+        file_path = os.path.join('templates', f'errors_{nombre_archivo}.html')
+
+        with open(file_path, 'w', encoding='utf-8') as file:
             file.write(html)
-        
-        webbrowser.open('file://' + os.path.realpath(file_path))
-        
+
+        webbrowser.open('file://' + os.path.realpath(file_path))  # Abrir en navegador
+
         return html

@@ -11,12 +11,10 @@ class Lexer:
             'DOT', 'COMMA', 'QUOTE'
         ]  
         self.lexer = lex.lex(module=self)  
-    def set_error(self,error,position):
-        error={
-            'error': error,
-            'position': position
-        }
-        self.errors.encolar_error(error)
+    def set_error(self, error, position):
+        error_message = f"Error léxico: '{error}' en la posición {position}"
+        self.errors.encolar_error(error_message)
+
     # Reglas para operadores y símbolos especiales
     t_PLUS      = r'\+'
     t_MINUS     = r'-'
@@ -52,8 +50,6 @@ class Lexer:
     # Manejo de errores léxicos
     def t_error(self, t):
         self.set_error(t.value[0], t.lexpos)
-        self.errors.mostrar_errores()
-        print(f"❌ Carácter ilegal encontrado: '{t.value[0]}' en la posición {t.lexpos}")
         t.lexer.skip(1)  # Avanza el lexer para evitar bucles infinitos
 
     # Método para analizar un texto
