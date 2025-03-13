@@ -1,0 +1,181 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    CHAR
+    COMMA
+    COMMENT_MULTI
+    COMMENT_SINGLE
+    DIVIDE
+    DOT
+    DO_WHILE
+    ELSE
+    EQUALS
+    FLOAT
+    FOR
+    FUNCTION
+    GT
+    IDENTIFIER
+    IF
+    INT
+    LBRACE
+    LPAREN
+    LT
+    MINUS
+    PAREN
+    PRINT
+    QUOTE
+    RBRACE
+    RETURN
+    RPAREN
+    SEMICOLON
+    STRUCT
+    SWITCH
+    VOID
+    WHILE
+
+Grammar
+
+Rule 0     S' -> expression
+Rule 1     expression -> expression PLUS term
+Rule 2     expression -> term
+Rule 3     term -> term TIMES factor
+Rule 4     term -> factor
+Rule 5     factor -> NUMBER
+
+Terminals, with rules where they appear
+
+CHAR                 : 
+COMMA                : 
+COMMENT_MULTI        : 
+COMMENT_SINGLE       : 
+DIVIDE               : 
+DOT                  : 
+DO_WHILE             : 
+ELSE                 : 
+EQUALS               : 
+FLOAT                : 
+FOR                  : 
+FUNCTION             : 
+GT                   : 
+IDENTIFIER           : 
+IF                   : 
+INT                  : 
+LBRACE               : 
+LPAREN               : 
+LT                   : 
+MINUS                : 
+NUMBER               : 5
+PAREN                : 
+PLUS                 : 1
+PRINT                : 
+QUOTE                : 
+RBRACE               : 
+RETURN               : 
+RPAREN               : 
+SEMICOLON            : 
+STRUCT               : 
+SWITCH               : 
+TIMES                : 3
+VOID                 : 
+WHILE                : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+expression           : 1 0
+factor               : 3 4
+term                 : 1 2 3
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . expression
+    (1) expression -> . expression PLUS term
+    (2) expression -> . term
+    (3) term -> . term TIMES factor
+    (4) term -> . factor
+    (5) factor -> . NUMBER
+
+    NUMBER          shift and go to state 4
+
+    expression                     shift and go to state 1
+    term                           shift and go to state 2
+    factor                         shift and go to state 3
+
+state 1
+
+    (0) S' -> expression .
+    (1) expression -> expression . PLUS term
+
+    PLUS            shift and go to state 5
+
+
+state 2
+
+    (2) expression -> term .
+    (3) term -> term . TIMES factor
+
+    PLUS            reduce using rule 2 (expression -> term .)
+    $end            reduce using rule 2 (expression -> term .)
+    TIMES           shift and go to state 6
+
+
+state 3
+
+    (4) term -> factor .
+
+    TIMES           reduce using rule 4 (term -> factor .)
+    PLUS            reduce using rule 4 (term -> factor .)
+    $end            reduce using rule 4 (term -> factor .)
+
+
+state 4
+
+    (5) factor -> NUMBER .
+
+    TIMES           reduce using rule 5 (factor -> NUMBER .)
+    PLUS            reduce using rule 5 (factor -> NUMBER .)
+    $end            reduce using rule 5 (factor -> NUMBER .)
+
+
+state 5
+
+    (1) expression -> expression PLUS . term
+    (3) term -> . term TIMES factor
+    (4) term -> . factor
+    (5) factor -> . NUMBER
+
+    NUMBER          shift and go to state 4
+
+    term                           shift and go to state 7
+    factor                         shift and go to state 3
+
+state 6
+
+    (3) term -> term TIMES . factor
+    (5) factor -> . NUMBER
+
+    NUMBER          shift and go to state 4
+
+    factor                         shift and go to state 8
+
+state 7
+
+    (1) expression -> expression PLUS term .
+    (3) term -> term . TIMES factor
+
+    PLUS            reduce using rule 1 (expression -> expression PLUS term .)
+    $end            reduce using rule 1 (expression -> expression PLUS term .)
+    TIMES           shift and go to state 6
+
+
+state 8
+
+    (3) term -> term TIMES factor .
+
+    TIMES           reduce using rule 3 (term -> term TIMES factor .)
+    PLUS            reduce using rule 3 (term -> term TIMES factor .)
+    $end            reduce using rule 3 (term -> term TIMES factor .)
+

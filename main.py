@@ -1,19 +1,34 @@
 from src.utils.files import Files as f
-class main:
+from src.lexer.lexer import Lexer
+from src.sintactic.parser import Parser
+from src.utils.errors import errors
+class Main:
     def __init__(self):
         """
-        Initializes a new instance of the class.
+        Inicializa el compilador.
         """
+        self.lexic_errors=errors() #Errores lexicos -> Graficarlos html
+        self.sintatic_errors=errors()
+
         file = f("lenguaje.txt")
-        content, lines =file.read_file()
+        content, lines = file.read_file()
 
         if content:
-            print("File read successfully!")
-            print(lines)
-        else:
-            print("Could not read the file.")
-    def main(self):
-        main()
+            try:
+                self.lexer = Lexer(self.lexic_errors) 
+                self.parser = Parser(self.lexer)  
+                
+                tokens = self.lexer.tokenize(content)
+                print("Tokens encontrados:", tokens)
 
-# Entry point of the program
-main=main()
+                # Iniciar análisis sintáctico
+                self.parser.parse(content)
+
+            except Exception as e:
+                print("Error: ", e)
+        else:
+            print("No se pudo leer el archivo.")
+
+
+if __name__ == "__main__":
+    Main()

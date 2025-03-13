@@ -1,7 +1,7 @@
 import os
 import webbrowser
 
-class symbolTable:
+class SymbolTable:
     def __init__(self):
         """Initialize the symbol table."""
         self.symbols = []
