@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'CHAR COMMA COMMENT_MULTI COMMENT_SINGLE DIVIDE DIVIDE DOT DO_WHILE ELSE EQUALS FLOAT FOR FUNCTION GT IDENTIFIER IF INT LBRACE LPAREN LT MINUS MINUS NUMBER PAREN PLUS PLUS PRINT QUOTE RBRACE RETURN RPAREN SEMICOLON STRUCT SWITCH TIMES TIMES VOID WHILEexpression : expression PLUS termexpression : termterm : term TIMES factorterm : factorfactor : NUMBER'
+_lr_signature = 'CHAR COMMA DIVIDE DOT ELSE EQUALS FLOAT GT IDENTIFIER IF INT LBRACE LPAREN LT MINUS NUMBER PLUS QUOTE RBRACE RPAREN SEMICOLON TIMESdeclaration : INT IDENTIFIER SEMICOLON\n                       | FLOAT IDENTIFIER SEMICOLON\n                       | CHAR IDENTIFIER SEMICOLONassignment : IDENTIFIER EQUALS expression SEMICOLONexpression : expression PLUS termexpression : termterm : term TIMES factorterm : factorfactor : NUMBERprogram : declaration\n                   | assignment\n                   | expression\n                   | program declaration\n                   | program assignment\n                   | program expression'
     
-_lr_action_items = {'NUMBER':([0,5,6,],[4,4,4,]),'$end':([1,2,3,4,7,8,],[0,-2,-4,-5,-1,-3,]),'PLUS':([1,2,3,4,7,8,],[5,-2,-4,-5,-1,-3,]),'TIMES':([2,3,4,7,8,],[6,-4,-5,6,-3,]),}
+_lr_action_items = {'INT':([0,],[2,]),'FLOAT':([0,],[3,]),'CHAR':([0,],[4,]),'$end':([1,8,9,10,],[0,-1,-2,-3,]),'IDENTIFIER':([2,3,4,],[5,6,7,]),'SEMICOLON':([5,6,7,],[8,9,10,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'expression':([0,],[1,]),'term':([0,5,],[2,7,]),'factor':([0,5,6,],[3,3,8,]),}
+_lr_goto_items = {'declaration':([0,],[1,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,10 +26,20 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> expression","S'",1,None,None,None),
-  ('expression -> expression PLUS term','expression',3,'p_expression_plus','parser.py',14),
-  ('expression -> term','expression',1,'p_expression_term','parser.py',18),
-  ('term -> term TIMES factor','term',3,'p_term_times','parser.py',22),
-  ('term -> factor','term',1,'p_term_factor','parser.py',26),
-  ('factor -> NUMBER','factor',1,'p_factor_number','parser.py',30),
+  ("S' -> declaration","S'",1,None,None,None),
+  ('declaration -> INT IDENTIFIER SEMICOLON','declaration',3,'p_declaration','parser.py',15),
+  ('declaration -> FLOAT IDENTIFIER SEMICOLON','declaration',3,'p_declaration','parser.py',16),
+  ('declaration -> CHAR IDENTIFIER SEMICOLON','declaration',3,'p_declaration','parser.py',17),
+  ('assignment -> IDENTIFIER EQUALS expression SEMICOLON','assignment',4,'p_assignment','parser.py',22),
+  ('expression -> expression PLUS term','expression',3,'p_expression_plus','parser.py',27),
+  ('expression -> term','expression',1,'p_expression_term','parser.py',31),
+  ('term -> term TIMES factor','term',3,'p_term_times','parser.py',35),
+  ('term -> factor','term',1,'p_term_factor','parser.py',39),
+  ('factor -> NUMBER','factor',1,'p_factor_number','parser.py',43),
+  ('program -> declaration','program',1,'p_program','parser.py',59),
+  ('program -> assignment','program',1,'p_program','parser.py',60),
+  ('program -> expression','program',1,'p_program','parser.py',61),
+  ('program -> program declaration','program',2,'p_program','parser.py',62),
+  ('program -> program assignment','program',2,'p_program','parser.py',63),
+  ('program -> program expression','program',2,'p_program','parser.py',64),
 ]

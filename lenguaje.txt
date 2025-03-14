@@ -1,17 +1,17 @@
-Milito x;
-Riquelme y;
-Saviola letra;
+int x;
+float y;
+char letra;
 
 x = 10;
 y = 20.5;
 letra = 'A';
 
-if (x > 5) {
-    y = y Cristiano x;
+walker (x > 5) {
+    y = y + x;
 } else {
-    x = x Tchouaméni 1;
+    x = x - 1;
 }
 
-Walker (x > 0) {
-    x = x Tchouaméni 1;
+walker (x > 0) {
+    x = x - 1;
 }
