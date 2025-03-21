@@ -1,17 +1,7 @@
-int x;
-float y;
-char letra;
-
-x = 10;
-y = 20.5;
-letra = 'A';
-
-walker (x > 5) {
-    y = y + x;
-} else {
-    x = x - 1;
-}
-
-walker (x > 0) {
-    x = x - 1;
-}
+Forlan x;          
+x = 10;           
+Walker y;         
+y = x Cristiano 5; 
+y = x +;         
+z = 10;           
+Vinicius y;       
