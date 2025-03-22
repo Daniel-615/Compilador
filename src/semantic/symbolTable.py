@@ -40,25 +40,29 @@ class SymbolTable:
 
     def toHtml(self):
         """Return the symbol table as HTML."""
-        html = '<table border="1">'
-        html += '<tr><th>Name</th><th>Type</th><th>Scope</th><th>Value</th></tr>'
-        for symbol in self.symbols:
+        html = '<html><head><title>Tabla de Símbolos</title><link rel="stylesheet" href="./css/styles.css"</head><body>'
+        html += '<table border="1">'
+        html += '<tr><th>Name</th><th>Type</th><th>Value</th></tr>'
+        
+        # Generar las filas de la tabla con la información de los símbolos
+        for identifier, data in self.symbols.items():
             html += '<tr>'
-            html += '<td>' + symbol['name'] + '</td>'
-            html += '<td>' + symbol['type'] + '</td>'
-            html += '<td>' + symbol['scope'] + '</td>'
-            html += '<td>' + str(symbol['value']) + '</td>'
+            html += f'<td>{identifier}</td>'
+            html += f'<td>{data["type"]}</td>'
+            html += f'<td>{str(data["value"])}</td>'  # Asegúrate de convertir a string el valor
             html += '</tr>'
+        
         html += '</table>'
         
+        # Crear el directorio 'templates' si no existe
         os.makedirs('templates', exist_ok=True)
         
-        #Join tempaltes and symbol table html
+        # Unir la plantilla y la tabla de símbolos HTML
         file_path = os.path.join('templates', 'symbol_table.html')
         with open(file_path, 'w') as file:
             file.write(html)
         
-        #Open the file in the browser
+        # Abrir el archivo en el navegador
         webbrowser.open('file://' + os.path.realpath(file_path))
         
         return html

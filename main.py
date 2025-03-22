@@ -27,6 +27,7 @@ class Main:
                 self.parser.parse(content)
                 self.sintatic_errors.errorHtml('Sintácticos')
                 self.lexic_errors.errorHtml('Léxicos')
+                self.symbol_table.toHtml()
 
             except Exception as e:
                 print("Error: ", e)
