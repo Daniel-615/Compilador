@@ -3,23 +3,29 @@ import ply.lex as lex
 class Lexer:
     tokens = [
         'NUMBER', 'IDENTIFIER', 'EQUALS', 'SEMICOLON', 'LBRACE', 'RBRACE', 
-        'LPAREN', 'RPAREN', 'GT', 'LT', 'DOT', 'COMMA', 'QUOTE', 'PLUS', 
-        'MINUS', 'TIMES', 'DIVIDE'
+        'LPAREN', 'RPAREN', 'GT', 'LT', 'DOT', 'COMMA', 'QUOTE',
+        'MINUS', 'TIMES', 'DIVIDE', 'RELOP'
     ]
 
-    # Palabras reservadas
+ 
+    # Palabras reservadas de la gramática de nuestro lenguaje
     reserved = {
-        'walker': 'IF',
+        'ronaldinho': 'IF',
+        'cristiano': 'PLUS',
         'else': 'ELSE',
-        'int': 'INT',       
-        'float': 'FLOAT',   
-        'char': 'CHAR'      
+        'milito': 'INT',       
+        'zidane': 'FLOAT',   
+        'saviola': 'CHAR',
+        'walker': 'WHILE',
+        'son': 'DO',
+        'forlan': 'FOR'
     }
 
     # Agregamos las palabras reservadas a los tokens
     tokens += list(reserved.values())
 
     # Reglas para los operadores y símbolos especiales
+    t_RELOP = r'==|!=|<|>|<=|>='
     t_PLUS      = r'\+'
     t_MINUS     = r'-'
     t_TIMES     = r'\*'
@@ -73,4 +79,7 @@ class Lexer:
     # Método para analizar texto
     def tokenize(self, data):
         self.lexer.input(data)
-        return [(tok.type, tok.value) for tok in self.lexer]
+        tokens = [(tok.type, tok.value) for tok in self.lexer]
+        print(tokens)  # Depuración
+        return tokens
+

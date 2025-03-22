@@ -2,6 +2,7 @@ from src.utils.files import Files as f
 from src.lexer.lexer import Lexer
 from src.sintactic.parser import Parser
 from src.utils.errors import Errors
+from src.semantic.symbolTable import SymbolTable
 
 class Main:
     def __init__(self):
@@ -10,17 +11,17 @@ class Main:
         """
         self.lexic_errors = Errors()  # Errores léxicos -> Graficarlos HTML
         self.sintatic_errors = Errors()  # Errores sintácticos -> Graficarlos HTML
-
+        self.symbol_table = SymbolTable()  # Tabla de símbolos
         file = f("lenguaje.txt")
         content, lines = file.read_file()
 
         if content:
             try:
                 self.lexer = Lexer(self.lexic_errors)
-                self.parser = Parser(self.lexer, self.sintatic_errors)  
+                self.parser = Parser(self.lexer, self.sintatic_errors,self.symbol_table)  
                 
                 tokens = self.lexer.tokenize(content)
-                print("Tokens encontrados:", tokens)
+                #print("Tokens encontrados:", tokens)
 
                 # Iniciar análisis sintáctico
                 self.parser.parse(content)

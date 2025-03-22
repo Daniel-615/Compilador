@@ -1,7 +1,5 @@
-Forlan x;          
-x = 10;           
-Walker y;         
-y = x Cristiano 5; 
-y = x +;         
-z = 10;           
-Vinicius y;       
+milito x;
+x = 10;
+walker (x > 5) {
+    x = x cristiano 1;
+}
