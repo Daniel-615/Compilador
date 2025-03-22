@@ -3,3 +3,4 @@ x = 10;
 walker (x > 5) {
     x = x cristiano 1;
 }
+
