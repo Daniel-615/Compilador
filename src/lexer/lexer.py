@@ -4,12 +4,15 @@ class Lexer:
     tokens = [
         'NUMBER', 'IDENTIFIER', 'EQUALS', 'SEMICOLON', 'LBRACE', 'RBRACE', 
         'LPAREN', 'RPAREN', 'GT', 'LT', 'DOT', 'COMMA', 'QUOTE',
-        'MINUS', 'TIMES', 'DIVIDE', 'RELOP'
+        'RELOP'
     ]
 
  
     # Palabras reservadas de la gramática de nuestro lenguaje
     reserved = {
+        'messi': 'TIMES',
+        'pepe':'DIVIDE',
+        'tchouameni':'MINUS',   
         'ronaldinho': 'IF',
         'cristiano': 'PLUS',
         'else': 'ELSE',

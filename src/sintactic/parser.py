@@ -16,9 +16,15 @@ class Parser:
 
     # Declaraciones de variables (Ejemplo: milito x;)
     def p_declaration(self, p):
-        '''declaration : INT IDENTIFIER SEMICOLON'''
-        self.symbol_table.add_symbol(p[2], p[1])
-        print("Declaración de variable:", p[2])
+        '''declaration : INT IDENTIFIER SEMICOLON
+                    | INT IDENTIFIER EQUALS expression SEMICOLON'''
+        if len(p) == 4:
+            self.symbol_table.add_symbol(p[2], p[1])
+            print(f"Declaración de variable: {p[2]}")
+        else:
+            self.symbol_table.add_symbol(p[2], p[1], p[4])
+            print(f"Declaración e inicialización de {p[2]} con valor {p[4]}")
+
 
     #Asignaciones (Ejemplo: x = 10;)
     def p_assignment(self, p):
@@ -44,7 +50,14 @@ class Parser:
                 self.errors.encolar_error(f"Error: Operación inválida entre identificadores y números: {p[1]} {p[2]} {p[3]}")
                 p[0] = None
             else:
-                p[0] = val1 + val3 if p[2] == 'cristiano' else val1 - val3
+                reserved_inverted = {v: k for k, v in self.lexer.reserved.items()} # Invertir clave por valor
+                if p[2]==reserved_inverted.get('PLUS'):
+                    p[0] = val1 + val3
+                elif p[2]==reserved_inverted.get('MINUS'):
+                    p[0]=val1-val3
+                else:
+                    self.errors.encolar_error(f"Error: Operador '{p[2]}' no reconocido.")
+                    p[0] = None 
         else:
             p[0] = p[1]
 
@@ -61,9 +74,10 @@ class Parser:
                 self.errors.encolar_error("Error: Operación con variable no inicializada")
                 p[0] = None
             else:
-                if p[2] == '*':
+                reserved_inverted = {v: k for k, v in self.lexer.reserved.items()} # Invertir clave por valor
+                if p[2] == reserved_inverted.get('TIMES'):
                     p[0] = val1 * val3
-                elif p[2] == '/' and val3 != 0:
+                elif p[2] == reserved_inverted.get('DIVIDE') and val3 != 0:
                     p[0] = val1 / val3
                 else:
                     print("Error: División por cero")
@@ -88,7 +102,8 @@ class Parser:
     def p_condition(self, p):
         'condition : expression RELOP expression'
 
-    # While Loop (Ejemplo: walker (x > 5) { x = x cristiano 1; })
+    
+
     def p_while_loop(self, p):
         'while_loop : WHILE LPAREN condition RPAREN LBRACE program RBRACE'
         print("Inicio de bucle WHILE")
@@ -96,9 +111,9 @@ class Parser:
     # Instrucciones generales (statement)
     def p_statement(self, p):
         '''statement : declaration
-                     | assignment
-                     | while_loop
-                     | expression SEMICOLON'''
+                    | assignment
+                    | while_loop
+                    | expression SEMICOLON'''
         print("Reconocido statement")
 
     # Manejo de errores sintácticos

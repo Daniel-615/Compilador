@@ -4,5 +4,8 @@ walker (x > 5) {
     x = x cristiano 1;
 }
 
-x = 10 * 5;
-x=  x /2;
+x = 10 messi 5;
+x =  x pepe 2;
+x= x tchouameni 3;
+milito y;
+milito i = 0; 

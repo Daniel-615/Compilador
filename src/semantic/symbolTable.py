@@ -6,12 +6,13 @@ class SymbolTable:
         # Diccionario para almacenar los símbolos (identificadores y sus valores)
         self.symbols = {}
 
-    def add_symbol(self, identifier, datatype):
-        """Agrega un nuevo símbolo a la tabla con su tipo de dato."""
-        if identifier in self.symbols:
-            print(f"Error: La variable '{identifier}' ya ha sido declarada.")
+    def add_symbol(self, name, type_, value=None):  # Accept optional value
+        if name in self.symbols:
+            print(f"Error: Variable '{name}' is already declared.")
         else:
-            self.symbols[identifier] = {'type': datatype, 'value': None}
+            self.symbols[name] = {'type': type_, 'value': value}
+            print(f"Variable '{name}' added with type '{type_}' and value '{value}'")
+
 
     def update_symbol(self, identifier, value):
         """Actualiza el valor de un símbolo existente en la tabla."""

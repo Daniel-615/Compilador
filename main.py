@@ -4,7 +4,6 @@ from src.sintactic.parser import Parser
 from src.utils.errors import Errors
 from src.semantic.symbolTable import SymbolTable
 from src.utils.tokens import Tokens
-
 class Main:
     def __init__(self):
         """

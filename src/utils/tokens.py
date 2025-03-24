@@ -30,6 +30,6 @@ class Tokens:
         with open(file_path, 'w', encoding='utf-8') as file:
             file.write(html)
 
-        webbrowser.open('file://' + os.path.realpath(file_path))  # Abrir en navegador
+        webbrowser.open('file://' + os.path.realpath(file_path)) 
 
         return html
