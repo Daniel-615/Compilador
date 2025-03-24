@@ -80,6 +80,5 @@ class Lexer:
     def tokenize(self, data):
         self.lexer.input(data)
         tokens = [(tok.type, tok.value) for tok in self.lexer]
-        print(tokens)  # Depuración
         return tokens
 
