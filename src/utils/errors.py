@@ -21,8 +21,6 @@ class Errors:
         """Encuentra la columna de un token en el texto de entrada"""
         # Obtener la posición del último salto de línea antes de lexpos
         last_newline = self.getText().rfind('\n', 0, token.lexpos)
-        print(f"Token: {token.value}, LexPos: {token.lexpos}")
-        print(f"Último salto de línea antes del token: {last_newline}")
         # Si no encontramos salto de línea, significa que estamos en la primera línea
         if last_newline == -1:
             # Devuelve la columna como la posición del token + 1 (ajustando por 0-indexed)
