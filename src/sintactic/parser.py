@@ -138,38 +138,48 @@ class Parser:
                 if stmt:  # Ejecutar solo si no es None
                     self.parser.parse(stmt, lexer=self.lexer.lexer)
 
-            print("x =", self.symbol_table.get_symbol("x"))  # <-- debug
+            print("x =", self.symbol_table.get_symbol("x"))  #debug
 
         p[0] = None
 
     def evaluate_condition(self, condition):
-        """Evalúa la condición de manera flexible (esto puede depender de tu implementación)."""
-        # Desempaquetamos los valores para que no tratemos la condición como un valor booleano
-        left_value = condition[0]  # parte izquierda de la condición
-        operator = condition[1]  # operador relacional
-        right_value = condition[2]  # parte derecha de la condición
+        """Evalúa la condición de manera flexible."""
+        try:
+            # Aseguramos que la condición sea una lista con tres elementos
+            if not isinstance(condition, list) or len(condition) != 3:
+                self.errors.encolar_error("Error: La condición debe ser una lista con tres elementos.")
+                return False
+            
+            # Desempaquetamos los valores
+            left_value = condition[0]  # parte izquierda de la condición
+            operator = condition[1]  # operador relacional
+            right_value = condition[2]  # parte derecha de la condición
 
-        # Evaluar las variables de la condición si son nombres de variables
-        if isinstance(left_value, str):
-            left_value = self.symbol_table.get_symbol(left_value)
-        if isinstance(right_value, str):
-            right_value = self.symbol_table.get_symbol(right_value)
+            # Evaluar las variables de la condición si son nombres de variables
+            if isinstance(left_value, str):
+                left_value = self.symbol_table.get_symbol(left_value)
+            if isinstance(right_value, str):
+                right_value = self.symbol_table.get_symbol(right_value)
 
-        # Comprobamos si alguna de las variables no está inicializada
-        if left_value is None or right_value is None:
-            self.errors.encolar_error(f"Error: Operación inválida: {left_value} {operator} {right_value}")
+            # Comprobamos si alguna de las variables no está inicializada
+            if left_value is None or right_value is None:
+                self.errors.encolar_error(f"Error: Operación inválida: {left_value} {operator} {right_value}")
+                return False
+
+            # Realizamos la comparación según el operador relacional
+            if operator == '>':
+                return left_value > right_value
+            elif operator == '<':
+                return left_value < right_value
+            elif operator == '==':
+                return left_value == right_value
+            else:
+                self.errors.encolar_error(f"Operador relacional desconocido: {operator}")
+                return False
+        except Exception as e:
+            self.errors.encolar_error(f"Error al evaluar la condición: {e}")
             return False
 
-        # Realizamos la comparación según el operador relacional
-        if operator == '>':
-            return left_value > right_value
-        elif operator == '<':
-            return left_value < right_value
-        elif operator == '==':
-            return left_value == right_value
-        else:
-            self.errors.encolar_error(f"Operador relacional desconocido: {operator}")
-            return False
     def p_statement(self, p):
         '''statement : declaration
                      | assignment
@@ -184,9 +194,5 @@ class Parser:
             self.errors.encolar_error("Error de sintaxis: expresión incompleta.")
 
     def parse(self, data):
-        print("\n=== Tokens Generados ===")
         self.lexer.lexer.input(data)
-        for tok in self.lexer.lexer:
-            print(tok)
-        print("========================\n")
         return self.parser.parse(data, lexer=self.lexer.lexer)
