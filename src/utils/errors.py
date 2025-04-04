@@ -2,11 +2,37 @@ import os
 import webbrowser
 
 class Errors:
-    def __init__(self):
+    def __init__(self,content):
         self.errors = []  # Lista de errores
-
+        self.text=content
+    def getText(self):
+        return self.text
     def encolar_error(self, error):
-        self.errors.append(error)  # Agregar error a la lista
+        self.errors.append(error)
+
+    def find_line(self, token):
+        """Encuentra la fila (número de línea) de un token en el texto de entrada"""
+        # Contar el número de saltos de línea antes de la posición del token
+        line_count = self.getText().count('\n', 0, token.lexpos)
+        # La fila es igual al número de saltos de línea + 1
+        return line_count + 1
+    
+    def find_column(self,  token):
+        """Encuentra la columna de un token en el texto de entrada"""
+        # Obtener la posición del último salto de línea antes de lexpos
+        last_newline = self.getText().rfind('\n', 0, token.lexpos)
+        print(f"Token: {token.value}, LexPos: {token.lexpos}")
+        print(f"Último salto de línea antes del token: {last_newline}")
+        # Si no encontramos salto de línea, significa que estamos en la primera línea
+        if last_newline == -1:
+            # Devuelve la columna como la posición del token + 1 (ajustando por 0-indexed)
+            return token.lexpos + 1  
+        
+        # Si encontramos un salto de línea, la columna es la diferencia entre lexpos y el último salto de línea
+        column = token.lexpos - last_newline
+        
+        return column
+
 
     def errorHtml(self, nombre_archivo):
         """Genera un HTML con la lista de errores sintácticos y léxicos en una tabla"""

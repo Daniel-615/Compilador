@@ -10,3 +10,4 @@ z =  x pepe 2;
 milito v;
 v= x tchouameni 3;
 milito i = 0; 
+boolean c;

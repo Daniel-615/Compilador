@@ -53,7 +53,10 @@ class Lexer:
         self.lexer = lex.lex(module=self)
 
     def set_error(self, error, position):
-        error_message = f"Error léxico: '{error}' en la posición {position}"
+        token=self.get_current_token()
+        columna=self.errors.find_column(token)
+        fila=self.errors.find_line(token)
+        error_message = f"Error léxico: '{error}' en la fila {fila} y columna {columna} "
         self.errors.encolar_error(error_message)
 
     # Regla para identificadores y palabras clave
@@ -79,6 +82,8 @@ class Lexer:
         self.set_error(t.value[0], t.lexpos)
         t.lexer.skip(1)
 
+    def get_current_token(self):
+        return self.lexer.token()  # Devuelve el siguiente token del lexer
     # Método para analizar texto
     def tokenize(self, data):
         self.lexer.input(data)

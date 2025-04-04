@@ -9,24 +9,25 @@ class Main:
         """
         Inicializa el compilador.
         """
-        self.lexic_errors = Errors()  # Errores léxicos -> Graficarlos HTML
-        self.sintatic_errors = Errors()  # Errores sintácticos -> Graficarlos HTML
+        
         self.symbol_table = SymbolTable()  # Tabla de símbolos
         self.tokens=Tokens() #Graficar tokens devueltos por el lexer
         file = f("lenguaje.txt")
-        content, lines = file.read_file()
+        self.content, lines = file.read_file()
 
-        if content:
+        if self.content:
             try:
+                self.lexic_errors = Errors(self.content)  # Errores léxicos -> Graficarlos HTML
+                self.sintatic_errors = Errors(self.content)  # Errores sintácticos -> Graficarlos HTML
                 self.lexer = Lexer(self.lexic_errors)
                 self.parser = Parser(self.lexer, self.sintatic_errors,self.symbol_table)  
                 
-                tokens = self.lexer.tokenize(content)
+                tokens = self.lexer.tokenize(self.content)
 
                 # Iniciar análisis sintáctico
-                self.parser.parse(content)
-                
+                self.parser.parse(self.content)
                 #Luego cambiar esto por botones en la interfaz
+
                 self.sintatic_errors.errorHtml('Sintácticos')
                 self.lexic_errors.errorHtml('Léxicos')
                 self.symbol_table.toHtml()
@@ -36,6 +37,6 @@ class Main:
                 print("Error: ", e)
         else:
             print("No se pudo leer el archivo.")
-
+       
 if __name__ == "__main__":
     Main()

@@ -189,7 +189,10 @@ class Parser:
 
     def p_error(self, p):
         if p:
-            self.errors.encolar_error(f"Error de sintaxis en '{p.value}' en la posición {p.lexpos}")
+            token=self.lexer.get_current_token()
+            columna=self.errors.find_column(token)
+            fila=self.errors.find_line(token)
+            self.errors.encolar_error(f"Error de sintaxis en '{p.value}' en la fila {fila} y columna {columna}")
         else:
             self.errors.encolar_error("Error de sintaxis: expresión incompleta.")
 
