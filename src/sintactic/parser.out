@@ -9,76 +9,681 @@ Unused terminals:
     ELSE
     FLOAT
     FOR
+    GT
     IF
+    LT
     QUOTE
-    RELOP
 
 Grammar
 
 Rule 0     S' -> program
 Rule 1     program -> statement
 Rule 2     program -> program statement
-Rule 3     declaration -> INT IDENTIFIER SEMICOLON
-Rule 4     declaration -> INT IDENTIFIER EQUALS expression SEMICOLON
-Rule 5     assignment -> IDENTIFIER EQUALS expression SEMICOLON
-Rule 6     expression -> expression PLUS term
-Rule 7     expression -> expression MINUS term
-Rule 8     expression -> term
-Rule 9     term -> term TIMES factor
-Rule 10    term -> term DIVIDE factor
-Rule 11    term -> factor
-Rule 12    factor -> NUMBER
-Rule 13    factor -> IDENTIFIER
-Rule 14    condition -> expression GT expression
-Rule 15    condition -> expression LT expression
-Rule 16    condition -> expression EQEQ expression
-Rule 17    while_loop -> WHILE LPAREN condition RPAREN LBRACE statement_list RBRACE
-Rule 18    statement -> declaration
-Rule 19    statement -> assignment
-Rule 20    statement -> while_loop
-Rule 21    statement -> expression SEMICOLON
+Rule 3     statement -> declaration
+Rule 4     statement -> assignment
+Rule 5     statement -> while_loop
+Rule 6     statement -> expression SEMICOLON
+Rule 7     declaration -> INT IDENTIFIER SEMICOLON
+Rule 8     declaration -> INT IDENTIFIER EQUALS expression SEMICOLON
+Rule 9     assignment -> IDENTIFIER EQUALS expression SEMICOLON
+Rule 10    expression -> expression PLUS term
+Rule 11    expression -> expression MINUS term
+Rule 12    expression -> term
+Rule 13    term -> term TIMES factor
+Rule 14    term -> term DIVIDE factor
+Rule 15    term -> factor
+Rule 16    factor -> NUMBER
+Rule 17    factor -> IDENTIFIER
+Rule 18    condition -> expression RELOP expression
+Rule 19    while_loop -> WHILE LPAREN condition RPAREN LBRACE program RBRACE
 
 Terminals, with rules where they appear
 
 CHAR                 : 
 COMMA                : 
-DIVIDE               : 10
+DIVIDE               : 14
 DO                   : 
 DOT                  : 
 ELSE                 : 
-EQUALS               : 4 5
+EQUALS               : 8 9
 FLOAT                : 
 FOR                  : 
-GT                   : 14
-IDENTIFIER           : 3 4 5 13
+GT                   : 
+IDENTIFIER           : 7 8 9 17
 IF                   : 
-INT                  : 3 4
-LBRACE               : 17
-LPAREN               : 17
-LT                   : 15
-MINUS                : 7
-NUMBER               : 12
-PLUS                 : 6
+INT                  : 7 8
+LBRACE               : 19
+LPAREN               : 19
+LT                   : 
+MINUS                : 11
+NUMBER               : 16
+PLUS                 : 10
 QUOTE                : 
-RBRACE               : 17
-RELOP                : 
-RPAREN               : 17
-SEMICOLON            : 3 4 5 21
-TIMES                : 9
-WHILE                : 17
+RBRACE               : 19
+RELOP                : 18
+RPAREN               : 19
+SEMICOLON            : 6 7 8 9
+TIMES                : 13
+WHILE                : 19
 error                : 
 
 Nonterminals, with rules where they appear
 
-EQEQ                 : 16
-assignment           : 19
-condition            : 17
-declaration          : 18
-expression           : 4 5 6 7 14 14 15 15 16 16 21
-factor               : 9 10 11
-program              : 2 0
+assignment           : 4
+condition            : 19
+declaration          : 3
+expression           : 6 8 9 10 11 18 18
+factor               : 13 14 15
+program              : 2 19 0
 statement            : 1 2
-statement_list       : 17
-term                 : 6 7 8 9 10
-while_loop           : 20
+term                 : 10 11 12 13 14
+while_loop           : 5
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . statement
+    (2) program -> . program statement
+    (3) statement -> . declaration
+    (4) statement -> . assignment
+    (5) statement -> . while_loop
+    (6) statement -> . expression SEMICOLON
+    (7) declaration -> . INT IDENTIFIER SEMICOLON
+    (8) declaration -> . INT IDENTIFIER EQUALS expression SEMICOLON
+    (9) assignment -> . IDENTIFIER EQUALS expression SEMICOLON
+    (19) while_loop -> . WHILE LPAREN condition RPAREN LBRACE program RBRACE
+    (10) expression -> . expression PLUS term
+    (11) expression -> . expression MINUS term
+    (12) expression -> . term
+    (13) term -> . term TIMES factor
+    (14) term -> . term DIVIDE factor
+    (15) term -> . factor
+    (16) factor -> . NUMBER
+    (17) factor -> . IDENTIFIER
+
+    INT             shift and go to state 7
+    IDENTIFIER      shift and go to state 8
+    WHILE           shift and go to state 9
+    NUMBER          shift and go to state 12
+
+    program                        shift and go to state 1
+    statement                      shift and go to state 2
+    declaration                    shift and go to state 3
+    assignment                     shift and go to state 4
+    while_loop                     shift and go to state 5
+    expression                     shift and go to state 6
+    term                           shift and go to state 10
+    factor                         shift and go to state 11
+
+state 1
+
+    (0) S' -> program .
+    (2) program -> program . statement
+    (3) statement -> . declaration
+    (4) statement -> . assignment
+    (5) statement -> . while_loop
+    (6) statement -> . expression SEMICOLON
+    (7) declaration -> . INT IDENTIFIER SEMICOLON
+    (8) declaration -> . INT IDENTIFIER EQUALS expression SEMICOLON
+    (9) assignment -> . IDENTIFIER EQUALS expression SEMICOLON
+    (19) while_loop -> . WHILE LPAREN condition RPAREN LBRACE program RBRACE
+    (10) expression -> . expression PLUS term
+    (11) expression -> . expression MINUS term
+    (12) expression -> . term
+    (13) term -> . term TIMES factor
+    (14) term -> . term DIVIDE factor
+    (15) term -> . factor
+    (16) factor -> . NUMBER
+    (17) factor -> . IDENTIFIER
+
+    INT             shift and go to state 7
+    IDENTIFIER      shift and go to state 8
+    WHILE           shift and go to state 9
+    NUMBER          shift and go to state 12
+
+    statement                      shift and go to state 13
+    declaration                    shift and go to state 3
+    assignment                     shift and go to state 4
+    while_loop                     shift and go to state 5
+    expression                     shift and go to state 6
+    term                           shift and go to state 10
+    factor                         shift and go to state 11
+
+state 2
+
+    (1) program -> statement .
+
+    INT             reduce using rule 1 (program -> statement .)
+    IDENTIFIER      reduce using rule 1 (program -> statement .)
+    WHILE           reduce using rule 1 (program -> statement .)
+    NUMBER          reduce using rule 1 (program -> statement .)
+    $end            reduce using rule 1 (program -> statement .)
+    RBRACE          reduce using rule 1 (program -> statement .)
+
+
+state 3
+
+    (3) statement -> declaration .
+
+    INT             reduce using rule 3 (statement -> declaration .)
+    IDENTIFIER      reduce using rule 3 (statement -> declaration .)
+    WHILE           reduce using rule 3 (statement -> declaration .)
+    NUMBER          reduce using rule 3 (statement -> declaration .)
+    $end            reduce using rule 3 (statement -> declaration .)
+    RBRACE          reduce using rule 3 (statement -> declaration .)
+
+
+state 4
+
+    (4) statement -> assignment .
+
+    INT             reduce using rule 4 (statement -> assignment .)
+    IDENTIFIER      reduce using rule 4 (statement -> assignment .)
+    WHILE           reduce using rule 4 (statement -> assignment .)
+    NUMBER          reduce using rule 4 (statement -> assignment .)
+    $end            reduce using rule 4 (statement -> assignment .)
+    RBRACE          reduce using rule 4 (statement -> assignment .)
+
+
+state 5
+
+    (5) statement -> while_loop .
+
+    INT             reduce using rule 5 (statement -> while_loop .)
+    IDENTIFIER      reduce using rule 5 (statement -> while_loop .)
+    WHILE           reduce using rule 5 (statement -> while_loop .)
+    NUMBER          reduce using rule 5 (statement -> while_loop .)
+    $end            reduce using rule 5 (statement -> while_loop .)
+    RBRACE          reduce using rule 5 (statement -> while_loop .)
+
+
+state 6
+
+    (6) statement -> expression . SEMICOLON
+    (10) expression -> expression . PLUS term
+    (11) expression -> expression . MINUS term
+
+    SEMICOLON       shift and go to state 14
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 16
+
+
+state 7
+
+    (7) declaration -> INT . IDENTIFIER SEMICOLON
+    (8) declaration -> INT . IDENTIFIER EQUALS expression SEMICOLON
+
+    IDENTIFIER      shift and go to state 17
+
+
+state 8
+
+    (9) assignment -> IDENTIFIER . EQUALS expression SEMICOLON
+    (17) factor -> IDENTIFIER .
+
+    EQUALS          shift and go to state 18
+    TIMES           reduce using rule 17 (factor -> IDENTIFIER .)
+    DIVIDE          reduce using rule 17 (factor -> IDENTIFIER .)
+    SEMICOLON       reduce using rule 17 (factor -> IDENTIFIER .)
+    PLUS            reduce using rule 17 (factor -> IDENTIFIER .)
+    MINUS           reduce using rule 17 (factor -> IDENTIFIER .)
+
+
+state 9
+
+    (19) while_loop -> WHILE . LPAREN condition RPAREN LBRACE program RBRACE
+
+    LPAREN          shift and go to state 19
+
+
+state 10
+
+    (12) expression -> term .
+    (13) term -> term . TIMES factor
+    (14) term -> term . DIVIDE factor
+
+    SEMICOLON       reduce using rule 12 (expression -> term .)
+    PLUS            reduce using rule 12 (expression -> term .)
+    MINUS           reduce using rule 12 (expression -> term .)
+    RELOP           reduce using rule 12 (expression -> term .)
+    RPAREN          reduce using rule 12 (expression -> term .)
+    TIMES           shift and go to state 20
+    DIVIDE          shift and go to state 21
+
+
+state 11
+
+    (15) term -> factor .
+
+    TIMES           reduce using rule 15 (term -> factor .)
+    DIVIDE          reduce using rule 15 (term -> factor .)
+    SEMICOLON       reduce using rule 15 (term -> factor .)
+    PLUS            reduce using rule 15 (term -> factor .)
+    MINUS           reduce using rule 15 (term -> factor .)
+    RELOP           reduce using rule 15 (term -> factor .)
+    RPAREN          reduce using rule 15 (term -> factor .)
+
+
+state 12
+
+    (16) factor -> NUMBER .
+
+    TIMES           reduce using rule 16 (factor -> NUMBER .)
+    DIVIDE          reduce using rule 16 (factor -> NUMBER .)
+    SEMICOLON       reduce using rule 16 (factor -> NUMBER .)
+    PLUS            reduce using rule 16 (factor -> NUMBER .)
+    MINUS           reduce using rule 16 (factor -> NUMBER .)
+    RELOP           reduce using rule 16 (factor -> NUMBER .)
+    RPAREN          reduce using rule 16 (factor -> NUMBER .)
+
+
+state 13
+
+    (2) program -> program statement .
+
+    INT             reduce using rule 2 (program -> program statement .)
+    IDENTIFIER      reduce using rule 2 (program -> program statement .)
+    WHILE           reduce using rule 2 (program -> program statement .)
+    NUMBER          reduce using rule 2 (program -> program statement .)
+    $end            reduce using rule 2 (program -> program statement .)
+    RBRACE          reduce using rule 2 (program -> program statement .)
+
+
+state 14
+
+    (6) statement -> expression SEMICOLON .
+
+    INT             reduce using rule 6 (statement -> expression SEMICOLON .)
+    IDENTIFIER      reduce using rule 6 (statement -> expression SEMICOLON .)
+    WHILE           reduce using rule 6 (statement -> expression SEMICOLON .)
+    NUMBER          reduce using rule 6 (statement -> expression SEMICOLON .)
+    $end            reduce using rule 6 (statement -> expression SEMICOLON .)
+    RBRACE          reduce using rule 6 (statement -> expression SEMICOLON .)
+
+
+state 15
+
+    (10) expression -> expression PLUS . term
+    (13) term -> . term TIMES factor
+    (14) term -> . term DIVIDE factor
+    (15) term -> . factor
+    (16) factor -> . NUMBER
+    (17) factor -> . IDENTIFIER
+
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 23
+
+    term                           shift and go to state 22
+    factor                         shift and go to state 11
+
+state 16
+
+    (11) expression -> expression MINUS . term
+    (13) term -> . term TIMES factor
+    (14) term -> . term DIVIDE factor
+    (15) term -> . factor
+    (16) factor -> . NUMBER
+    (17) factor -> . IDENTIFIER
+
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 23
+
+    term                           shift and go to state 24
+    factor                         shift and go to state 11
+
+state 17
+
+    (7) declaration -> INT IDENTIFIER . SEMICOLON
+    (8) declaration -> INT IDENTIFIER . EQUALS expression SEMICOLON
+
+    SEMICOLON       shift and go to state 25
+    EQUALS          shift and go to state 26
+
+
+state 18
+
+    (9) assignment -> IDENTIFIER EQUALS . expression SEMICOLON
+    (10) expression -> . expression PLUS term
+    (11) expression -> . expression MINUS term
+    (12) expression -> . term
+    (13) term -> . term TIMES factor
+    (14) term -> . term DIVIDE factor
+    (15) term -> . factor
+    (16) factor -> . NUMBER
+    (17) factor -> . IDENTIFIER
+
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 23
+
+    expression                     shift and go to state 27
+    term                           shift and go to state 10
+    factor                         shift and go to state 11
+
+state 19
+
+    (19) while_loop -> WHILE LPAREN . condition RPAREN LBRACE program RBRACE
+    (18) condition -> . expression RELOP expression
+    (10) expression -> . expression PLUS term
+    (11) expression -> . expression MINUS term
+    (12) expression -> . term
+    (13) term -> . term TIMES factor
+    (14) term -> . term DIVIDE factor
+    (15) term -> . factor
+    (16) factor -> . NUMBER
+    (17) factor -> . IDENTIFIER
+
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 23
+
+    condition                      shift and go to state 28
+    expression                     shift and go to state 29
+    term                           shift and go to state 10
+    factor                         shift and go to state 11
+
+state 20
+
+    (13) term -> term TIMES . factor
+    (16) factor -> . NUMBER
+    (17) factor -> . IDENTIFIER
+
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 23
+
+    factor                         shift and go to state 30
+
+state 21
+
+    (14) term -> term DIVIDE . factor
+    (16) factor -> . NUMBER
+    (17) factor -> . IDENTIFIER
+
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 23
+
+    factor                         shift and go to state 31
+
+state 22
+
+    (10) expression -> expression PLUS term .
+    (13) term -> term . TIMES factor
+    (14) term -> term . DIVIDE factor
+
+    SEMICOLON       reduce using rule 10 (expression -> expression PLUS term .)
+    PLUS            reduce using rule 10 (expression -> expression PLUS term .)
+    MINUS           reduce using rule 10 (expression -> expression PLUS term .)
+    RELOP           reduce using rule 10 (expression -> expression PLUS term .)
+    RPAREN          reduce using rule 10 (expression -> expression PLUS term .)
+    TIMES           shift and go to state 20
+    DIVIDE          shift and go to state 21
+
+
+state 23
+
+    (17) factor -> IDENTIFIER .
+
+    TIMES           reduce using rule 17 (factor -> IDENTIFIER .)
+    DIVIDE          reduce using rule 17 (factor -> IDENTIFIER .)
+    SEMICOLON       reduce using rule 17 (factor -> IDENTIFIER .)
+    PLUS            reduce using rule 17 (factor -> IDENTIFIER .)
+    MINUS           reduce using rule 17 (factor -> IDENTIFIER .)
+    RELOP           reduce using rule 17 (factor -> IDENTIFIER .)
+    RPAREN          reduce using rule 17 (factor -> IDENTIFIER .)
+
+
+state 24
+
+    (11) expression -> expression MINUS term .
+    (13) term -> term . TIMES factor
+    (14) term -> term . DIVIDE factor
+
+    SEMICOLON       reduce using rule 11 (expression -> expression MINUS term .)
+    PLUS            reduce using rule 11 (expression -> expression MINUS term .)
+    MINUS           reduce using rule 11 (expression -> expression MINUS term .)
+    RELOP           reduce using rule 11 (expression -> expression MINUS term .)
+    RPAREN          reduce using rule 11 (expression -> expression MINUS term .)
+    TIMES           shift and go to state 20
+    DIVIDE          shift and go to state 21
+
+
+state 25
+
+    (7) declaration -> INT IDENTIFIER SEMICOLON .
+
+    INT             reduce using rule 7 (declaration -> INT IDENTIFIER SEMICOLON .)
+    IDENTIFIER      reduce using rule 7 (declaration -> INT IDENTIFIER SEMICOLON .)
+    WHILE           reduce using rule 7 (declaration -> INT IDENTIFIER SEMICOLON .)
+    NUMBER          reduce using rule 7 (declaration -> INT IDENTIFIER SEMICOLON .)
+    $end            reduce using rule 7 (declaration -> INT IDENTIFIER SEMICOLON .)
+    RBRACE          reduce using rule 7 (declaration -> INT IDENTIFIER SEMICOLON .)
+
+
+state 26
+
+    (8) declaration -> INT IDENTIFIER EQUALS . expression SEMICOLON
+    (10) expression -> . expression PLUS term
+    (11) expression -> . expression MINUS term
+    (12) expression -> . term
+    (13) term -> . term TIMES factor
+    (14) term -> . term DIVIDE factor
+    (15) term -> . factor
+    (16) factor -> . NUMBER
+    (17) factor -> . IDENTIFIER
+
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 23
+
+    expression                     shift and go to state 32
+    term                           shift and go to state 10
+    factor                         shift and go to state 11
+
+state 27
+
+    (9) assignment -> IDENTIFIER EQUALS expression . SEMICOLON
+    (10) expression -> expression . PLUS term
+    (11) expression -> expression . MINUS term
+
+    SEMICOLON       shift and go to state 33
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 16
+
+
+state 28
+
+    (19) while_loop -> WHILE LPAREN condition . RPAREN LBRACE program RBRACE
+
+    RPAREN          shift and go to state 34
+
+
+state 29
+
+    (18) condition -> expression . RELOP expression
+    (10) expression -> expression . PLUS term
+    (11) expression -> expression . MINUS term
+
+    RELOP           shift and go to state 35
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 16
+
+
+state 30
+
+    (13) term -> term TIMES factor .
+
+    TIMES           reduce using rule 13 (term -> term TIMES factor .)
+    DIVIDE          reduce using rule 13 (term -> term TIMES factor .)
+    SEMICOLON       reduce using rule 13 (term -> term TIMES factor .)
+    PLUS            reduce using rule 13 (term -> term TIMES factor .)
+    MINUS           reduce using rule 13 (term -> term TIMES factor .)
+    RELOP           reduce using rule 13 (term -> term TIMES factor .)
+    RPAREN          reduce using rule 13 (term -> term TIMES factor .)
+
+
+state 31
+
+    (14) term -> term DIVIDE factor .
+
+    TIMES           reduce using rule 14 (term -> term DIVIDE factor .)
+    DIVIDE          reduce using rule 14 (term -> term DIVIDE factor .)
+    SEMICOLON       reduce using rule 14 (term -> term DIVIDE factor .)
+    PLUS            reduce using rule 14 (term -> term DIVIDE factor .)
+    MINUS           reduce using rule 14 (term -> term DIVIDE factor .)
+    RELOP           reduce using rule 14 (term -> term DIVIDE factor .)
+    RPAREN          reduce using rule 14 (term -> term DIVIDE factor .)
+
+
+state 32
+
+    (8) declaration -> INT IDENTIFIER EQUALS expression . SEMICOLON
+    (10) expression -> expression . PLUS term
+    (11) expression -> expression . MINUS term
+
+    SEMICOLON       shift and go to state 36
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 16
+
+
+state 33
+
+    (9) assignment -> IDENTIFIER EQUALS expression SEMICOLON .
+
+    INT             reduce using rule 9 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
+    IDENTIFIER      reduce using rule 9 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
+    WHILE           reduce using rule 9 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
+    NUMBER          reduce using rule 9 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
+    $end            reduce using rule 9 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
+    RBRACE          reduce using rule 9 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
+
+
+state 34
+
+    (19) while_loop -> WHILE LPAREN condition RPAREN . LBRACE program RBRACE
+
+    LBRACE          shift and go to state 37
+
+
+state 35
+
+    (18) condition -> expression RELOP . expression
+    (10) expression -> . expression PLUS term
+    (11) expression -> . expression MINUS term
+    (12) expression -> . term
+    (13) term -> . term TIMES factor
+    (14) term -> . term DIVIDE factor
+    (15) term -> . factor
+    (16) factor -> . NUMBER
+    (17) factor -> . IDENTIFIER
+
+    NUMBER          shift and go to state 12
+    IDENTIFIER      shift and go to state 23
+
+    expression                     shift and go to state 38
+    term                           shift and go to state 10
+    factor                         shift and go to state 11
+
+state 36
+
+    (8) declaration -> INT IDENTIFIER EQUALS expression SEMICOLON .
+
+    INT             reduce using rule 8 (declaration -> INT IDENTIFIER EQUALS expression SEMICOLON .)
+    IDENTIFIER      reduce using rule 8 (declaration -> INT IDENTIFIER EQUALS expression SEMICOLON .)
+    WHILE           reduce using rule 8 (declaration -> INT IDENTIFIER EQUALS expression SEMICOLON .)
+    NUMBER          reduce using rule 8 (declaration -> INT IDENTIFIER EQUALS expression SEMICOLON .)
+    $end            reduce using rule 8 (declaration -> INT IDENTIFIER EQUALS expression SEMICOLON .)
+    RBRACE          reduce using rule 8 (declaration -> INT IDENTIFIER EQUALS expression SEMICOLON .)
+
+
+state 37
+
+    (19) while_loop -> WHILE LPAREN condition RPAREN LBRACE . program RBRACE
+    (1) program -> . statement
+    (2) program -> . program statement
+    (3) statement -> . declaration
+    (4) statement -> . assignment
+    (5) statement -> . while_loop
+    (6) statement -> . expression SEMICOLON
+    (7) declaration -> . INT IDENTIFIER SEMICOLON
+    (8) declaration -> . INT IDENTIFIER EQUALS expression SEMICOLON
+    (9) assignment -> . IDENTIFIER EQUALS expression SEMICOLON
+    (19) while_loop -> . WHILE LPAREN condition RPAREN LBRACE program RBRACE
+    (10) expression -> . expression PLUS term
+    (11) expression -> . expression MINUS term
+    (12) expression -> . term
+    (13) term -> . term TIMES factor
+    (14) term -> . term DIVIDE factor
+    (15) term -> . factor
+    (16) factor -> . NUMBER
+    (17) factor -> . IDENTIFIER
+
+    INT             shift and go to state 7
+    IDENTIFIER      shift and go to state 8
+    WHILE           shift and go to state 9
+    NUMBER          shift and go to state 12
+
+    program                        shift and go to state 39
+    statement                      shift and go to state 2
+    declaration                    shift and go to state 3
+    assignment                     shift and go to state 4
+    while_loop                     shift and go to state 5
+    expression                     shift and go to state 6
+    term                           shift and go to state 10
+    factor                         shift and go to state 11
+
+state 38
+
+    (18) condition -> expression RELOP expression .
+    (10) expression -> expression . PLUS term
+    (11) expression -> expression . MINUS term
+
+    RPAREN          reduce using rule 18 (condition -> expression RELOP expression .)
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 16
+
+
+state 39
+
+    (19) while_loop -> WHILE LPAREN condition RPAREN LBRACE program . RBRACE
+    (2) program -> program . statement
+    (3) statement -> . declaration
+    (4) statement -> . assignment
+    (5) statement -> . while_loop
+    (6) statement -> . expression SEMICOLON
+    (7) declaration -> . INT IDENTIFIER SEMICOLON
+    (8) declaration -> . INT IDENTIFIER EQUALS expression SEMICOLON
+    (9) assignment -> . IDENTIFIER EQUALS expression SEMICOLON
+    (19) while_loop -> . WHILE LPAREN condition RPAREN LBRACE program RBRACE
+    (10) expression -> . expression PLUS term
+    (11) expression -> . expression MINUS term
+    (12) expression -> . term
+    (13) term -> . term TIMES factor
+    (14) term -> . term DIVIDE factor
+    (15) term -> . factor
+    (16) factor -> . NUMBER
+    (17) factor -> . IDENTIFIER
+
+    RBRACE          shift and go to state 40
+    INT             shift and go to state 7
+    IDENTIFIER      shift and go to state 8
+    WHILE           shift and go to state 9
+    NUMBER          shift and go to state 12
+
+    statement                      shift and go to state 13
+    declaration                    shift and go to state 3
+    assignment                     shift and go to state 4
+    while_loop                     shift and go to state 5
+    expression                     shift and go to state 6
+    term                           shift and go to state 10
+    factor                         shift and go to state 11
+
+state 40
+
+    (19) while_loop -> WHILE LPAREN condition RPAREN LBRACE program RBRACE .
+
+    INT             reduce using rule 19 (while_loop -> WHILE LPAREN condition RPAREN LBRACE program RBRACE .)
+    IDENTIFIER      reduce using rule 19 (while_loop -> WHILE LPAREN condition RPAREN LBRACE program RBRACE .)
+    WHILE           reduce using rule 19 (while_loop -> WHILE LPAREN condition RPAREN LBRACE program RBRACE .)
+    NUMBER          reduce using rule 19 (while_loop -> WHILE LPAREN condition RPAREN LBRACE program RBRACE .)
+    $end            reduce using rule 19 (while_loop -> WHILE LPAREN condition RPAREN LBRACE program RBRACE .)
+    RBRACE          reduce using rule 19 (while_loop -> WHILE LPAREN condition RPAREN LBRACE program RBRACE .)
 

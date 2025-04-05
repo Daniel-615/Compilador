@@ -3,7 +3,9 @@ from src.lexer.lexer import Lexer
 from src.sintactic.parser import Parser
 from src.utils.errors import Errors
 from src.semantic.symbolTable import SymbolTable
+from src.semantic.semantic import Semantic
 from src.utils.tokens import Tokens
+
 class Main:
     def __init__(self):
         """
@@ -19,8 +21,12 @@ class Main:
             try:
                 self.lexic_errors = Errors(self.content)  # Errores léxicos -> Graficarlos HTML
                 self.sintatic_errors = Errors(self.content)  # Errores sintácticos -> Graficarlos HTML
+                self.semantic_errors=Errors(self.content)
                 self.lexer = Lexer(self.lexic_errors)
-                self.parser = Parser(self.lexer, self.sintatic_errors,self.symbol_table)  
+                self.semantic=Semantic(self.symbol_table,self.semantic_errors,self.lexer) 
+                self.parser = Parser(self.lexer, self.sintatic_errors, self.semantic)
+
+                
                 
                 tokens = self.lexer.tokenize(self.content)
 

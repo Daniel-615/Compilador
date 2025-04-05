@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'CHAR COMMA DIVIDE DO DOT ELSE EQUALS FLOAT FOR GT IDENTIFIER IF INT LBRACE LPAREN LT MINUS NUMBER PLUS QUOTE RBRACE RELOP RPAREN SEMICOLON TIMES WHILEprogram : statement\n                   | program statementdeclaration : INT IDENTIFIER SEMICOLON\n                       | INT IDENTIFIER EQUALS expression SEMICOLONassignment : IDENTIFIER EQUALS expression SEMICOLONexpression : expression PLUS term\n                      | expression MINUS term\n                      | termterm : term TIMES factor\n                | term DIVIDE factor\n                | factorfactor : NUMBER\n                  | IDENTIFIERcondition : expression RELOP expressionwhile_loop : WHILE LPAREN condition RPAREN LBRACE program RBRACEstatement : declaration\n                     | assignment\n                     | while_loop\n                     | expression SEMICOLON'
+_lr_signature = 'CHAR COMMA DIVIDE DO DOT ELSE EQUALS FLOAT FOR GT IDENTIFIER IF INT LBRACE LPAREN LT MINUS NUMBER PLUS QUOTE RBRACE RELOP RPAREN SEMICOLON TIMES WHILEprogram : statement\n                   | program statementstatement : declaration\n                     | assignment\n                     | while_loop\n                     | expression SEMICOLONdeclaration : INT IDENTIFIER SEMICOLON\n                       | INT IDENTIFIER EQUALS expression SEMICOLONassignment : IDENTIFIER EQUALS expression SEMICOLONexpression : expression PLUS term\n                      | expression MINUS term\n                      | termterm : term TIMES factor\n                | term DIVIDE factor\n                | factorfactor : NUMBER\n                  | IDENTIFIERcondition : expression RELOP expressionwhile_loop : WHILE LPAREN condition RPAREN LBRACE program RBRACE'
     
-_lr_action_items = {'INT':([0,1,2,3,4,5,13,14,25,33,36,37,39,40,],[7,7,-1,-16,-17,-18,-2,-19,-3,-5,-4,7,7,-15,]),'IDENTIFIER':([0,1,2,3,4,5,7,13,14,15,16,18,19,20,21,25,26,33,35,36,37,39,40,],[8,8,-1,-16,-17,-18,17,-2,-19,23,23,23,23,23,23,-3,23,-5,23,-4,8,8,-15,]),'WHILE':([0,1,2,3,4,5,13,14,25,33,36,37,39,40,],[9,9,-1,-16,-17,-18,-2,-19,-3,-5,-4,9,9,-15,]),'NUMBER':([0,1,2,3,4,5,13,14,15,16,18,19,20,21,25,26,33,35,36,37,39,40,],[12,12,-1,-16,-17,-18,-2,-19,12,12,12,12,12,12,-3,12,-5,12,-4,12,12,-15,]),'$end':([1,2,3,4,5,13,14,25,33,36,40,],[0,-1,-16,-17,-18,-2,-19,-3,-5,-4,-15,]),'RBRACE':([2,3,4,5,13,14,25,33,36,39,40,],[-1,-16,-17,-18,-2,-19,-3,-5,-4,40,-15,]),'SEMICOLON':([6,8,10,11,12,17,22,23,24,27,30,31,32,],[14,-13,-8,-11,-12,25,-6,-13,-7,33,-9,-10,36,]),'PLUS':([6,8,10,11,12,22,23,24,27,29,30,31,32,38,],[15,-13,-8,-11,-12,-6,-13,-7,15,15,-9,-10,15,15,]),'MINUS':([6,8,10,11,12,22,23,24,27,29,30,31,32,38,],[16,-13,-8,-11,-12,-6,-13,-7,16,16,-9,-10,16,16,]),'EQUALS':([8,17,],[18,26,]),'TIMES':([8,10,11,12,22,23,24,30,31,],[-13,20,-11,-12,20,-13,20,-9,-10,]),'DIVIDE':([8,10,11,12,22,23,24,30,31,],[-13,21,-11,-12,21,-13,21,-9,-10,]),'LPAREN':([9,],[19,]),'RELOP':([10,11,12,22,23,24,29,30,31,],[-8,-11,-12,-6,-13,-7,35,-9,-10,]),'RPAREN':([10,11,12,22,23,24,28,30,31,38,],[-8,-11,-12,-6,-13,-7,34,-9,-10,-14,]),'LBRACE':([34,],[37,]),}
+_lr_action_items = {'INT':([0,1,2,3,4,5,13,14,25,33,36,37,39,40,],[7,7,-1,-3,-4,-5,-2,-6,-7,-9,-8,7,7,-19,]),'IDENTIFIER':([0,1,2,3,4,5,7,13,14,15,16,18,19,20,21,25,26,33,35,36,37,39,40,],[8,8,-1,-3,-4,-5,17,-2,-6,23,23,23,23,23,23,-7,23,-9,23,-8,8,8,-19,]),'WHILE':([0,1,2,3,4,5,13,14,25,33,36,37,39,40,],[9,9,-1,-3,-4,-5,-2,-6,-7,-9,-8,9,9,-19,]),'NUMBER':([0,1,2,3,4,5,13,14,15,16,18,19,20,21,25,26,33,35,36,37,39,40,],[12,12,-1,-3,-4,-5,-2,-6,12,12,12,12,12,12,-7,12,-9,12,-8,12,12,-19,]),'$end':([1,2,3,4,5,13,14,25,33,36,40,],[0,-1,-3,-4,-5,-2,-6,-7,-9,-8,-19,]),'RBRACE':([2,3,4,5,13,14,25,33,36,39,40,],[-1,-3,-4,-5,-2,-6,-7,-9,-8,40,-19,]),'SEMICOLON':([6,8,10,11,12,17,22,23,24,27,30,31,32,],[14,-17,-12,-15,-16,25,-10,-17,-11,33,-13,-14,36,]),'PLUS':([6,8,10,11,12,22,23,24,27,29,30,31,32,38,],[15,-17,-12,-15,-16,-10,-17,-11,15,15,-13,-14,15,15,]),'MINUS':([6,8,10,11,12,22,23,24,27,29,30,31,32,38,],[16,-17,-12,-15,-16,-10,-17,-11,16,16,-13,-14,16,16,]),'EQUALS':([8,17,],[18,26,]),'TIMES':([8,10,11,12,22,23,24,30,31,],[-17,20,-15,-16,20,-17,20,-13,-14,]),'DIVIDE':([8,10,11,12,22,23,24,30,31,],[-17,21,-15,-16,21,-17,21,-13,-14,]),'LPAREN':([9,],[19,]),'RELOP':([10,11,12,22,23,24,29,30,31,],[-12,-15,-16,-10,-17,-11,35,-13,-14,]),'RPAREN':([10,11,12,22,23,24,28,30,31,38,],[-12,-15,-16,-10,-17,-11,34,-13,-14,-18,]),'LBRACE':([34,],[37,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -27,23 +27,23 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> program","S'",1,None,None,None),
-  ('program -> statement','program',1,'p_program','parser.py',13),
-  ('program -> program statement','program',2,'p_program','parser.py',14),
-  ('declaration -> INT IDENTIFIER SEMICOLON','declaration',3,'p_declaration','parser.py',18),
-  ('declaration -> INT IDENTIFIER EQUALS expression SEMICOLON','declaration',5,'p_declaration','parser.py',19),
-  ('assignment -> IDENTIFIER EQUALS expression SEMICOLON','assignment',4,'p_assignment','parser.py',28),
-  ('expression -> expression PLUS term','expression',3,'p_expression','parser.py',37),
-  ('expression -> expression MINUS term','expression',3,'p_expression','parser.py',38),
-  ('expression -> term','expression',1,'p_expression','parser.py',39),
-  ('term -> term TIMES factor','term',3,'p_term','parser.py',61),
-  ('term -> term DIVIDE factor','term',3,'p_term','parser.py',62),
-  ('term -> factor','term',1,'p_term','parser.py',63),
-  ('factor -> NUMBER','factor',1,'p_factor','parser.py',86),
-  ('factor -> IDENTIFIER','factor',1,'p_factor','parser.py',87),
-  ('condition -> expression RELOP expression','condition',3,'p_condition','parser.py',98),
-  ('while_loop -> WHILE LPAREN condition RPAREN LBRACE program RBRACE','while_loop',7,'p_while_loop','parser.py',126),
-  ('statement -> declaration','statement',1,'p_statement','parser.py',135),
-  ('statement -> assignment','statement',1,'p_statement','parser.py',136),
-  ('statement -> while_loop','statement',1,'p_statement','parser.py',137),
-  ('statement -> expression SEMICOLON','statement',2,'p_statement','parser.py',138),
+  ('program -> statement','program',1,'p_program','parser.py',12),
+  ('program -> program statement','program',2,'p_program','parser.py',13),
+  ('statement -> declaration','statement',1,'p_statement','parser.py',20),
+  ('statement -> assignment','statement',1,'p_statement','parser.py',21),
+  ('statement -> while_loop','statement',1,'p_statement','parser.py',22),
+  ('statement -> expression SEMICOLON','statement',2,'p_statement','parser.py',23),
+  ('declaration -> INT IDENTIFIER SEMICOLON','declaration',3,'p_declaration','parser.py',27),
+  ('declaration -> INT IDENTIFIER EQUALS expression SEMICOLON','declaration',5,'p_declaration','parser.py',28),
+  ('assignment -> IDENTIFIER EQUALS expression SEMICOLON','assignment',4,'p_assignment','parser.py',35),
+  ('expression -> expression PLUS term','expression',3,'p_expression','parser.py',39),
+  ('expression -> expression MINUS term','expression',3,'p_expression','parser.py',40),
+  ('expression -> term','expression',1,'p_expression','parser.py',41),
+  ('term -> term TIMES factor','term',3,'p_term','parser.py',48),
+  ('term -> term DIVIDE factor','term',3,'p_term','parser.py',49),
+  ('term -> factor','term',1,'p_term','parser.py',50),
+  ('factor -> NUMBER','factor',1,'p_factor','parser.py',57),
+  ('factor -> IDENTIFIER','factor',1,'p_factor','parser.py',58),
+  ('condition -> expression RELOP expression','condition',3,'p_condition','parser.py',62),
+  ('while_loop -> WHILE LPAREN condition RPAREN LBRACE program RBRACE','while_loop',7,'p_while_loop','parser.py',66),
 ]

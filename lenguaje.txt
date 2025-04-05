@@ -1,6 +1,6 @@
 milito x;
-x = 10;
-walker (x > 5) {
+x = 0;
+walker (x < 10) {
     x = x cristiano 1;
 }
 
