@@ -21,7 +21,9 @@ class Lexer:
         'saviola': 'CHAR',
         'walker': 'WHILE',
         'son': 'DO',
-        'forlan': 'FOR'
+        'forlan': 'FOR',
+        'global': 'GLOBAL',  # Agregar palabra clave global
+        'local' : 'LOCAL'
     }
 
     # Agregamos las palabras reservadas a los tokens

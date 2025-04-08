@@ -24,12 +24,25 @@ class Parser:
         p[0] = p[1]
 
     def p_declaration(self, p):
-        '''declaration : INT IDENTIFIER SEMICOLON
-                       | INT IDENTIFIER EQUALS expression SEMICOLON'''
-        if len(p) == 4:
-            p[0] = self.semantic.handle_declaration(p[2], p[1])
+        '''declaration : GLOBAL INT IDENTIFIER SEMICOLON
+                    | LOCAL INT IDENTIFIER SEMICOLON
+                    | INT IDENTIFIER SEMICOLON
+                    | INT IDENTIFIER EQUALS expression SEMICOLON'''
+        if p[1] == 'GLOBAL':
+            scope = 'global'
+            identifier = p[3]
+            type_ = p[2]
+            self.semantic.handle_declaration(identifier, type_, scope)  # Correcto
+        elif p[1] == 'LOCAL':
+            scope = 'local'
+            identifier = p[3]
+            type_ = p[2]
+            self.semantic.handle_declaration(identifier, type_, scope)  # Correcto
         else:
-            p[0] = self.semantic.handle_declaration(p[2], p[1], p[4])
+            # Manejo de declaración sin alcance
+            identifier = p[2]
+            type_ = p[1]
+            self.semantic.handle_declaration(identifier, type_, "local")  # Asignar un scope por defecto
 
     def p_assignment(self, p):
         'assignment : IDENTIFIER EQUALS expression SEMICOLON'
@@ -60,13 +73,10 @@ class Parser:
 
     def p_condition(self, p):
         'condition : IDENTIFIER RELOP expression'
-        # Pasamos el nombre (string) y la expresión evaluable
         var_name = p[1]  # Esto es un string como 'x'
         op = p[2]
         value_expr = p[3]
         p[0] = lambda: self.semantic.evaluate_condition_dynamic(var_name, op, value_expr)
-
-
 
     def p_while_loop(self, p):
         'while_loop : WHILE LPAREN condition RPAREN LBRACE program RBRACE'
@@ -83,7 +93,7 @@ class Parser:
 
     def parse(self, data):
         self.lexer.lexer.input(data)
-        parsed= self.parser.parse(data, lexer=self.lexer.lexer)
+        parsed = self.parser.parse(data, lexer=self.lexer.lexer)
         if parsed:  # Ejecutamos el programa principal
             for stmt in parsed:
                 if callable(stmt):

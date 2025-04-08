@@ -6,13 +6,12 @@ class SymbolTable:
         # Diccionario para almacenar los símbolos (identificadores y sus valores)
         self.symbols = {}
 
-    def add_symbol(self, name, type_, value=None):  # Accept optional value
+    def add_symbol(self, name, type_, scope, value=None):
         if name in self.symbols:
-            print(f"Error: Variable '{name}' is already declared.")
+            print(f"Error: Variable '{name}' ya está declarada en el alcance '{self.symbols[name]['scope']}'.")
         else:
-            self.symbols[name] = {'type': type_, 'value': value}
-            print(f"Variable '{name}' added with type '{type_}' and value '{value}'")
-
+            self.symbols[name] = {'type': type_, 'scope': scope, 'value': value}
+            print(f"Variable '{name}' añadida con tipo '{type_}', alcance '{scope}' y valor '{value}'")
 
     def update_symbol(self, identifier, value):
         """Actualiza el valor de un símbolo existente en la tabla."""
@@ -29,27 +28,34 @@ class SymbolTable:
             print(f"Error: La variable '{identifier}' no ha sido declarada.")
             return None
 
-    def exists(self, identifier):
-        """Verifica si un símbolo existe en la tabla."""
-        return identifier in self.symbols
+    def exists(self, name, scope="local"):
+        return (name, scope) in self.symbols
+    
+    def get_value(self, name, scope="local"):
+        return self.symbols.get((name, scope), {}).get("value")
+    
+    def set_value(self, name, value, scope="local"):
+        if (name, scope) in self.symbols:
+            self.symbols[(name, scope)]["value"] = value
 
     def show_table(self):
         """Imprime la tabla de símbolos actual."""
         print("\nTabla de Símbolos:")
         for identifier, data in self.symbols.items():
-            print(f"{identifier}: Tipo={data['type']}, Valor={data['value']}")
+            print(f"{identifier}: Tipo={data['type']}, Alcance={data['scope']}, Valor={data['value']}")
 
     def toHtml(self):
-        """Return the symbol table as HTML."""
-        html = '<html><head><title>Tabla de Símbolos</title><link rel="stylesheet" href="./css/styles.css"</head><body>'
+        """Retorna la tabla de símbolos como HTML."""
+        html = '<html><head><title>Tabla de Símbolos</title><link rel="stylesheet" href="./css/styles.css"></head><body>'
         html += '<table border="1">'
-        html += '<tr><th>Name</th><th>Type</th><th>Value</th></tr>'
+        html += '<tr><th>Name</th><th>Type</th><th>Scope</th><th>Value</th></tr>'
         
         # Generar las filas de la tabla con la información de los símbolos
         for identifier, data in self.symbols.items():
             html += '<tr>'
             html += f'<td>{identifier}</td>'
             html += f'<td>{data["type"]}</td>'
+            html += f'<td>{data["scope"]}</td>'
             html += f'<td>{str(data["value"])}</td>'  # Asegúrate de convertir a string el valor
             html += '</tr>'
         
