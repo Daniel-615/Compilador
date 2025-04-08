@@ -6,6 +6,9 @@ while (x < 5) {
 local milito y = 10;          
 local milito z;               
 z = x / 2;                   
+while (y < 5) {               
+    y = x - 1;               
+}
 
 local milito v;              
 v = x - 3;                

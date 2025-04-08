@@ -30,7 +30,7 @@ class Lexer:
     tokens += list(reserved.values())
 
     # Reglas para los operadores y símbolos especiales
-    t_WHILE=r'WHILE'
+
     t_RELOP = r'==|!=|<|>|<=|>='
     t_PLUS      = r'\+'
     t_MINUS     = r'-'

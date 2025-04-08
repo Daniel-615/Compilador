@@ -27,22 +27,33 @@ class Parser:
         '''declaration : GLOBAL INT IDENTIFIER SEMICOLON
                     | LOCAL INT IDENTIFIER SEMICOLON
                     | INT IDENTIFIER SEMICOLON
-                    | INT IDENTIFIER EQUALS expression SEMICOLON'''
-        if p[1] == 'GLOBAL':
+                    | INT IDENTIFIER EQUALS expression SEMICOLON
+                    | GLOBAL INT IDENTIFIER EQUALS expression SEMICOLON
+                    | LOCAL INT IDENTIFIER EQUALS expression SEMICOLON'''
+        reserved = {v: k for k, v in self.lexer.reserved.items()}
+        
+        if p[1] == reserved.get('GLOBAL'):
             scope = 'global'
             identifier = p[3]
             type_ = p[2]
-            self.semantic.handle_declaration(identifier, type_, scope)  # Correcto
-        elif p[1] == 'LOCAL':
+            value = p[5] if len(p) > 5 else None
+            action = self.semantic.handle_declaration(identifier, type_, scope, value)
+        elif p[1] == reserved.get('LOCAL'):
             scope = 'local'
             identifier = p[3]
             type_ = p[2]
-            self.semantic.handle_declaration(identifier, type_, scope)  # Correcto
+            value = p[5] if len(p) > 5 else None
+            action = self.semantic.handle_declaration(identifier, type_, scope, value)
         else:
-            # Manejo de declaración sin alcance
+            # Si no se especifica alcance, asumimos que es global
+            scope = 'global'
             identifier = p[2]
             type_ = p[1]
-            self.semantic.handle_declaration(identifier, type_, "local")  # Asignar un scope por defecto
+            value = p[4] if len(p) > 4 else None
+            action = self.semantic.handle_declaration(identifier, type_, scope, value)
+        
+        # Ejecutar la acción para agregar la variable a la tabla de símbolos
+        action()
 
     def p_assignment(self, p):
         'assignment : IDENTIFIER EQUALS expression SEMICOLON'
