@@ -28,6 +28,7 @@ class Lexer:
     tokens += list(reserved.values())
 
     # Reglas para los operadores y símbolos especiales
+    t_WHILE=r'WHILE'
     t_RELOP = r'==|!=|<|>|<=|>='
     t_PLUS      = r'\+'
     t_MINUS     = r'-'
@@ -65,7 +66,7 @@ class Lexer:
         # Verificar si es una palabra reservada
         t.type = self.reserved.get(t.value, 'IDENTIFIER')
         return t
-
+    
     # Regla para números
     def t_NUMBER(self, t):
         r'\d+(\.\d+)?'

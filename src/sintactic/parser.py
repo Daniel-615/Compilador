@@ -59,8 +59,14 @@ class Parser:
         p[0] = self.semantic.handle_factor(p[1])
 
     def p_condition(self, p):
-        'condition : expression RELOP expression'
-        p[0] = [p[1], p[2], p[3]]
+        'condition : IDENTIFIER RELOP expression'
+        # Pasamos el nombre (string) y la expresión evaluable
+        var_name = p[1]  # Esto es un string como 'x'
+        op = p[2]
+        value_expr = p[3]
+        p[0] = lambda: self.semantic.evaluate_condition_dynamic(var_name, op, value_expr)
+
+
 
     def p_while_loop(self, p):
         'while_loop : WHILE LPAREN condition RPAREN LBRACE program RBRACE'
@@ -77,4 +83,10 @@ class Parser:
 
     def parse(self, data):
         self.lexer.lexer.input(data)
-        return self.parser.parse(data, lexer=self.lexer.lexer)
+        parsed= self.parser.parse(data, lexer=self.lexer.lexer)
+        if parsed:  # Ejecutamos el programa principal
+            for stmt in parsed:
+                if callable(stmt):
+                    stmt()
+        
+        return parsed

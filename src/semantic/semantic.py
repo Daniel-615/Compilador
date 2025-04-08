@@ -5,20 +5,27 @@ class Semantic:
         self.lexer = lexer
 
     def handle_declaration(self, name, var_type, value=None):
-        self.symbol_table.add_symbol(name, var_type, value)
-        if value is not None:
-            print(f"Declaración e inicialización de {name} con valor {value}")
-        else:
-            print(f"Declaración de variable: {name}")
-        return None
+        def action():
+            self.symbol_table.add_symbol(name, var_type, value)
+            if value is not None:
+                print(f"Declaración e inicialización de {name} con valor {value}")
+            else:
+                print(f"Declaración de variable: {name}")
+        return action
+
+
 
     def handle_assignment(self, name, value):
-        if self.symbol_table.exists(name):
-            self.symbol_table.update_symbol(name, value)
-            print("Asignación:", name, "=", value)
-        else:
-            self.errors.encolar_error(f"Error: Variable '{name}' no declarada.")
-        return None
+        def action():
+            value_eval = self._get_value(value)
+            if self.symbol_table.exists(name):
+                self.symbol_table.update_symbol(name, value_eval)
+                print("Asignación:", name, "=", value_eval)
+            else:
+                self.errors.encolar_error(f"Error: Variable '{name}' no declarada.")
+        return action
+
+
 
     def handle_expression(self, left, operator, right):
         val1 = self._get_value(left)
@@ -38,16 +45,30 @@ class Semantic:
                 self.errors.encolar_error(f"Error: Variable '{value}' no inicializada.")
             return val
         return value
+    def evaluate_condition_dynamic(self, left, op, right):
+        val1 = self._get_value(left)
+        val2 = self._get_value(right)
 
-    def handle_while(self, condition, body):
-        print("Reconocido WHILE")
-        while self.evaluate_condition(condition):
-            print("Ejecutando cuerpo del WHILE")
-            for stmt in body:
-                if stmt:
-                    pass  # Aquí podrías ejecutar directamente si usas un motor de ejecución aparte
-            print("x =", self.symbol_table.get_symbol("x"))
-        return None
+        if val1 is None or val2 is None:
+            self.errors.encolar_error(f"Error: Condición inválida: {left} {op} {right}")
+            return False
+
+        if op == '>': return val1 > val2
+        if op == '<': return val1 < val2
+        if op == '==': return val1 == val2
+        self.errors.encolar_error(f"Error: Operador relacional desconocido: {op}")
+        return False
+    def handle_while(self, condition_fn, body):
+        def action():
+            print("Reconocido WHILE")
+            while condition_fn():
+                print("Ejecutando cuerpo del WHILE")
+                for stmt in body:
+                    if stmt and callable(stmt):
+                        stmt()
+                print("x =", self.symbol_table.get_symbol("x"))
+        return action
+
 
     def evaluate_condition(self, condition):
         if not isinstance(condition, list) or len(condition) != 3:

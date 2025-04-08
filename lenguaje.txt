@@ -1,6 +1,5 @@
-milito x;
-x = 0;
-walker (x < 10) {
+milito x=0;
+walker (x < 5) {
     x = x cristiano 1;
 }
 
@@ -10,4 +9,3 @@ z =  x pepe 2;
 milito v;
 v= x tchouameni 3;
 milito i = 0; 
-boolean c;
