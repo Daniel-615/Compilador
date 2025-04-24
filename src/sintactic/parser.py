@@ -1,4 +1,4 @@
-# PARSER FINAL Y SEMANTIC CORREGIDO
+# PARSER FINAL Y SEMANTIC CORREGIDO CON FUNCIONES Y MÉTODOS
 import ply.yacc as yacc
 
 class Parser:
@@ -21,6 +21,8 @@ class Parser:
         '''statement : declaration
                      | assignment
                      | while_loop
+                     | method_declaration
+                     | method_call SEMICOLON
                      | expression SEMICOLON'''
         p[0] = p[1]
 
@@ -67,7 +69,8 @@ class Parser:
         '''factor : NUMBER
                   | IDENTIFIER
                   | STRING_LITERAL
-                  | CHAR_LITERAL'''
+                  | CHAR_LITERAL
+                  | method_call'''
         p[0] = self.semantic.handle_factor(p[1])
 
     def p_condition(self, p):
@@ -77,6 +80,14 @@ class Parser:
     def p_while_loop(self, p):
         'while_loop : WALKER LPAREN condition RPAREN LBRACE program RBRACE'
         p[0] = self.semantic.handle_while(p[3], p[6])
+
+    def p_method_declaration(self, p):
+        'method_declaration : IDENTIFIER LPAREN RPAREN LBRACE program RBRACE'
+        p[0] = self.semantic.handle_method_declaration(p[1], p[5])
+
+    def p_method_call(self, p):
+        'method_call : IDENTIFIER LPAREN RPAREN'
+        p[0] = self.semantic.handle_method_call(p[1])
 
     def p_error(self, p):
         if p:

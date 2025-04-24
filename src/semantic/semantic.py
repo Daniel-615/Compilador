@@ -3,6 +3,7 @@ class Semantic:
         self.symbol_table = symbol_table
         self.errors = errors
         self.lexer = lexer
+        self.methods = {}  # Diccionario para guardar métodos
 
     def handle_declaration(self, name, var_type, scope, value=None):
         def action():
@@ -125,3 +126,20 @@ class Semantic:
         if op == '==': return left == right
         self.errors.encolar_error(f"Error: Operador relacional desconocido: {op}")
         return False
+
+    def handle_method_declaration(self, name, body):
+        def action():
+            self.methods[name] = body
+            print(f"Método '{name}' definido.")
+        return action
+
+    def handle_method_call(self, name):
+        def action():
+            if name in self.methods:
+                print(f"Llamando al método '{name}'...")
+                for stmt in self.methods[name]:
+                    if callable(stmt):
+                        stmt()
+            else:
+                self.errors.encolar_error(f"Error: Método '{name}' no está definido.")
+        return action
