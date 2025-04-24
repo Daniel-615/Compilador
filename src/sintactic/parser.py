@@ -7,16 +7,19 @@ class Parser:
         self.errors = sintatic_errors
         self.semantic = semantic_handler
         self.tokens = lexer.tokens
-        self.pause_event = semantic_handler.pause_event  # evento de pausa compartido
+        self.pause_event = semantic_handler.pause_event
         self.parser = yacc.yacc(module=self, debug=True)
 
     def p_program(self, p):
         '''program : statement
-                   | program statement'''
+                | program statement'''
         if len(p) == 2:
-            p[0] = [p[1]]
+            p[0] = [p[1]] if p[1] is not None else []
         else:
-            p[0] = p[1] + [p[2]]
+            list1 = p[1] if isinstance(p[1], list) else []
+            list2 = [p[2]] if p[2] is not None else []
+            p[0] = list1 + list2
+
 
     def p_statement(self, p):
         '''statement : declaration
@@ -26,7 +29,7 @@ class Parser:
                      | method_call SEMICOLON
                      | expression SEMICOLON'''
         self._check_pause()
-        p[0] = p[1]
+        p[0] = p[1] if p[1] is not None else (lambda: None)
 
     def p_declaration(self, p):
         '''declaration : MILITO IDENTIFIER SEMICOLON
@@ -73,15 +76,33 @@ class Parser:
                   | STRING_LITERAL
                   | CHAR_LITERAL
                   | method_call'''
+        print(f"🔎 Factor detectado: {p[1]}")
         p[0] = self.semantic.handle_factor(p[1])
 
     def p_condition(self, p):
         'condition : IDENTIFIER RELOP expression'
-        p[0] = lambda: self.semantic.evaluate_condition_dynamic(p[1], p[2], p[3])
+        print(f"🔍 Condición construida: {p[1]} {p[2]} {p[3]}")
+        p[0] = self.semantic.evaluate_condition_dynamic(p[1], p[2], p[3])
+
 
     def p_while_loop(self, p):
         'while_loop : WALKER LPAREN condition RPAREN LBRACE program RBRACE'
-        p[0] = self.semantic.handle_while(p[3], p[6])
+        body = p[6] if isinstance(p[6], list) else ([] if p[6] is None else [p[6]])
+
+        # Debug
+        print("🔄 WHILE detectado, cuerpo recibido:", body)
+        # Ensure the condition is callable
+        if not callable(p[3]):
+            self.errors.encolar_error("La condición del while no es válida.")
+            p[0] = lambda: None
+            return
+        try:
+            p[0] = self.semantic.handle_while(p[3], body)
+        except Exception as e:
+            self.errors.encolar_error(f"Error en cuerpo del while: {e}")
+            p[0] = lambda: None
+
+
 
     def p_method_declaration(self, p):
         'method_declaration : IDENTIFIER LPAREN RPAREN LBRACE program RBRACE'
@@ -101,7 +122,6 @@ class Parser:
             self.errors.encolar_error("Error de sintaxis: expresión incompleta.")
 
     def _check_pause(self):
-        """Espera si el evento de pausa está desactivado"""
         while not self.pause_event.is_set():
             print("⏸ Ejecución pausada. Esperando reanudación...")
             time.sleep(0.5)
@@ -109,8 +129,10 @@ class Parser:
     def parse(self, data):
         self.lexer.lexer.input(data)
         parsed = self.parser.parse(data, lexer=self.lexer.lexer)
+        print("✔ Parsing completado. Ejecutando AST...")
         if parsed:
             for stmt in parsed:
+                print(f"STMT Desde el parser:{stmt}")
                 self._check_pause()
                 if callable(stmt):
                     stmt()

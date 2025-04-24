@@ -7,5 +7,10 @@ valderrama leyenda = true;
 calcular() {
     goles = goles cristiano 5;
     promedio = promedio cristiano 1.0;
+    walker (goles > 10) {
+        promedio = promedio cristiano 0.5;
+        goles = goles tchouameni 1;
+    }
 }
+
 calcular();
