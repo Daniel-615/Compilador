@@ -7,7 +7,6 @@ class Parser:
         self.errors = sintatic_errors
         self.semantic = semantic_handler
         self.tokens = lexer.tokens
-        self.pause_event = semantic_handler.pause_event
         self.parser = yacc.yacc(module=self, debug=True)
 
     def p_program(self, p):
@@ -28,7 +27,6 @@ class Parser:
                      | method_declaration
                      | method_call SEMICOLON
                      | expression SEMICOLON'''
-        self._check_pause()
         p[0] = p[1] if p[1] is not None else (lambda: None)
 
     def p_declaration(self, p):
@@ -121,10 +119,6 @@ class Parser:
         else:
             self.errors.encolar_error("Error de sintaxis: expresión incompleta.")
 
-    def _check_pause(self):
-        while not self.pause_event.is_set():
-            print("⏸ Ejecución pausada. Esperando reanudación...")
-            time.sleep(0.5)
 
     def parse(self, data):
         self.lexer.lexer.input(data)
@@ -133,7 +127,6 @@ class Parser:
         if parsed:
             for stmt in parsed:
                 print(f"STMT Desde el parser:{stmt}")
-                self._check_pause()
                 if callable(stmt):
                     stmt()
         return parsed

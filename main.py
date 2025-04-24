@@ -1,5 +1,7 @@
 import threading
-import time
+import tempfile
+import json
+
 import os
 import webbrowser
 from src.utils.files import Files as f
@@ -14,8 +16,6 @@ class Main:
     def __init__(self):
         self.symbol_table = SymbolTable()
         self.tokens = Tokens()
-        self.pause_event = threading.Event()
-        self.pause_event.set()  # Comienza en modo "ejecutando"
 
         file_path = input("Por favor, ingrese la ruta del archivo de entrada: ")
         archivo = f(file_path)
@@ -27,7 +27,7 @@ class Main:
             self.semantic_errors = Errors(self.content)
 
             self.lexer = Lexer(self.lexic_errors)
-            self.semantic = Semantic(self.symbol_table, self.semantic_errors, self.lexer, self.pause_event)
+            self.semantic = Semantic(self.symbol_table, self.semantic_errors, self.lexer)
             self.parser = Parser(self.lexer, self.sintatic_errors, self.semantic)
 
             self.thread = threading.Thread(target=self.run_analysis)
@@ -35,6 +35,9 @@ class Main:
 
     def run_analysis(self):
         try:
+            path = os.path.join(tempfile.gettempdir(), "tabla_simbolos_iteracion_historial.json")
+            if os.path.exists(path):
+                os.remove(path)
             tokens = self.lexer.tokenize(self.content)
             self.parser.parse(self.content)
 
@@ -47,6 +50,21 @@ class Main:
                            .replace("{{SYNTAX_ERRORS}}", self.sintatic_errors.errorHtml('sintacticos')) \
                            .replace("{{SYMBOL_TABLE}}", self.symbol_table.toHtml()) \
                            .replace("{{TOKENS}}", self.tokens.toHtml(tokens))
+            # Leer historial del while
+            with open(os.path.join(tempfile.gettempdir(), "tabla_simbolos_iteracion_historial.json"), "r", encoding="utf-8") as f:
+                historial = json.load(f)
+
+            historial_html = '<h2>🌀 Cambios durante el WHILE</h2>'
+            for entry in historial:
+                historial_html += f"<h4>Iteración #{entry['iteration']} – {entry['timestamp']}</h4>"
+                historial_html += "<table border='1'><tr><th>Variable</th><th>Valor</th></tr>"
+                for k, v in entry["tabla"].items():
+                    historial_html += f"<tr><td>{k}</td><td>{v}</td></tr>"
+                historial_html += "</table><br>"
+
+            # Reemplaza o añade una nueva sección en tu HTML
+            html = html.replace("{{WHILE_HISTORY}}", historial_html)
+
 
             with open("./templates/salida.html", "w", encoding="utf-8") as output_file:
                 output_file.write(html)
@@ -57,11 +75,6 @@ class Main:
         except Exception as e:
             print("Error:", e)
 
-    def pause(self):
-        self.pause_event.clear()
-
-    def resume(self):
-        self.pause_event.set()
 
 if __name__ == "__main__":
     main = Main()

@@ -14,7 +14,7 @@
             text-align: center;
             color: #333;
         }
-        .tab-buttons, .control-buttons {
+        .tab-buttons {
             text-align: center;
             margin-bottom: 20px;
         }
@@ -58,17 +58,13 @@
 <body>
     <h1>Resultados del Compilador</h1>
 
-    <!-- Botones de control de ejecución -->
-    <div class="control-buttons">
-        <button onclick="togglePause()" id="pauseBtn">⏸ Pausar</button>
-    </div>
-
     <!-- Botones para navegar entre secciones -->
     <div class="tab-buttons">
         <button onclick="showTab('symbolTable')">📄 Tabla de Símbolos</button>
         <button onclick="showTab('lexicalErrors')">❌ Errores Léxicos</button>
         <button onclick="showTab('syntaxErrors')">❌ Errores Sintácticos</button>
         <button onclick="showTab('tokens')">🔤 Tokens</button>
+        <button onclick="showTab('whileHistory')">🔁 Historial WHILE</button>
     </div>
 
     <div id="symbolTable" class="tab-content">
@@ -87,6 +83,10 @@
         {{TOKENS}}
     </div>
 
+    <div id="whileHistory" class="tab-content">
+        {{WHILE_HISTORY}}
+    </div>
+
     <script>
         function showTab(tabId) {
             const tabs = document.querySelectorAll('.tab-content');
@@ -94,20 +94,8 @@
             document.getElementById(tabId).classList.add('active');
         }
 
-        function togglePause() {
-            const current = localStorage.getItem("paused") === "true";
-            localStorage.setItem("paused", (!current).toString());
-            document.getElementById("pauseBtn").textContent = !current ? "▶️ Reanudar" : "⏸ Pausar";
-        }
-
         // Mostrar por defecto la tabla de símbolos
         showTab('symbolTable');
-
-        // Establecer estado inicial del botón
-        window.onload = () => {
-            const paused = localStorage.getItem("paused") === "true";
-            document.getElementById("pauseBtn").textContent = paused ? "▶️ Reanudar" : "⏸ Pausar";
-        }
     </script>
 </body>
 </html>
