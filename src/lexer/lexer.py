@@ -4,7 +4,7 @@ class Lexer:
     tokens = [
         'NUMBER', 'IDENTIFIER', 'EQUALS', 'SEMICOLON', 'LBRACE', 'RBRACE',
         'LPAREN', 'RPAREN', 'GT', 'LT', 'DOT', 'COMMA', 'QUOTE',
-        'RELOP', 'STRING_LITERAL', 'CHAR_LITERAL'
+        'RELOP', 'STRING_LITERAL', 'CHAR_LITERAL','COLON',
     ]
 
     reserved = {
@@ -13,7 +13,7 @@ class Lexer:
         'tchouameni': 'TCHOUAMENI',
         'ronaldinho': 'RONALDINHO',
         'cristiano': 'CRISTIANO',
-        'robben': 'ROBBEN',
+        'robben': 'ROBBEN', #else
         'milito': 'MILITO',
         'zidane': 'ZIDANE',  # float
         'saviola': 'SAVIOLA',  # char
@@ -21,13 +21,14 @@ class Lexer:
         'valderrama': 'VALDERRAMA',  # boolean
         'walker': 'WALKER',
         'son': 'SON',
-        'forlan': 'FORLAN',
+        'forlan': 'FORLAN', #Switch
         'global': 'GLOBAL',
         'local': 'LOCAL',
         "ballack": "BALLACK" #if
     }
 
     tokens += list(reserved.values())
+    t_COLON = r':'
 
     t_RELOP = r'==|!=|<|>|<=|>='
     t_CRISTIANO = r'\+'

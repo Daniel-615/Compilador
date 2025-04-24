@@ -21,3 +21,11 @@ ejecutarIf() {
 }
 calcular();
 ejecutarIf();
+forlan (goles) {
+    son 10:
+        promedio = promedio cristiano 2.0;
+    son 15:
+        promedio = promedio cristiano 5.0;
+    ronaldinho:
+        promedio = 0;
+}

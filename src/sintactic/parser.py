@@ -113,6 +113,43 @@ class Parser:
         'method_call : IDENTIFIER LPAREN RPAREN'
         p[0] = self.semantic.handle_method_call(p[1])
 
+    #switch
+    def p_switch_statement(self, p):
+        '''statement : FORLAN LPAREN IDENTIFIER RPAREN LBRACE cases default_case RBRACE'''
+        var_name = p[3]
+        cases = p[6]
+        default = p[7]
+        p[0] = self.semantic.handle_switch(var_name, cases, default)
+    def p_empty(self, p):
+        'empty :'
+        p[0] = []
+
+    def p_cases(self, p):
+        '''cases : cases case
+                | case'''
+        if len(p) == 2:
+            p[0] = [p[1]]
+        else:
+            p[0] = p[1] + [p[2]]
+
+    def p_case(self, p):
+        '''case : SON value COLON program'''
+        p[0] = (p[2], p[4])
+
+    def p_default_case(self, p):
+        '''default_case : RONALDINHO COLON program
+                        | empty'''
+        if len(p) > 2:
+            p[0] = p[3]
+        else:
+            p[0] = []
+
+    def p_value(self, p):
+        '''value : NUMBER
+                | STRING_LITERAL
+                | CHAR_LITERAL'''
+        p[0] = p[1]
+
     def p_error(self, p):
         if p:
             token = self.lexer.get_current_token()

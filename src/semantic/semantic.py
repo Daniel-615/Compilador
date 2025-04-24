@@ -152,7 +152,8 @@ class Semantic:
             else:
                 self.errors.encolar_error(f" Error: Método '{name}' no está definido.")
         return action
-    
+    #estructuras de control
+    #if, else
     def handle_if(self, condition_fn, if_body, else_body):
         def action():
             if condition_fn():
@@ -163,6 +164,25 @@ class Semantic:
             else:
                 print(" IF falso: ejecutando ELSE")
                 for stmt in else_body:
+                    if callable(stmt):
+                        stmt()
+        return action
+    def handle_switch(self, var_name, cases, default_body):
+        def action():
+            val = self._get_value(var_name)
+            matched = False
+            print(f"🔀 SWITCH sobre '{var_name}' con valor '{val}'")
+            for case_val, body in cases:
+                if val == case_val:
+                    print(f"🎯 Coincidencia con CASE: {case_val}")
+                    for stmt in body:
+                        if callable(stmt):
+                            stmt()
+                    matched = True
+                    break
+            if not matched and default_body:
+                print(f"⚠️ Ejecutando bloque DEFAULT")
+                for stmt in default_body:
                     if callable(stmt):
                         stmt()
         return action
