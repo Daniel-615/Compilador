@@ -109,6 +109,22 @@ class Semantic:
                 return False
 
         return condition
+    #for (RAMOS)
+    def handle_for(self, init_stmt, condition_fn, update_stmt, body):
+        def action():
+            print(" Iniciando ciclo FOR")
+            iteration = 0
+            init_stmt()  # Ejecuta la inicialización
+            while condition_fn():
+                iteration += 1
+                print(f" Iteración #{iteration} del FOR")
+                for i, stmt in enumerate(body):
+                    if callable(stmt):
+                        stmt()
+                update_stmt()  # Ejecuta el update después del cuerpo
+                self._save_iteration_state()
+        return action
+
     #do while (aguero ,walker)
     def handle_do_while(self, condition_fn, body):
         def action():

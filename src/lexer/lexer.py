@@ -27,7 +27,7 @@ class Lexer:
         'ballack': 'BALLACK', #if
         'coutinho': 'COUTINHO', #mostrar
         'aguero': 'AGUERO', #do
-        
+        'ramos': 'RAMOS', #For
     }
 
     tokens += list(reserved.values())

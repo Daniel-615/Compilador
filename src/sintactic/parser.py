@@ -7,14 +7,15 @@ class Parser:
         self.semantic = semantic_handler
         self.tokens = lexer.tokens
         self.parser = yacc.yacc(module=self, debug=True)
-    
+
     precedence = (
         ('left', 'CRISTIANO', 'TCHOUAMENI'),  # + y -
         ('left', 'MESSI', 'PEPE'),            # * y /
     )
+
     def p_program(self, p):
         '''program : statement
-                | program statement'''
+                   | program statement'''
         if len(p) == 2:
             p[0] = [p[1]] if p[1] is not None else []
         else:
@@ -27,11 +28,56 @@ class Parser:
                      | assignment
                      | while_loop
                      | do_while_loop
+                     | for_loop
                      | if_statement
                      | method_declaration
                      | method_call SEMICOLON
-                     | expression SEMICOLON'''
-        p[0] = p[1] if p[1] is not None else (lambda: None)
+                     | expression SEMICOLON
+                     | COUTINHO LPAREN expression RPAREN SEMICOLON'''
+        if p[1] == 'coutinho':
+            p[0] = self.semantic.handle_print(p[3])
+        else:
+            p[0] = p[1] if p[1] is not None else (lambda: None)
+
+    def p_for_init(self, p):
+        '''for_init : declaration_no_semicolon
+                    | assignment_no_semicolon'''
+        p[0] = p[1]
+
+    def p_assignment_no_semicolon(self, p):
+        'assignment_no_semicolon : IDENTIFIER EQUALS expression'
+        p[0] = self.semantic.handle_assignment(p[1], p[3])
+
+    def p_declaration_no_semicolon(self, p):
+        '''declaration_no_semicolon : MILITO IDENTIFIER EQUALS expression
+                                    | ZIDANE IDENTIFIER EQUALS expression
+                                    | SAVIOLA IDENTIFIER EQUALS expression
+                                    | INIESTA IDENTIFIER EQUALS expression
+                                    | VALDERRAMA IDENTIFIER EQUALS expression'''
+        scope = 'local'
+        identifier = p[2]
+        value = p[4]
+        type_ = p[1]
+        p[0] = self.semantic.handle_declaration(identifier, type_, scope, value)
+
+    def p_for_loop(self, p):
+        'for_loop : RAMOS LPAREN for_init SEMICOLON condition SEMICOLON assignment_no_semicolon RPAREN LBRACE program RBRACE'
+        init = p[3]
+        condition = p[5]
+        update = p[7]
+        body = p[10] if isinstance(p[10], list) else []
+
+        if not callable(condition):
+            self.errors.encolar_error("❌ La condición del for no es válida.")
+            p[0] = lambda: None
+            return
+
+        try:
+            p[0] = self.semantic.handle_for(init, condition, update, body)
+        except Exception as e:
+            self.errors.encolar_error(f"❌ Error en el cuerpo del for: {e}")
+            p[0] = lambda: None
+
     def p_do_while_loop(self, p):
         'do_while_loop : AGUERO LBRACE program RBRACE WALKER LPAREN condition RPAREN SEMICOLON'
         body = p[3] if isinstance(p[3], list) else []
@@ -64,6 +110,7 @@ class Parser:
         value = p[4] if len(p) > 4 else None
         type_ = p[1]
         p[0] = self.semantic.handle_declaration(identifier, type_, scope, value)
+
     def p_factor_grouped(self, p):
         'factor : LPAREN expression RPAREN'
         p[0] = p[2]
@@ -105,7 +152,6 @@ class Parser:
         condition = p[3]
         if_body = p[6]
         else_body = p[10] if len(p) > 8 else []
-
         p[0] = self.semantic.handle_if(condition, if_body, else_body)
 
     def p_condition(self, p):
@@ -117,11 +163,11 @@ class Parser:
         'while_loop : WALKER LPAREN condition RPAREN LBRACE program RBRACE'
         body = p[6] if isinstance(p[6], list) else ([] if p[6] is None else [p[6]])
 
-        print(" WHILE detectado, cuerpo recibido:", body)
         if not callable(p[3]):
             self.errors.encolar_error("La condición del while no es válida.")
             p[0] = lambda: None
             return
+
         try:
             p[0] = self.semantic.handle_while(p[3], body)
         except Exception as e:
@@ -136,13 +182,10 @@ class Parser:
         'method_call : IDENTIFIER LPAREN RPAREN'
         p[0] = self.semantic.handle_method_call(p[1])
 
-    #switch
     def p_switch_statement(self, p):
-        '''statement : FORLAN LPAREN IDENTIFIER RPAREN LBRACE cases default_case RBRACE'''
-        var_name = p[3]
-        cases = p[6]
-        default = p[7]
-        p[0] = self.semantic.handle_switch(var_name, cases, default)
+        'statement : FORLAN LPAREN IDENTIFIER RPAREN LBRACE cases default_case RBRACE'
+        p[0] = self.semantic.handle_switch(p[3], p[6], p[7])
+
     def p_empty(self, p):
         'empty :'
         p[0] = []
@@ -150,40 +193,34 @@ class Parser:
     def p_cases(self, p):
         '''cases : cases case
                 | case'''
-        if len(p) == 2:
-            p[0] = [p[1]]
-        else:
-            p[0] = p[1] + [p[2]]
+        p[0] = p[1] + [p[2]] if len(p) == 3 else [p[1]]
 
     def p_case(self, p):
-        '''case : SON value COLON program'''
+        'case : SON value COLON program'
         p[0] = (p[2], p[4])
 
     def p_default_case(self, p):
         '''default_case : RONALDINHO COLON program
                         | empty'''
-        if len(p) > 2:
-            p[0] = p[3]
-        else:
-            p[0] = []
+        p[0] = p[3] if len(p) > 2 else []
 
     def p_value(self, p):
         '''value : NUMBER
-                | STRING_LITERAL
-                | CHAR_LITERAL'''
+                 | STRING_LITERAL
+                 | CHAR_LITERAL'''
         p[0] = p[1]
 
     def p_error(self, p):
         if p:
-            token = self.lexer.get_current_token()
-            col = self.errors.find_column(token)
-            row = self.errors.find_line(token)
-            self.errors.encolar_error(f"Error de sintaxis en '{p.value}' en la fila {row} y columna {col}")
+            try:
+                col = self.errors.find_column(p)
+                row = self.errors.find_line(p)
+                self.errors.encolar_error(f"❌ Error de sintaxis en '{p.value}' en la fila {row} y columna {col}")
+            except Exception:
+                self.errors.encolar_error(f"❌ Error de sintaxis en token inesperado.")
         else:
-            self.errors.encolar_error("Error de sintaxis: expresión incompleta.")
-    def p_statement_mostrar(self, p):
-        'statement : COUTINHO LPAREN expression RPAREN SEMICOLON'
-        p[0] = self.semantic.handle_print(p[3])
+            self.errors.encolar_error("❌ Error de sintaxis: expresión incompleta o final inesperado.")
+
     def parse(self, data):
         self.lexer.lexer.input(data)
         parsed = self.parser.parse(data, lexer=self.lexer.lexer)

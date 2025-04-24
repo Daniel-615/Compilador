@@ -19,24 +19,36 @@ ejecutarIf() {
         promedio = promedio tchouameni 0.5;
     }
 }
-calcular();
-ejecutarIf();
-forlan (goles) {
+
+ejecutarDoWhile(){
+    milito i = 0;
+    aguero {
+        coutinho(i);
+        i = i cristiano 1;
+    } walker (i < 5);
+}
+ejecutarSwitch(){
+    forlan (goles) {
     son 10:
         promedio = promedio cristiano 2.0;
     son 15:
         promedio = promedio cristiano 5.0;
     ronaldinho:
         promedio = 0;
+    }
 }
+calcular(); 
+ejecutarIf();
+ejecutarDoWhile();
+ejecutarSwitch();
 /* Este es un
    comentario multilínea
    que no se ejecutará */
 // Este es un comentario de línea que no se ejecuta
 coutinho(nombre); //imprime messi
-milito i = 0;
-
-aguero {
-    coutinho(i);
-    i = i cristiano 1;
-} walker (i < 5);
+ejecutarFor(){
+    ramos (milito x = 0; x < 3; x = x cristiano 1) {
+        coutinho(x);
+    }
+}
+ejecutarFor();
