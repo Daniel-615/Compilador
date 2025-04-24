@@ -186,6 +186,12 @@ class Semantic:
                     if callable(stmt):
                         stmt()
         return action
+    #impresion en pantalla 
+    def handle_print(self, value):
+        def action():
+            val = self._get_value(value)
+            print(f"Salida: {val}")
+        return action
 
     def _save_iteration_state(self):
         temp_dir = tempfile.gettempdir()

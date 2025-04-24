@@ -7,7 +7,11 @@ class Parser:
         self.semantic = semantic_handler
         self.tokens = lexer.tokens
         self.parser = yacc.yacc(module=self, debug=True)
-
+    
+    precedence = (
+        ('left', 'CRISTIANO', 'TCHOUAMENI'),  # + y -
+        ('left', 'MESSI', 'PEPE'),            # * y /
+    )
     def p_program(self, p):
         '''program : statement
                 | program statement'''
@@ -44,6 +48,9 @@ class Parser:
         value = p[4] if len(p) > 4 else None
         type_ = p[1]
         p[0] = self.semantic.handle_declaration(identifier, type_, scope, value)
+    def p_factor_grouped(self, p):
+        'factor : LPAREN expression RPAREN'
+        p[0] = p[2]
 
     def p_assignment(self, p):
         'assignment : IDENTIFIER EQUALS expression SEMICOLON'
@@ -158,7 +165,9 @@ class Parser:
             self.errors.encolar_error(f"Error de sintaxis en '{p.value}' en la fila {row} y columna {col}")
         else:
             self.errors.encolar_error("Error de sintaxis: expresión incompleta.")
-
+    def p_statement_mostrar(self, p):
+        'statement : COUTINHO LPAREN expression RPAREN SEMICOLON'
+        p[0] = self.semantic.handle_print(p[3])
     def parse(self, data):
         self.lexer.lexer.input(data)
         parsed = self.parser.parse(data, lexer=self.lexer.lexer)

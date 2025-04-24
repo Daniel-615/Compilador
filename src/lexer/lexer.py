@@ -24,7 +24,8 @@ class Lexer:
         'forlan': 'FORLAN', #Switch
         'global': 'GLOBAL',
         'local': 'LOCAL',
-        "ballack": "BALLACK" #if
+        'ballack': 'BALLACK', #if
+        'coutinho': 'COUTINHO' #mostrar
     }
 
     tokens += list(reserved.values())
@@ -52,6 +53,14 @@ class Lexer:
     def __init__(self, errors):
         self.errors = errors
         self.lexer = lex.lex(module=self)
+    def t_COMMENT_SINGLELINE(self, t):
+        r'\/\/.*'
+        pass  # Ignora comentarios de línea
+
+    def t_COMMENT_MULTILINE(self, t):
+        r'/\*(.|\n)*?\*/'
+        t.lexer.lineno += t.value.count('\n')
+        pass  # Ignora comentarios multilínea
 
     def t_IDENTIFIER(self, t):
         r'[a-zA-Z_][a-zA-Z0-9_]*'
