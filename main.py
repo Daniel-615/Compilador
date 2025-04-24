@@ -62,16 +62,16 @@ class Main:
 
             tokens = self.lexer.tokenize(self.content)
             self.parser.parse(self.content)
-            print("\n💡 Código intermedio generado:")
-            for line in self.semantic.intercode_generator.get_code():
-                print(line)
+            inter_code_html = "<br>".join(self.semantic.intercode_generator.get_code())
+
             with open("./templates/compilador.html", "r", encoding="utf-8") as tpl_file:
                 template = tpl_file.read()
 
             html = template.replace("{{LEXICAL_ERRORS}}", self.lexic_errors.errorHtml('lexicos')) \
                            .replace("{{SYNTAX_ERRORS}}", self.sintatic_errors.errorHtml('sintacticos')) \
                            .replace("{{SYMBOL_TABLE}}", self.symbol_table.toHtml()) \
-                           .replace("{{TOKENS}}", self.tokens.toHtml(tokens))
+                           .replace("{{TOKENS}}", self.tokens.toHtml(tokens)) \
+                           .replace("{{INTER_CODE}}", inter_code_html) 
 
             # Historial WHILE
             if os.path.exists(path):

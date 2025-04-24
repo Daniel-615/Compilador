@@ -66,6 +66,39 @@
         <button onclick="showTab('tokens')">🔤 Tokens</button>
         <button onclick="showTab('whileHistory')">🔁 Historial de los Ciclos</button>
     </div>
+    <div class="tab-code-intermedio">
+        <details style="margin: 0 auto 20px; width: 80%; text-align: left;">
+            <summary style="font-size: 20px; font-weight: bold; color: #c00; cursor: pointer; margin-bottom: 10px;">
+                💻 Código intermedio generado
+            </summary>
+            <div style="position: relative;">
+                <button onclick="copyCode()" style="
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    background-color: #444;
+                    color: white;
+                    border: none;
+                    padding: 6px 12px;
+                    font-size: 14px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    z-index: 2;
+                ">📋 Copiar código</button>
+                <pre id="intermediateCodeBlock" style="
+                    background: #1e1e1e;
+                    color: #dcdcdc;
+                    padding: 1.5em;
+                    border-radius: 8px;
+                    border: 1px solid #333;
+                    overflow-x: auto;
+                    font-family: Consolas, 'Courier New', monospace;
+                    font-size: 14px;
+                    white-space: pre-wrap;
+                ">t0 = promedio + 1.0<br>t1 = 10 + 5<br>goles = t1<br>t2 = t0 / 2<br>promedio = t2<br>t3 = t2 - 0.5<br>promedio = t3<br>t4 = 0 + 1<br>i = t4<br>promedio = 0<br>t5 = 0 + 1<br>x = t5</pre>
+            </div>
+        </details>
+    </div>
 
     <div id="symbolTable" class="tab-content">
         <html><head><title>Tabla de Símbolos</title><link rel="stylesheet" href="./css/styles.css"></head><body><table border="1"><tr><th>Name</th><th>Type</th><th>Scope</th><th>Value</th></tr><tr><td>goles</td><td>milito</td><td>local</td><td>t1</td></tr><tr><td>promedio</td><td>zidane</td><td>local</td><td>0</td></tr><tr><td>inicial</td><td>saviola</td><td>local</td><td>M</td></tr><tr><td>nombre</td><td>iniesta</td><td>local</td><td>Messi</td></tr><tr><td>leyenda</td><td>valderrama</td><td>local</td><td>true</td></tr><tr><td>i</td><td>milito</td><td>local</td><td>t4</td></tr><tr><td>x</td><td>milito</td><td>local</td><td>t5</td></tr></table>
@@ -84,7 +117,7 @@
     </div>
 
     <div id="whileHistory" class="tab-content">
-        <h2>🌀 Cambios durante los ciclos</h2><h4>Iteración #1 – 2025-04-24T02:14:37.859130</h4><table border='1'><tr><th>Variable</th><th>Valor</th></tr><tr><td>goles</td><td>{'type': 'milito', 'scope': 'local', 'value': 't1'}</td></tr><tr><td>promedio</td><td>{'type': 'zidane', 'scope': 'local', 'value': 't3'}</td></tr><tr><td>inicial</td><td>{'type': 'saviola', 'scope': 'local', 'value': 'M'}</td></tr><tr><td>nombre</td><td>{'type': 'iniesta', 'scope': 'local', 'value': 'Messi'}</td></tr><tr><td>leyenda</td><td>{'type': 'valderrama', 'scope': 'local', 'value': 'true'}</td></tr><tr><td>i</td><td>{'type': 'milito', 'scope': 'local', 'value': 't4'}</td></tr></table><br><h4>Iteración #2 – 2025-04-24T02:14:37.860130</h4><table border='1'><tr><th>Variable</th><th>Valor</th></tr><tr><td>goles</td><td>{'type': 'milito', 'scope': 'local', 'value': 't1'}</td></tr><tr><td>promedio</td><td>{'type': 'zidane', 'scope': 'local', 'value': 0}</td></tr><tr><td>inicial</td><td>{'type': 'saviola', 'scope': 'local', 'value': 'M'}</td></tr><tr><td>nombre</td><td>{'type': 'iniesta', 'scope': 'local', 'value': 'Messi'}</td></tr><tr><td>leyenda</td><td>{'type': 'valderrama', 'scope': 'local', 'value': 'true'}</td></tr><tr><td>i</td><td>{'type': 'milito', 'scope': 'local', 'value': 't4'}</td></tr><tr><td>x</td><td>{'type': 'milito', 'scope': 'local', 'value': 't5'}</td></tr></table><br>
+        <h2>🌀 Cambios durante los ciclos</h2><h4>Iteración #1 – 2025-04-24T02:28:05.630492</h4><table border='1'><tr><th>Variable</th><th>Valor</th></tr><tr><td>goles</td><td>{'type': 'milito', 'scope': 'local', 'value': 't1'}</td></tr><tr><td>promedio</td><td>{'type': 'zidane', 'scope': 'local', 'value': 't3'}</td></tr><tr><td>inicial</td><td>{'type': 'saviola', 'scope': 'local', 'value': 'M'}</td></tr><tr><td>nombre</td><td>{'type': 'iniesta', 'scope': 'local', 'value': 'Messi'}</td></tr><tr><td>leyenda</td><td>{'type': 'valderrama', 'scope': 'local', 'value': 'true'}</td></tr><tr><td>i</td><td>{'type': 'milito', 'scope': 'local', 'value': 't4'}</td></tr></table><br><h4>Iteración #2 – 2025-04-24T02:28:05.632480</h4><table border='1'><tr><th>Variable</th><th>Valor</th></tr><tr><td>goles</td><td>{'type': 'milito', 'scope': 'local', 'value': 't1'}</td></tr><tr><td>promedio</td><td>{'type': 'zidane', 'scope': 'local', 'value': 0}</td></tr><tr><td>inicial</td><td>{'type': 'saviola', 'scope': 'local', 'value': 'M'}</td></tr><tr><td>nombre</td><td>{'type': 'iniesta', 'scope': 'local', 'value': 'Messi'}</td></tr><tr><td>leyenda</td><td>{'type': 'valderrama', 'scope': 'local', 'value': 'true'}</td></tr><tr><td>i</td><td>{'type': 'milito', 'scope': 'local', 'value': 't4'}</td></tr><tr><td>x</td><td>{'type': 'milito', 'scope': 'local', 'value': 't5'}</td></tr></table><br>
     </div>
 
     <script>
@@ -96,6 +129,22 @@
 
         // Mostrar por defecto la tabla de símbolos
         showTab('symbolTable');
+        function copyCode() {
+            const code = document.getElementById("intermediateCodeBlock").innerText;
+            navigator.clipboard.writeText(code).then(() => {
+                alert(" Código intermedio copiado al portapapeles.");
+            }).catch(err => {
+                alert(" Error al copiar: " + err);
+            });
+        }
     </script>
+    <footer style="margin-top: 40px; text-align: center; font-size: 14px; color: #555;">
+        <hr style="margin-bottom: 10px; border: none; height: 1px; background: #ccc;">
+        <p>📘 Proyecto de Compiladores — <strong>Universidad Mariano Galvez</strong></p>
+        <p>👨‍💻 Desarrollado por: <strong>Angel Garcia</strong></p>
+        <p>👨‍💻 Desarrollado por: <strong>Marcos Morales</strong></p>
+        <p>👩‍💻 Desarrollado por: <strong>Valeria Recinos</strong></p>
+        <p>&copy; 2025 Todos los derechos reservados</p>
+    </footer>
 </body>
 </html>

@@ -66,6 +66,39 @@
         <button onclick="showTab('tokens')">🔤 Tokens</button>
         <button onclick="showTab('whileHistory')">🔁 Historial de los Ciclos</button>
     </div>
+    <div class="tab-code-intermedio">
+        <details style="margin: 0 auto 20px; width: 80%; text-align: left;">
+            <summary style="font-size: 20px; font-weight: bold; color: #c00; cursor: pointer; margin-bottom: 10px;">
+                💻 Código intermedio generado
+            </summary>
+            <div style="position: relative;">
+                <button onclick="copyCode()" style="
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    background-color: #444;
+                    color: white;
+                    border: none;
+                    padding: 6px 12px;
+                    font-size: 14px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    z-index: 2;
+                ">📋 Copiar código</button>
+                <pre id="intermediateCodeBlock" style="
+                    background: #1e1e1e;
+                    color: #dcdcdc;
+                    padding: 1.5em;
+                    border-radius: 8px;
+                    border: 1px solid #333;
+                    overflow-x: auto;
+                    font-family: Consolas, 'Courier New', monospace;
+                    font-size: 14px;
+                    white-space: pre-wrap;
+                ">{{INTER_CODE}}</pre>
+            </div>
+        </details>
+    </div>
 
     <div id="symbolTable" class="tab-content">
         {{SYMBOL_TABLE}}
@@ -96,6 +129,22 @@
 
         // Mostrar por defecto la tabla de símbolos
         showTab('symbolTable');
+        function copyCode() {
+            const code = document.getElementById("intermediateCodeBlock").innerText;
+            navigator.clipboard.writeText(code).then(() => {
+                alert(" Código intermedio copiado al portapapeles.");
+            }).catch(err => {
+                alert(" Error al copiar: " + err);
+            });
+        }
     </script>
+    <footer style="margin-top: 40px; text-align: center; font-size: 14px; color: #555;">
+        <hr style="margin-bottom: 10px; border: none; height: 1px; background: #ccc;">
+        <p>📘 Proyecto de Compiladores — <strong>Universidad Mariano Galvez</strong></p>
+        <p>👨‍💻 Desarrollado por: <strong>Angel Garcia</strong></p>
+        <p>👨‍💻 Desarrollado por: <strong>Marcos Morales</strong></p>
+        <p>👩‍💻 Desarrollado por: <strong>Valeria Recinos</strong></p>
+        <p>&copy; 2025 Todos los derechos reservados</p>
+    </footer>
 </body>
 </html>
