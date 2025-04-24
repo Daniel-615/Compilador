@@ -1,10 +1,8 @@
-global milito x = 4;       
-p;
-local milito y = 10;          
-local milito z;               
-z = x pepe 2;                   
+milito goles = 10;
+zidane promedio = 7.5;
+saviola inicial = 'M';
+iniesta nombre = "Messi";
+valderrama leyenda = true;
 
-              
-local milito v = x tchouameni 3;                
-
-local milito z= x pepe 1;
+goles = goles cristiano 2;
+promedio = promedio tchouameni 0.5;

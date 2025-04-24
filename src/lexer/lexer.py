@@ -2,12 +2,11 @@ import ply.lex as lex
 
 class Lexer:
     tokens = [
-        'NUMBER', 'IDENTIFIER', 'EQUALS', 'SEMICOLON', 'LBRACE', 'RBRACE', 
+        'NUMBER', 'IDENTIFIER', 'EQUALS', 'SEMICOLON', 'LBRACE', 'RBRACE',
         'LPAREN', 'RPAREN', 'GT', 'LT', 'DOT', 'COMMA', 'QUOTE',
-        'RELOP'
+        'RELOP', 'STRING_LITERAL', 'CHAR_LITERAL'
     ]
 
-    # Palabras reservadas como tokens explícitos (basados en nombres literales del lenguaje fuente)
     reserved = {
         'messi': 'MESSI',
         'pepe': 'PEPE',
@@ -16,19 +15,19 @@ class Lexer:
         'cristiano': 'CRISTIANO',
         'else': 'ELSE',
         'milito': 'MILITO',
-        'zidane': 'ZIDANE',
-        'saviola': 'SAVIOLA',
+        'zidane': 'ZIDANE',  # float
+        'saviola': 'SAVIOLA',  # char
+        'iniesta': 'INIESTA',  # string
+        'valderrama': 'VALDERRAMA',  # boolean
         'walker': 'WALKER',
         'son': 'SON',
         'forlan': 'FORLAN',
-        'global': 'GLOBAL',  
+        'global': 'GLOBAL',
         'local': 'LOCAL'
     }
 
-    # Agregamos las palabras reservadas como tokens válidos
     tokens += list(reserved.values())
 
-    # Reglas para operadores y símbolos
     t_RELOP = r'==|!=|<|>|<=|>='
     t_CRISTIANO = r'\+'
     t_TCHOUAMENI = r'-'
@@ -44,25 +43,27 @@ class Lexer:
     t_LT = r'<'
     t_DOT = r'\.'
     t_COMMA = r','
-    t_QUOTE = r'\"'
+    t_QUOTE = r'"'
 
-    # Ignorar espacios y tabs
-    t_ignore = " \t"
+    t_ignore = ' \t'
 
     def __init__(self, errors):
         self.errors = errors
         self.lexer = lex.lex(module=self)
 
-    def set_error(self, error, position):
-        token = self.get_current_token()
-        columna = self.errors.find_column(token)
-        fila = self.errors.find_line(token)
-        error_message = f"Error léxico: '{error}' en la fila {fila} y columna {columna} "
-        self.errors.encolar_error(error_message)
-
     def t_IDENTIFIER(self, t):
         r'[a-zA-Z_][a-zA-Z0-9_]*'
-        t.type = self.reserved.get(t.value, 'IDENTIFIER')  # Retorna el token del nombre reservado o IDENTIFIER
+        t.type = self.reserved.get(t.value, 'IDENTIFIER')
+        return t
+
+    def t_STRING_LITERAL(self, t):
+        r'"([^\\"]|\\.)*"'
+        t.value = t.value[1:-1]
+        return t
+
+    def t_CHAR_LITERAL(self, t):
+        r'\'(.*?)\''
+        t.value = t.value[1:-1]
         return t
 
     def t_NUMBER(self, t):
@@ -80,6 +81,12 @@ class Lexer:
 
     def get_current_token(self):
         return self.lexer.token()
+
+    def set_error(self, error, position):
+        token = self.get_current_token()
+        columna = self.errors.find_column(token)
+        fila = self.errors.find_line(token)
+        self.errors.encolar_error(f"Error léxico: '{error}' en la fila {fila} y columna {columna} ")
 
     def tokenize(self, data):
         self.lexer.input(data)

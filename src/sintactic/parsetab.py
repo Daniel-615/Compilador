@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'COMMA CRISTIANO DOT ELSE EQUALS FORLAN GLOBAL GT IDENTIFIER LBRACE LOCAL LPAREN LT MESSI MILITO NUMBER PEPE QUOTE RBRACE RELOP RONALDINHO RPAREN SAVIOLA SEMICOLON SON TCHOUAMENI WALKER ZIDANEprogram : statement\n                   | program statementstatement : declaration\n                     | assignment\n                     | while_loop\n                     | expression SEMICOLONdeclaration : GLOBAL MILITO IDENTIFIER SEMICOLON\n                   | LOCAL MILITO IDENTIFIER SEMICOLON\n                   | MILITO IDENTIFIER SEMICOLON\n                   | MILITO IDENTIFIER EQUALS expression SEMICOLON\n                   | GLOBAL MILITO IDENTIFIER EQUALS expression SEMICOLON\n                   | LOCAL MILITO IDENTIFIER EQUALS expression SEMICOLONassignment : IDENTIFIER EQUALS expression SEMICOLONexpression : expression CRISTIANO term\n                  | expression TCHOUAMENI term\n                  | termterm : term MESSI factor\n            | term PEPE factor\n            | factorfactor : NUMBER\n                  | IDENTIFIERcondition : IDENTIFIER RELOP expressionwhile_loop : WALKER LPAREN condition RPAREN LBRACE program RBRACE'
+_lr_signature = 'CHAR_LITERAL COMMA CRISTIANO DOT ELSE EQUALS FORLAN GLOBAL GT IDENTIFIER INIESTA LBRACE LOCAL LPAREN LT MESSI MILITO NUMBER PEPE QUOTE RBRACE RELOP RONALDINHO RPAREN SAVIOLA SEMICOLON SON STRING_LITERAL TCHOUAMENI VALDERRAMA WALKER ZIDANEprogram : statement\n                   | program statementstatement : declaration\n                     | assignment\n                     | while_loop\n                     | expression SEMICOLONdeclaration : MILITO IDENTIFIER SEMICOLON\n                       | MILITO IDENTIFIER EQUALS expression SEMICOLON\n                       | ZIDANE IDENTIFIER SEMICOLON\n                       | ZIDANE IDENTIFIER EQUALS expression SEMICOLON\n                       | SAVIOLA IDENTIFIER SEMICOLON\n                       | SAVIOLA IDENTIFIER EQUALS expression SEMICOLON\n                       | INIESTA IDENTIFIER SEMICOLON\n                       | INIESTA IDENTIFIER EQUALS expression SEMICOLON\n                       | VALDERRAMA IDENTIFIER SEMICOLON\n                       | VALDERRAMA IDENTIFIER EQUALS expression SEMICOLONassignment : IDENTIFIER EQUALS expression SEMICOLONexpression : expression CRISTIANO term\n                      | expression TCHOUAMENI term\n                      | termterm : term MESSI factor\n                | term PEPE factor\n                | factorfactor : NUMBER\n                  | IDENTIFIER\n                  | STRING_LITERAL\n                  | CHAR_LITERALcondition : IDENTIFIER RELOP expressionwhile_loop : WALKER LPAREN condition RPAREN LBRACE program RBRACE'
     
-_lr_action_items = {'GLOBAL':([0,1,2,3,4,5,15,16,30,38,41,42,47,49,51,52,53,54,],[7,7,-1,-3,-4,-5,-2,-6,-9,-7,-13,-8,-10,7,-11,-12,7,-23,]),'LOCAL':([0,1,2,3,4,5,15,16,30,38,41,42,47,49,51,52,53,54,],[10,10,-1,-3,-4,-5,-2,-6,-9,-7,-13,-8,-10,10,-11,-12,10,-23,]),'MILITO':([0,1,2,3,4,5,7,10,15,16,30,38,41,42,47,49,51,52,53,54,],[8,8,-1,-3,-4,-5,19,22,-2,-6,-9,-7,-13,-8,-10,8,-11,-12,8,-23,]),'IDENTIFIER':([0,1,2,3,4,5,8,15,16,17,18,19,21,22,23,24,25,30,31,38,39,41,42,43,45,47,49,51,52,53,54,],[9,9,-1,-3,-4,-5,20,-2,-6,27,27,29,27,33,35,27,27,-9,27,-7,27,-13,-8,27,27,-10,9,-11,-12,9,-23,]),'WALKER':([0,1,2,3,4,5,15,16,30,38,41,42,47,49,51,52,53,54,],[11,11,-1,-3,-4,-5,-2,-6,-9,-7,-13,-8,-10,11,-11,-12,11,-23,]),'NUMBER':([0,1,2,3,4,5,15,16,17,18,21,24,25,30,31,38,39,41,42,43,45,47,49,51,52,53,54,],[14,14,-1,-3,-4,-5,-2,-6,14,14,14,14,14,-9,14,-7,14,-13,-8,14,14,-10,14,-11,-12,14,-23,]),'$end':([1,2,3,4,5,15,16,30,38,41,42,47,51,52,54,],[0,-1,-3,-4,-5,-2,-6,-9,-7,-13,-8,-10,-11,-12,-23,]),'RBRACE':([2,3,4,5,15,16,30,38,41,42,47,51,52,53,54,],[-1,-3,-4,-5,-2,-6,-9,-7,-13,-8,-10,-11,-12,54,-23,]),'SEMICOLON':([6,9,12,13,14,20,26,27,28,29,32,33,36,37,40,46,48,],[16,-21,-16,-19,-20,30,-14,-21,-15,38,41,42,-17,-18,47,51,52,]),'CRISTIANO':([6,9,12,13,14,26,27,28,32,36,37,40,46,48,50,],[17,-21,-16,-19,-20,-14,-21,-15,17,-17,-18,17,17,17,17,]),'TCHOUAMENI':([6,9,12,13,14,26,27,28,32,36,37,40,46,48,50,],[18,-21,-16,-19,-20,-14,-21,-15,18,-17,-18,18,18,18,18,]),'EQUALS':([9,20,29,33,],[21,31,39,43,]),'MESSI':([9,12,13,14,26,27,28,36,37,],[-21,24,-19,-20,24,-21,24,-17,-18,]),'PEPE':([9,12,13,14,26,27,28,36,37,],[-21,25,-19,-20,25,-21,25,-17,-18,]),'LPAREN':([11,],[23,]),'RPAREN':([12,13,14,26,27,28,34,36,37,50,],[-16,-19,-20,-14,-21,-15,44,-17,-18,-22,]),'RELOP':([35,],[45,]),'LBRACE':([44,],[49,]),}
+_lr_action_items = {'MILITO':([0,1,2,3,4,5,19,20,35,38,40,42,44,51,58,59,60,61,62,63,65,66,],[7,7,-1,-3,-4,-5,-2,-6,-7,-9,-11,-13,-15,-17,-8,-10,-12,-14,-16,7,7,-29,]),'ZIDANE':([0,1,2,3,4,5,19,20,35,38,40,42,44,51,58,59,60,61,62,63,65,66,],[9,9,-1,-3,-4,-5,-2,-6,-7,-9,-11,-13,-15,-17,-8,-10,-12,-14,-16,9,9,-29,]),'SAVIOLA':([0,1,2,3,4,5,19,20,35,38,40,42,44,51,58,59,60,61,62,63,65,66,],[10,10,-1,-3,-4,-5,-2,-6,-7,-9,-11,-13,-15,-17,-8,-10,-12,-14,-16,10,10,-29,]),'INIESTA':([0,1,2,3,4,5,19,20,35,38,40,42,44,51,58,59,60,61,62,63,65,66,],[11,11,-1,-3,-4,-5,-2,-6,-7,-9,-11,-13,-15,-17,-8,-10,-12,-14,-16,11,11,-29,]),'VALDERRAMA':([0,1,2,3,4,5,19,20,35,38,40,42,44,51,58,59,60,61,62,63,65,66,],[12,12,-1,-3,-4,-5,-2,-6,-7,-9,-11,-13,-15,-17,-8,-10,-12,-14,-16,12,12,-29,]),'IDENTIFIER':([0,1,2,3,4,5,7,9,10,11,12,19,20,21,22,24,29,30,31,35,36,38,39,40,41,42,43,44,45,51,57,58,59,60,61,62,63,65,66,],[8,8,-1,-3,-4,-5,23,25,26,27,28,-2,-6,33,33,33,47,33,33,-7,33,-9,33,-11,33,-13,33,-15,33,-17,33,-8,-10,-12,-14,-16,8,8,-29,]),'WALKER':([0,1,2,3,4,5,19,20,35,38,40,42,44,51,58,59,60,61,62,63,65,66,],[13,13,-1,-3,-4,-5,-2,-6,-7,-9,-11,-13,-15,-17,-8,-10,-12,-14,-16,13,13,-29,]),'NUMBER':([0,1,2,3,4,5,19,20,21,22,24,30,31,35,36,38,39,40,41,42,43,44,45,51,57,58,59,60,61,62,63,65,66,],[16,16,-1,-3,-4,-5,-2,-6,16,16,16,16,16,-7,16,-9,16,-11,16,-13,16,-15,16,-17,16,-8,-10,-12,-14,-16,16,16,-29,]),'STRING_LITERAL':([0,1,2,3,4,5,19,20,21,22,24,30,31,35,36,38,39,40,41,42,43,44,45,51,57,58,59,60,61,62,63,65,66,],[17,17,-1,-3,-4,-5,-2,-6,17,17,17,17,17,-7,17,-9,17,-11,17,-13,17,-15,17,-17,17,-8,-10,-12,-14,-16,17,17,-29,]),'CHAR_LITERAL':([0,1,2,3,4,5,19,20,21,22,24,30,31,35,36,38,39,40,41,42,43,44,45,51,57,58,59,60,61,62,63,65,66,],[18,18,-1,-3,-4,-5,-2,-6,18,18,18,18,18,-7,18,-9,18,-11,18,-13,18,-15,18,-17,18,-8,-10,-12,-14,-16,18,18,-29,]),'$end':([1,2,3,4,5,19,20,35,38,40,42,44,51,58,59,60,61,62,66,],[0,-1,-3,-4,-5,-2,-6,-7,-9,-11,-13,-15,-17,-8,-10,-12,-14,-16,-29,]),'RBRACE':([2,3,4,5,19,20,35,38,40,42,44,51,58,59,60,61,62,65,66,],[-1,-3,-4,-5,-2,-6,-7,-9,-11,-13,-15,-17,-8,-10,-12,-14,-16,66,-29,]),'SEMICOLON':([6,8,14,15,16,17,18,23,25,26,27,28,32,33,34,37,48,49,50,52,53,54,55,],[20,-25,-20,-23,-24,-26,-27,35,38,40,42,44,-18,-25,-19,51,-21,-22,58,59,60,61,62,]),'CRISTIANO':([6,8,14,15,16,17,18,32,33,34,37,48,49,50,52,53,54,55,64,],[21,-25,-20,-23,-24,-26,-27,-18,-25,-19,21,-21,-22,21,21,21,21,21,21,]),'TCHOUAMENI':([6,8,14,15,16,17,18,32,33,34,37,48,49,50,52,53,54,55,64,],[22,-25,-20,-23,-24,-26,-27,-18,-25,-19,22,-21,-22,22,22,22,22,22,22,]),'EQUALS':([8,23,25,26,27,28,],[24,36,39,41,43,45,]),'MESSI':([8,14,15,16,17,18,32,33,34,48,49,],[-25,30,-23,-24,-26,-27,30,-25,30,-21,-22,]),'PEPE':([8,14,15,16,17,18,32,33,34,48,49,],[-25,31,-23,-24,-26,-27,31,-25,31,-21,-22,]),'LPAREN':([13,],[29,]),'RPAREN':([14,15,16,17,18,32,33,34,46,48,49,64,],[-20,-23,-24,-26,-27,-18,-25,-19,56,-21,-22,-28,]),'RELOP':([47,],[57,]),'LBRACE':([56,],[63,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'program':([0,49,],[1,53,]),'statement':([0,1,49,53,],[2,15,2,15,]),'declaration':([0,1,49,53,],[3,3,3,3,]),'assignment':([0,1,49,53,],[4,4,4,4,]),'while_loop':([0,1,49,53,],[5,5,5,5,]),'expression':([0,1,21,31,39,43,45,49,53,],[6,6,32,40,46,48,50,6,6,]),'term':([0,1,17,18,21,31,39,43,45,49,53,],[12,12,26,28,12,12,12,12,12,12,12,]),'factor':([0,1,17,18,21,24,25,31,39,43,45,49,53,],[13,13,13,13,13,36,37,13,13,13,13,13,13,]),'condition':([23,],[34,]),}
+_lr_goto_items = {'program':([0,63,],[1,65,]),'statement':([0,1,63,65,],[2,19,2,19,]),'declaration':([0,1,63,65,],[3,3,3,3,]),'assignment':([0,1,63,65,],[4,4,4,4,]),'while_loop':([0,1,63,65,],[5,5,5,5,]),'expression':([0,1,24,36,39,41,43,45,57,63,65,],[6,6,37,50,52,53,54,55,64,6,6,]),'term':([0,1,21,22,24,36,39,41,43,45,57,63,65,],[14,14,32,34,14,14,14,14,14,14,14,14,14,]),'factor':([0,1,21,22,24,30,31,36,39,41,43,45,57,63,65,],[15,15,15,15,15,48,49,15,15,15,15,15,15,15,15,]),'condition':([29,],[46,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,27 +27,33 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> program","S'",1,None,None,None),
-  ('program -> statement','program',1,'p_program','parser.py',12),
-  ('program -> program statement','program',2,'p_program','parser.py',13),
-  ('statement -> declaration','statement',1,'p_statement','parser.py',20),
-  ('statement -> assignment','statement',1,'p_statement','parser.py',21),
-  ('statement -> while_loop','statement',1,'p_statement','parser.py',22),
-  ('statement -> expression SEMICOLON','statement',2,'p_statement','parser.py',23),
-  ('declaration -> GLOBAL MILITO IDENTIFIER SEMICOLON','declaration',4,'p_declaration','parser.py',27),
-  ('declaration -> LOCAL MILITO IDENTIFIER SEMICOLON','declaration',4,'p_declaration','parser.py',28),
-  ('declaration -> MILITO IDENTIFIER SEMICOLON','declaration',3,'p_declaration','parser.py',29),
-  ('declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON','declaration',5,'p_declaration','parser.py',30),
-  ('declaration -> GLOBAL MILITO IDENTIFIER EQUALS expression SEMICOLON','declaration',6,'p_declaration','parser.py',31),
-  ('declaration -> LOCAL MILITO IDENTIFIER EQUALS expression SEMICOLON','declaration',6,'p_declaration','parser.py',32),
-  ('assignment -> IDENTIFIER EQUALS expression SEMICOLON','assignment',4,'p_assignment','parser.py',56),
-  ('expression -> expression CRISTIANO term','expression',3,'p_expression','parser.py',60),
-  ('expression -> expression TCHOUAMENI term','expression',3,'p_expression','parser.py',61),
-  ('expression -> term','expression',1,'p_expression','parser.py',62),
-  ('term -> term MESSI factor','term',3,'p_term','parser.py',70),
-  ('term -> term PEPE factor','term',3,'p_term','parser.py',71),
-  ('term -> factor','term',1,'p_term','parser.py',72),
-  ('factor -> NUMBER','factor',1,'p_factor','parser.py',80),
-  ('factor -> IDENTIFIER','factor',1,'p_factor','parser.py',81),
-  ('condition -> IDENTIFIER RELOP expression','condition',3,'p_condition','parser.py',85),
-  ('while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE','while_loop',7,'p_while_loop','parser.py',93),
+  ('program -> statement','program',1,'p_program','parser.py',13),
+  ('program -> program statement','program',2,'p_program','parser.py',14),
+  ('statement -> declaration','statement',1,'p_statement','parser.py',21),
+  ('statement -> assignment','statement',1,'p_statement','parser.py',22),
+  ('statement -> while_loop','statement',1,'p_statement','parser.py',23),
+  ('statement -> expression SEMICOLON','statement',2,'p_statement','parser.py',24),
+  ('declaration -> MILITO IDENTIFIER SEMICOLON','declaration',3,'p_declaration','parser.py',28),
+  ('declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON','declaration',5,'p_declaration','parser.py',29),
+  ('declaration -> ZIDANE IDENTIFIER SEMICOLON','declaration',3,'p_declaration','parser.py',30),
+  ('declaration -> ZIDANE IDENTIFIER EQUALS expression SEMICOLON','declaration',5,'p_declaration','parser.py',31),
+  ('declaration -> SAVIOLA IDENTIFIER SEMICOLON','declaration',3,'p_declaration','parser.py',32),
+  ('declaration -> SAVIOLA IDENTIFIER EQUALS expression SEMICOLON','declaration',5,'p_declaration','parser.py',33),
+  ('declaration -> INIESTA IDENTIFIER SEMICOLON','declaration',3,'p_declaration','parser.py',34),
+  ('declaration -> INIESTA IDENTIFIER EQUALS expression SEMICOLON','declaration',5,'p_declaration','parser.py',35),
+  ('declaration -> VALDERRAMA IDENTIFIER SEMICOLON','declaration',3,'p_declaration','parser.py',36),
+  ('declaration -> VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON','declaration',5,'p_declaration','parser.py',37),
+  ('assignment -> IDENTIFIER EQUALS expression SEMICOLON','assignment',4,'p_assignment','parser.py',47),
+  ('expression -> expression CRISTIANO term','expression',3,'p_expression','parser.py',51),
+  ('expression -> expression TCHOUAMENI term','expression',3,'p_expression','parser.py',52),
+  ('expression -> term','expression',1,'p_expression','parser.py',53),
+  ('term -> term MESSI factor','term',3,'p_term','parser.py',60),
+  ('term -> term PEPE factor','term',3,'p_term','parser.py',61),
+  ('term -> factor','term',1,'p_term','parser.py',62),
+  ('factor -> NUMBER','factor',1,'p_factor','parser.py',69),
+  ('factor -> IDENTIFIER','factor',1,'p_factor','parser.py',70),
+  ('factor -> STRING_LITERAL','factor',1,'p_factor','parser.py',71),
+  ('factor -> CHAR_LITERAL','factor',1,'p_factor','parser.py',72),
+  ('condition -> IDENTIFIER RELOP expression','condition',3,'p_condition','parser.py',76),
+  ('while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE','while_loop',7,'p_while_loop','parser.py',80),
 ]

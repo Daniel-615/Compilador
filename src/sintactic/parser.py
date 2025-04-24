@@ -1,3 +1,4 @@
+# PARSER FINAL Y SEMANTIC CORREGIDO
 import ply.yacc as yacc
 
 class Parser:
@@ -24,33 +25,21 @@ class Parser:
         p[0] = p[1]
 
     def p_declaration(self, p):
-        '''declaration : GLOBAL MILITO IDENTIFIER SEMICOLON
-                   | LOCAL MILITO IDENTIFIER SEMICOLON
-                   | MILITO IDENTIFIER SEMICOLON
-                   | MILITO IDENTIFIER EQUALS expression SEMICOLON
-                   | GLOBAL MILITO IDENTIFIER EQUALS expression SEMICOLON
-                   | LOCAL MILITO IDENTIFIER EQUALS expression SEMICOLON'''
-    
-        if p[1] == 'global':
-           scope = 'global'
-           type_ = p[2]  # p[2] = 'milito'
-           identifier = p[3]
-           value = p[5] if len(p) > 5 else None
-           action = self.semantic.handle_declaration(identifier, type_, scope, value)
-        elif p[1] == 'local':
-           scope = 'local'
-           type_ = p[2]  # p[2] = 'milito'
-           identifier = p[3]
-           value = p[5] if len(p) > 5 else None
-           action = self.semantic.handle_declaration(identifier, type_, scope, value)
-        else:
-           scope = 'local'  # default scope
-           type_ = p[1]  # p[1] = 'milito'
-           identifier = p[2]
-           value = p[4] if len(p) > 4 else None
-           action = self.semantic.handle_declaration(identifier, type_, scope, value)
-
-        action()
+        '''declaration : MILITO IDENTIFIER SEMICOLON
+                       | MILITO IDENTIFIER EQUALS expression SEMICOLON
+                       | ZIDANE IDENTIFIER SEMICOLON
+                       | ZIDANE IDENTIFIER EQUALS expression SEMICOLON
+                       | SAVIOLA IDENTIFIER SEMICOLON
+                       | SAVIOLA IDENTIFIER EQUALS expression SEMICOLON
+                       | INIESTA IDENTIFIER SEMICOLON
+                       | INIESTA IDENTIFIER EQUALS expression SEMICOLON
+                       | VALDERRAMA IDENTIFIER SEMICOLON
+                       | VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON'''
+        scope = 'local'
+        identifier = p[2]
+        value = p[4] if len(p) > 4 else None
+        type_ = p[1]
+        p[0] = self.semantic.handle_declaration(identifier, type_, scope, value)
 
     def p_assignment(self, p):
         'assignment : IDENTIFIER EQUALS expression SEMICOLON'
@@ -58,36 +47,32 @@ class Parser:
 
     def p_expression(self, p):
         '''expression : expression CRISTIANO term
-                  | expression TCHOUAMENI term
-                  | term'''
-
+                      | expression TCHOUAMENI term
+                      | term'''
         if len(p) == 4:
-            p[0] = self.semantic.handle_expression(p[1], p[2], p[3])
+            p[0] = (p[1], p[2], p[3])
         else:
             p[0] = p[1]
 
     def p_term(self, p):
         '''term : term MESSI factor
-            | term PEPE factor
-            | factor'''
-
+                | term PEPE factor
+                | factor'''
         if len(p) == 4:
-            p[0] = self.semantic.handle_term(p[1], p[2], p[3])
+            p[0] = (p[1], p[2], p[3])
         else:
             p[0] = p[1]
 
     def p_factor(self, p):
         '''factor : NUMBER
-                  | IDENTIFIER'''
+                  | IDENTIFIER
+                  | STRING_LITERAL
+                  | CHAR_LITERAL'''
         p[0] = self.semantic.handle_factor(p[1])
 
     def p_condition(self, p):
         'condition : IDENTIFIER RELOP expression'
-        var_name = p[1]
-        op = p[2]
-        value_expr = p[3]
-        p[0] = lambda: self.semantic.evaluate_condition_dynamic(var_name, op, value_expr)
-
+        p[0] = lambda: self.semantic.evaluate_condition_dynamic(p[1], p[2], p[3])
 
     def p_while_loop(self, p):
         'while_loop : WALKER LPAREN condition RPAREN LBRACE program RBRACE'
@@ -105,9 +90,8 @@ class Parser:
     def parse(self, data):
         self.lexer.lexer.input(data)
         parsed = self.parser.parse(data, lexer=self.lexer.lexer)
-        if parsed:  # Ejecutamos el programa principal
+        if parsed:
             for stmt in parsed:
                 if callable(stmt):
                     stmt()
-        
         return parsed

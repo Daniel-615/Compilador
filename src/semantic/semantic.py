@@ -6,19 +6,24 @@ class Semantic:
 
     def handle_declaration(self, name, var_type, scope, value=None):
         def action():
-            self.symbol_table.add_symbol(name, var_type, scope, value)
-            if value is not None:
-                print(f"Declaración e inicialización de {name} con valor {value}")
+            if isinstance(value, (int, float, bool)):
+                evaluated_value = value
+            else:
+                evaluated_value = self._get_value(value) if value is not None else None
+            self.symbol_table.add_symbol(name, var_type, scope, evaluated_value)
+            if evaluated_value is not None:
+                print(f"Declaración e inicialización de {name} con valor {evaluated_value}")
             else:
                 print(f"Declaración de variable: {name}")
         return action
 
     def handle_assignment(self, name, value):
         def action():
-            # Evalúa la expresión o el valor asignado
-            value_eval = self._get_value(value) if not isinstance(value, tuple) else self.handle_expression(*value)
+            if isinstance(value, tuple):
+                value_eval = self.handle_expression(*value)
+            else:
+                value_eval = self._get_value(value)
             if self.symbol_table.get_symbol(name) is not None:
-                # Actualiza el valor en la tabla de símbolos
                 self.symbol_table.update_symbol(name, value_eval)
                 print(f"Asignación: {name} = {value_eval}")
             else:
@@ -26,12 +31,12 @@ class Semantic:
         return action
 
     def handle_expression(self, left, operator, right):
-        val1 = self._get_value(left)  # Obtiene el valor del lado izquierdo
-        val2 = self._get_value(right)  # Obtiene el valor del lado derecho
+        val1 = self._get_value(left)
+        val2 = self._get_value(right)
         if val1 is None or val2 is None:
             self.errors.encolar_error(f"Error: Operación inválida: {left} {operator} {right}")
             return None
-        result = self._apply_operator(val1, operator, val2)  # Aplica el operador
+        result = self._apply_operator(val1, operator, val2)
         print(f"Evaluando expresión: {val1} {operator} {val2} = {result}")
         return result
 
@@ -39,46 +44,54 @@ class Semantic:
         return self.handle_expression(left, operator, right)
 
     def handle_factor(self, value):
-        if isinstance(value, str):  # Si es un identificador
-            val = self.symbol_table.get_symbol(value)
-            if val is None:
-                self.errors.encolar_error(f"Error: Variable '{value}' no inicializada.")
-            return val
-        return value  # Si es un valor literal, simplemente lo devuelve
+        if isinstance(value, str) and value in self.symbol_table.symbols:
+            return self.symbol_table.get_symbol(value)
+        return value
 
     def _get_value(self, item):
-        if isinstance(item, str):  # Si es un identificador
-            value = self.symbol_table.get_symbol(item)
-            if value is None:
-                self.errors.encolar_error(f"Error: Variable '{item}' no inicializada.")
-            return value
-        print(f"Valor literal: {item}")
-        return item  # Si es un número literal, simplemente lo devuelve
+        if isinstance(item, str) and item in self.symbol_table.symbols:
+            return self.symbol_table.get_symbol(item)
+        return item
 
     def _apply_operator(self, a, op, b):
-        # Mapeo de operadores personalizados
-        if op == 'cristiano':  # Suma
-            return a + b
-        if op == 'tchouameni':  # Resta
-            return a - b
-        if op == 'messi':  # Multiplicación
-            return a * b
-        if op == 'pepe':  # División
-            if b == 0:
-                self.errors.encolar_error("Error: División por cero")
+        if op == 'cristiano':
+            if isinstance(a, str) and isinstance(b, str):
+                return a + b
+            elif isinstance(a, (int, float)) and isinstance(b, (int, float)):
+                return a + b
+            else:
+                self.errors.encolar_error(f"Error: No se puede sumar {type(a).__name__} con {type(b).__name__}")
                 return None
-            return a / b
+        if op == 'tchouameni':
+            if isinstance(a, (int, float)) and isinstance(b, (int, float)):
+                return a - b
+            else:
+                self.errors.encolar_error(f"Error: No se puede restar {type(a).__name__} con {type(b).__name__}")
+                return None
+        if op == 'messi':
+            if isinstance(a, (int, float)) and isinstance(b, (int, float)):
+                return a * b
+            else:
+                self.errors.encolar_error(f"Error: No se puede multiplicar {type(a).__name__} con {type(b).__name__}")
+                return None
+        if op == 'pepe':
+            if isinstance(a, (int, float)) and isinstance(b, (int, float)):
+                if b == 0:
+                    self.errors.encolar_error("Error: División por cero")
+                    return None
+                return a / b
+            else:
+                self.errors.encolar_error(f"Error: No se puede dividir {type(a).__name__} con {type(b).__name__}")
+                return None
         self.errors.encolar_error(f"Error: Operador no soportado: {op}")
         return None
 
     def evaluate_condition_dynamic(self, left, op, right):
-        val1 = self._get_value(left)  # Obtiene el valor actualizado de la variable izquierda
-        val2 = self._get_value(right)  # Obtiene el valor de la constante o variable derecha
-
+        val1 = self._get_value(left)
+        val2 = self._get_value(right)
         if val1 is None or val2 is None:
             self.errors.encolar_error(f"Error: Condición inválida: {left} {op} {right}")
             return False
-
         print(f"Evaluando condición: {val1} {op} {val2}")
         if op == '>': return val1 > val2
         if op == '<': return val1 < val2
@@ -89,11 +102,11 @@ class Semantic:
     def handle_while(self, condition_fn, body):
         def action():
             print("Reconocido WHILE")
-            while condition_fn():  # Evalúa la condición en cada iteración
+            while condition_fn():
                 print("Evaluando condición del WHILE...")
                 for stmt in body:
                     if stmt and callable(stmt):
-                        stmt()  # Ejecuta cada sentencia en el cuerpo del while
+                        stmt()
                 print("Estado actual de las variables:", self.symbol_table.symbols)
         return action
 
@@ -101,15 +114,12 @@ class Semantic:
         if not isinstance(condition, list) or len(condition) != 3:
             self.errors.encolar_error("Error: La condición debe tener tres elementos.")
             return False
-
         left = self._get_value(condition[0])
         op = condition[1]
         right = self._get_value(condition[2])
-
         if left is None or right is None:
             self.errors.encolar_error(f"Error: Condición inválida: {left} {op} {right}")
             return False
-
         if op == '>': return left > right
         if op == '<': return left < right
         if op == '==': return left == right
