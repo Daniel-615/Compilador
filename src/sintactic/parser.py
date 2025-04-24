@@ -26,11 +26,27 @@ class Parser:
         '''statement : declaration
                      | assignment
                      | while_loop
+                     | do_while_loop
                      | if_statement
                      | method_declaration
                      | method_call SEMICOLON
                      | expression SEMICOLON'''
         p[0] = p[1] if p[1] is not None else (lambda: None)
+    def p_do_while_loop(self, p):
+        'do_while_loop : AGUERO LBRACE program RBRACE WALKER LPAREN condition RPAREN SEMICOLON'
+        body = p[3] if isinstance(p[3], list) else []
+        condition = p[7]
+
+        if not callable(condition):
+            self.errors.encolar_error(" La condición del do-while no es válida.")
+            p[0] = lambda: None
+            return
+
+        try:
+            p[0] = self.semantic.handle_do_while(condition, body)
+        except Exception as e:
+            self.errors.encolar_error(f" Error en el cuerpo del do-while: {e}")
+            p[0] = lambda: None
 
     def p_declaration(self, p):
         '''declaration : MILITO IDENTIFIER SEMICOLON

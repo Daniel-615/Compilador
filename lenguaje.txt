@@ -33,4 +33,10 @@ forlan (goles) {
    comentario multilínea
    que no se ejecutará */
 // Este es un comentario de línea que no se ejecuta
-coutinho(nombre);
+coutinho(nombre); //imprime messi
+milito i = 0;
+
+aguero {
+    coutinho(i);
+    i = i cristiano 1;
+} walker (i < 5);

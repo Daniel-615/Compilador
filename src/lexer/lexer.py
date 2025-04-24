@@ -8,24 +8,26 @@ class Lexer:
     ]
 
     reserved = {
-        'messi': 'MESSI',
-        'pepe': 'PEPE',
-        'tchouameni': 'TCHOUAMENI',
-        'ronaldinho': 'RONALDINHO',
-        'cristiano': 'CRISTIANO',
+        'messi': 'MESSI',# *
+        'pepe': 'PEPE',# /
+        'tchouameni': 'TCHOUAMENI', # -
+        'ronaldinho': 'RONALDINHO', #default
+        'cristiano': 'CRISTIANO', # +
         'robben': 'ROBBEN', #else
-        'milito': 'MILITO',
+        'milito': 'MILITO', #int
         'zidane': 'ZIDANE',  # float
         'saviola': 'SAVIOLA',  # char
         'iniesta': 'INIESTA',  # string
         'valderrama': 'VALDERRAMA',  # boolean
-        'walker': 'WALKER',
-        'son': 'SON',
+        'walker': 'WALKER', #while
+        'son': 'SON', #case
         'forlan': 'FORLAN', #Switch
         'global': 'GLOBAL',
         'local': 'LOCAL',
         'ballack': 'BALLACK', #if
-        'coutinho': 'COUTINHO' #mostrar
+        'coutinho': 'COUTINHO', #mostrar
+        'aguero': 'AGUERO', #do
+        
     }
 
     tokens += list(reserved.values())

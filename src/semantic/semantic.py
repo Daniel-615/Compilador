@@ -109,7 +109,23 @@ class Semantic:
                 return False
 
         return condition
+    #do while (aguero ,walker)
+    def handle_do_while(self, condition_fn, body):
+        def action():
+            print(" Iniciando ciclo DO-WHILE")
+            iteration = 0
+            while True:
+                iteration += 1
+                print(f" Iteración #{iteration} del DO-WHILE")
+                for i, stmt in enumerate(body):
+                    if callable(stmt):
+                        stmt()
+                self._save_iteration_state()
+                if not condition_fn():
+                    break
+        return action
 
+    #while (walker)
     def handle_while(self, condition_fn, body):
         def action():
             print(f" WHILE detectado, cuerpo recibido: {body}")
@@ -167,6 +183,7 @@ class Semantic:
                     if callable(stmt):
                         stmt()
         return action
+    #swich
     def handle_switch(self, var_name, cases, default_body):
         def action():
             val = self._get_value(var_name)

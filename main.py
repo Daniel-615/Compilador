@@ -73,7 +73,7 @@ class Main:
                 with open(path, "r", encoding="utf-8") as f:
                     historial = json.load(f)
 
-                historial_html = '<h2>🌀 Cambios durante el WHILE</h2>'
+                historial_html = '<h2>🌀 Cambios durante los ciclos</h2>'
                 for entry in historial:
                     historial_html += f"<h4>Iteración #{entry['iteration']} – {entry['timestamp']}</h4>"
                     historial_html += "<table border='1'><tr><th>Variable</th><th>Valor</th></tr>"
