@@ -72,6 +72,6 @@ class SymbolTable:
             file.write(html)
         
         # Abrir el archivo en el navegador
-        webbrowser.open('file://' + os.path.realpath(file_path))
+        #webbrowser.open('file://' + os.path.realpath(file_path))
         
         return html

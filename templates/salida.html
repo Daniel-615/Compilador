@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Visualizador del Compilador</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .tab-buttons, .control-buttons {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #008CBA;
+            color: white;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #005f75;
+        }
+        .tab-content {
+            display: none;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .tab-content.active {
+            display: block;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 8px;
+            border: 1px solid #ccc;
+        }
+        th {
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+    <h1>Resultados del Compilador</h1>
+
+    <!-- Botones de control de ejecución -->
+    <div class="control-buttons">
+        <button onclick="togglePause()" id="pauseBtn">⏸ Pausar</button>
+    </div>
+
+    <!-- Botones para navegar entre secciones -->
+    <div class="tab-buttons">
+        <button onclick="showTab('symbolTable')">📄 Tabla de Símbolos</button>
+        <button onclick="showTab('lexicalErrors')">❌ Errores Léxicos</button>
+        <button onclick="showTab('syntaxErrors')">❌ Errores Sintácticos</button>
+        <button onclick="showTab('tokens')">🔤 Tokens</button>
+    </div>
+
+    <div id="symbolTable" class="tab-content">
+        <html><head><title>Tabla de Símbolos</title><link rel="stylesheet" href="./css/styles.css"></head><body><table border="1"><tr><th>Name</th><th>Type</th><th>Scope</th><th>Value</th></tr><tr><td>goles</td><td>milito</td><td>local</td><td>15</td></tr><tr><td>promedio</td><td>zidane</td><td>local</td><td>8.5</td></tr><tr><td>inicial</td><td>saviola</td><td>local</td><td>M</td></tr><tr><td>nombre</td><td>iniesta</td><td>local</td><td>Messi</td></tr><tr><td>leyenda</td><td>valderrama</td><td>local</td><td>true</td></tr></table>
+    </div>
+
+    <div id="lexicalErrors" class="tab-content">
+        <p style='color: green;'>No se encontraron errores.</p>
+    </div>
+
+    <div id="syntaxErrors" class="tab-content">
+        <p style='color: green;'>No se encontraron errores.</p>
+    </div>
+
+    <div id="tokens" class="tab-content">
+        <html><head><title>Tokens</title><link rel="stylesheet" href="./css/styles.css"></head><body><h2 style="color: red; text-align:center;">Tokens leídos</h2><table border="1" style="width: 80%; margin: auto; text-align: left;"><tr><th>#</th><th>Tipo de Token</th><th>Valor</th></tr><tr><td>1</td><td>MILITO</td><td>milito</td></tr><tr><td>2</td><td>IDENTIFIER</td><td>goles</td></tr><tr><td>3</td><td>EQUALS</td><td>=</td></tr><tr><td>4</td><td>NUMBER</td><td>10</td></tr><tr><td>5</td><td>SEMICOLON</td><td>;</td></tr><tr><td>6</td><td>ZIDANE</td><td>zidane</td></tr><tr><td>7</td><td>IDENTIFIER</td><td>promedio</td></tr><tr><td>8</td><td>EQUALS</td><td>=</td></tr><tr><td>9</td><td>NUMBER</td><td>7.5</td></tr><tr><td>10</td><td>SEMICOLON</td><td>;</td></tr><tr><td>11</td><td>SAVIOLA</td><td>saviola</td></tr><tr><td>12</td><td>IDENTIFIER</td><td>inicial</td></tr><tr><td>13</td><td>EQUALS</td><td>=</td></tr><tr><td>14</td><td>CHAR_LITERAL</td><td>M</td></tr><tr><td>15</td><td>SEMICOLON</td><td>;</td></tr><tr><td>16</td><td>INIESTA</td><td>iniesta</td></tr><tr><td>17</td><td>IDENTIFIER</td><td>nombre</td></tr><tr><td>18</td><td>EQUALS</td><td>=</td></tr><tr><td>19</td><td>STRING_LITERAL</td><td>Messi</td></tr><tr><td>20</td><td>SEMICOLON</td><td>;</td></tr><tr><td>21</td><td>VALDERRAMA</td><td>valderrama</td></tr><tr><td>22</td><td>IDENTIFIER</td><td>leyenda</td></tr><tr><td>23</td><td>EQUALS</td><td>=</td></tr><tr><td>24</td><td>IDENTIFIER</td><td>true</td></tr><tr><td>25</td><td>SEMICOLON</td><td>;</td></tr><tr><td>26</td><td>IDENTIFIER</td><td>calcular</td></tr><tr><td>27</td><td>LPAREN</td><td>(</td></tr><tr><td>28</td><td>RPAREN</td><td>)</td></tr><tr><td>29</td><td>LBRACE</td><td>{</td></tr><tr><td>30</td><td>IDENTIFIER</td><td>goles</td></tr><tr><td>31</td><td>EQUALS</td><td>=</td></tr><tr><td>32</td><td>IDENTIFIER</td><td>goles</td></tr><tr><td>33</td><td>CRISTIANO</td><td>cristiano</td></tr><tr><td>34</td><td>NUMBER</td><td>5</td></tr><tr><td>35</td><td>SEMICOLON</td><td>;</td></tr><tr><td>36</td><td>IDENTIFIER</td><td>promedio</td></tr><tr><td>37</td><td>EQUALS</td><td>=</td></tr><tr><td>38</td><td>IDENTIFIER</td><td>promedio</td></tr><tr><td>39</td><td>CRISTIANO</td><td>cristiano</td></tr><tr><td>40</td><td>NUMBER</td><td>1.0</td></tr><tr><td>41</td><td>SEMICOLON</td><td>;</td></tr><tr><td>42</td><td>RBRACE</td><td>}</td></tr><tr><td>43</td><td>IDENTIFIER</td><td>calcular</td></tr><tr><td>44</td><td>LPAREN</td><td>(</td></tr><tr><td>45</td><td>RPAREN</td><td>)</td></tr><tr><td>46</td><td>SEMICOLON</td><td>;</td></tr></table></body></html>
+    </div>
+
+    <script>
+        function showTab(tabId) {
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function togglePause() {
+            const current = localStorage.getItem("paused") === "true";
+            localStorage.setItem("paused", (!current).toString());
+            document.getElementById("pauseBtn").textContent = !current ? "▶️ Reanudar" : "⏸ Pausar";
+        }
+
+        // Mostrar por defecto la tabla de símbolos
+        showTab('symbolTable');
+
+        // Establecer estado inicial del botón
+        window.onload = () => {
+            const paused = localStorage.getItem("paused") === "true";
+            document.getElementById("pauseBtn").textContent = paused ? "▶️ Reanudar" : "⏸ Pausar";
+        }
+    </script>
+</body>
+</html>

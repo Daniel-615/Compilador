@@ -26,28 +26,23 @@ class Errors:
         return column
 
 
-    def errorHtml(self, nombre_archivo):
-        """Genera un HTML con la lista de errores sintácticos y léxicos en una tabla"""
+    def errorHtml(self, nombre_archivo=None):
+        """Retorna el HTML de la lista de errores sin generar archivos físicos."""
         if not self.errors:
-            return "No hay errores."
+            return "<p style='color: green;'>No se encontraron errores.</p>"
 
-        html = f'<html><head><title>Errores {nombre_archivo}</title><link rel="stylesheet" href="./css/styles.css"</head><body>'
-        html += f'<h2 style="color: red;">Errores {nombre_archivo}</h2>'
-        html += '<table border="1" style="width: 80%; margin: auto; text-align: left;">'
+        html = f'<div class="error-section">'
+        if nombre_archivo:
+            html += f'<h2 style="color: red;">Errores {nombre_archivo.capitalize()}</h2>'
+        else:
+            html += f'<h2 style="color: red;">Errores</h2>'
+
+        html += '<table class="error-table">'
         html += '<tr><th>#</th><th>Descripción del Error</th></tr>'
 
         for i, error in enumerate(self.errors, start=1):
             html += f'<tr><td>{i}</td><td>{error}</td></tr>'
 
-        html += '</table></body></html>'
-
-        # Guardar archivo
-        os.makedirs('templates', exist_ok=True)
-        file_path = os.path.join('templates', f'errors_{nombre_archivo}.html')
-
-        with open(file_path, 'w', encoding='utf-8') as file:
-            file.write(html)
-
-        webbrowser.open('file://' + os.path.realpath(file_path))  # Abrir en navegador
+        html += '</table></div>'
 
         return html

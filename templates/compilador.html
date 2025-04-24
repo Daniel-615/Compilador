@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Visualizador del Compilador</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .tab-buttons, .control-buttons {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #008CBA;
+            color: white;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #005f75;
+        }
+        .tab-content {
+            display: none;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .tab-content.active {
+            display: block;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 8px;
+            border: 1px solid #ccc;
+        }
+        th {
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+    <h1>Resultados del Compilador</h1>
+
+    <!-- Botones de control de ejecución -->
+    <div class="control-buttons">
+        <button onclick="togglePause()" id="pauseBtn">⏸ Pausar</button>
+    </div>
+
+    <!-- Botones para navegar entre secciones -->
+    <div class="tab-buttons">
+        <button onclick="showTab('symbolTable')">📄 Tabla de Símbolos</button>
+        <button onclick="showTab('lexicalErrors')">❌ Errores Léxicos</button>
+        <button onclick="showTab('syntaxErrors')">❌ Errores Sintácticos</button>
+        <button onclick="showTab('tokens')">🔤 Tokens</button>
+    </div>
+
+    <div id="symbolTable" class="tab-content">
+        {{SYMBOL_TABLE}}
+    </div>
+
+    <div id="lexicalErrors" class="tab-content">
+        {{LEXICAL_ERRORS}}
+    </div>
+
+    <div id="syntaxErrors" class="tab-content">
+        {{SYNTAX_ERRORS}}
+    </div>
+
+    <div id="tokens" class="tab-content">
+        {{TOKENS}}
+    </div>
+
+    <script>
+        function showTab(tabId) {
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function togglePause() {
+            const current = localStorage.getItem("paused") === "true";
+            localStorage.setItem("paused", (!current).toString());
+            document.getElementById("pauseBtn").textContent = !current ? "▶️ Reanudar" : "⏸ Pausar";
+        }
+
+        // Mostrar por defecto la tabla de símbolos
+        showTab('symbolTable');
+
+        // Establecer estado inicial del botón
+        window.onload = () => {
+            const paused = localStorage.getItem("paused") === "true";
+            document.getElementById("pauseBtn").textContent = paused ? "▶️ Reanudar" : "⏸ Pausar";
+        }
+    </script>
+</body>
+</html>

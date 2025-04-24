@@ -1,5 +1,5 @@
-# PARSER FINAL Y SEMANTIC CORREGIDO CON FUNCIONES Y MÉTODOS
 import ply.yacc as yacc
+import time
 
 class Parser:
     def __init__(self, lexer, sintatic_errors, semantic_handler):
@@ -7,6 +7,7 @@ class Parser:
         self.errors = sintatic_errors
         self.semantic = semantic_handler
         self.tokens = lexer.tokens
+        self.pause_event = semantic_handler.pause_event  # evento de pausa compartido
         self.parser = yacc.yacc(module=self, debug=True)
 
     def p_program(self, p):
@@ -24,6 +25,7 @@ class Parser:
                      | method_declaration
                      | method_call SEMICOLON
                      | expression SEMICOLON'''
+        self._check_pause()
         p[0] = p[1]
 
     def p_declaration(self, p):
@@ -98,11 +100,18 @@ class Parser:
         else:
             self.errors.encolar_error("Error de sintaxis: expresión incompleta.")
 
+    def _check_pause(self):
+        """Espera si el evento de pausa está desactivado"""
+        while not self.pause_event.is_set():
+            print("⏸ Ejecución pausada. Esperando reanudación...")
+            time.sleep(0.5)
+
     def parse(self, data):
         self.lexer.lexer.input(data)
         parsed = self.parser.parse(data, lexer=self.lexer.lexer)
         if parsed:
             for stmt in parsed:
+                self._check_pause()
                 if callable(stmt):
                     stmt()
         return parsed
