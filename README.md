@@ -25,7 +25,7 @@ Este proyecto es una implementación de un compilador para un lenguaje de progra
     ```
 3. Instala las dependencias:
     ```bash
-    pip install -r requirements.txt
+    pip install ply
     ```
 
 ## Uso
@@ -42,8 +42,8 @@ python main.py
 - `ccodeGen.py`: Generación de código máquina.
 - `tests/`: Directorio con pruebas unitarias.
 - `errors.py`: Bitácora de errores
--`semantic.py`: Lógica relacionada que se ejecutará en el parser 
-
+- `semantic.py`: Lógica relacionada que se ejecutará en el parser. 
+- `interCodeGenerator.py`: Genera instrucciones de código intermedio en formato de tres direcciones (Three Address Code), típicamente usadas para representar operaciones matemáticas y asignaciones.`: Crea operaciones matemáticas en 3 direcciones.
 ## Contribuciones
 Las contribuciones son bienvenidas. Por favor, abre un issue o envía un pull request.
 
