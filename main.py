@@ -92,7 +92,7 @@ class Main:
             webbrowser.open(f"file://{ruta_absoluta}")
 
         except Exception as e:
-            print("❌ Error en análisis:", e)
+            print(" Error en análisis:", e)
 
 if __name__ == "__main__":
     Main()

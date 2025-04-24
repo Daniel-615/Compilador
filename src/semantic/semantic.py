@@ -152,6 +152,21 @@ class Semantic:
             else:
                 self.errors.encolar_error(f" Error: Método '{name}' no está definido.")
         return action
+    
+    def handle_if(self, condition_fn, if_body, else_body):
+        def action():
+            if condition_fn():
+                print(" IF verdadero: ejecutando bloque")
+                for stmt in if_body:
+                    if callable(stmt):
+                        stmt()
+            else:
+                print(" IF falso: ejecutando ELSE")
+                for stmt in else_body:
+                    if callable(stmt):
+                        stmt()
+        return action
+
     def _save_iteration_state(self):
         temp_dir = tempfile.gettempdir()
         path = os.path.join(temp_dir, "tabla_simbolos_iteracion_historial.json")

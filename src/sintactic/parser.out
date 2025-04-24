@@ -4,7 +4,6 @@ Unused terminals:
 
     COMMA
     DOT
-    ELSE
     FORLAN
     GLOBAL
     GT
@@ -22,84 +21,89 @@ Rule 2     program -> program statement
 Rule 3     statement -> declaration
 Rule 4     statement -> assignment
 Rule 5     statement -> while_loop
-Rule 6     statement -> method_declaration
-Rule 7     statement -> method_call SEMICOLON
-Rule 8     statement -> expression SEMICOLON
-Rule 9     declaration -> MILITO IDENTIFIER SEMICOLON
-Rule 10    declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON
-Rule 11    declaration -> ZIDANE IDENTIFIER SEMICOLON
-Rule 12    declaration -> ZIDANE IDENTIFIER EQUALS expression SEMICOLON
-Rule 13    declaration -> SAVIOLA IDENTIFIER SEMICOLON
-Rule 14    declaration -> SAVIOLA IDENTIFIER EQUALS expression SEMICOLON
-Rule 15    declaration -> INIESTA IDENTIFIER SEMICOLON
-Rule 16    declaration -> INIESTA IDENTIFIER EQUALS expression SEMICOLON
-Rule 17    declaration -> VALDERRAMA IDENTIFIER SEMICOLON
-Rule 18    declaration -> VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON
-Rule 19    assignment -> IDENTIFIER EQUALS expression SEMICOLON
-Rule 20    expression -> expression CRISTIANO term
-Rule 21    expression -> expression TCHOUAMENI term
-Rule 22    expression -> term
-Rule 23    term -> term MESSI factor
-Rule 24    term -> term PEPE factor
-Rule 25    term -> factor
-Rule 26    factor -> NUMBER
-Rule 27    factor -> IDENTIFIER
-Rule 28    factor -> STRING_LITERAL
-Rule 29    factor -> CHAR_LITERAL
-Rule 30    factor -> method_call
-Rule 31    condition -> IDENTIFIER RELOP expression
-Rule 32    while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE
-Rule 33    method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE program RBRACE
-Rule 34    method_call -> IDENTIFIER LPAREN RPAREN
+Rule 6     statement -> if_statement
+Rule 7     statement -> method_declaration
+Rule 8     statement -> method_call SEMICOLON
+Rule 9     statement -> expression SEMICOLON
+Rule 10    declaration -> MILITO IDENTIFIER SEMICOLON
+Rule 11    declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON
+Rule 12    declaration -> ZIDANE IDENTIFIER SEMICOLON
+Rule 13    declaration -> ZIDANE IDENTIFIER EQUALS expression SEMICOLON
+Rule 14    declaration -> SAVIOLA IDENTIFIER SEMICOLON
+Rule 15    declaration -> SAVIOLA IDENTIFIER EQUALS expression SEMICOLON
+Rule 16    declaration -> INIESTA IDENTIFIER SEMICOLON
+Rule 17    declaration -> INIESTA IDENTIFIER EQUALS expression SEMICOLON
+Rule 18    declaration -> VALDERRAMA IDENTIFIER SEMICOLON
+Rule 19    declaration -> VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON
+Rule 20    assignment -> IDENTIFIER EQUALS expression SEMICOLON
+Rule 21    expression -> expression CRISTIANO term
+Rule 22    expression -> expression TCHOUAMENI term
+Rule 23    expression -> term
+Rule 24    term -> term MESSI factor
+Rule 25    term -> term PEPE factor
+Rule 26    term -> factor
+Rule 27    factor -> NUMBER
+Rule 28    factor -> IDENTIFIER
+Rule 29    factor -> STRING_LITERAL
+Rule 30    factor -> CHAR_LITERAL
+Rule 31    factor -> method_call
+Rule 32    if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE
+Rule 33    if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE ROBBEN LBRACE program RBRACE
+Rule 34    condition -> IDENTIFIER RELOP expression
+Rule 35    while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE
+Rule 36    method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE program RBRACE
+Rule 37    method_call -> IDENTIFIER LPAREN RPAREN
 
 Terminals, with rules where they appear
 
-CHAR_LITERAL         : 29
+BALLACK              : 32 33
+CHAR_LITERAL         : 30
 COMMA                : 
-CRISTIANO            : 20
+CRISTIANO            : 21
 DOT                  : 
-ELSE                 : 
-EQUALS               : 10 12 14 16 18 19
+EQUALS               : 11 13 15 17 19 20
 FORLAN               : 
 GLOBAL               : 
 GT                   : 
-IDENTIFIER           : 9 10 11 12 13 14 15 16 17 18 19 27 31 33 34
-INIESTA              : 15 16
-LBRACE               : 32 33
+IDENTIFIER           : 10 11 12 13 14 15 16 17 18 19 20 28 34 36 37
+INIESTA              : 16 17
+LBRACE               : 32 33 33 35 36
 LOCAL                : 
-LPAREN               : 32 33 34
+LPAREN               : 32 33 35 36 37
 LT                   : 
-MESSI                : 23
-MILITO               : 9 10
-NUMBER               : 26
-PEPE                 : 24
+MESSI                : 24
+MILITO               : 10 11
+NUMBER               : 27
+PEPE                 : 25
 QUOTE                : 
-RBRACE               : 32 33
-RELOP                : 31
+RBRACE               : 32 33 33 35 36
+RELOP                : 34
+ROBBEN               : 33
 RONALDINHO           : 
-RPAREN               : 32 33 34
-SAVIOLA              : 13 14
-SEMICOLON            : 7 8 9 10 11 12 13 14 15 16 17 18 19
+RPAREN               : 32 33 35 36 37
+SAVIOLA              : 14 15
+SEMICOLON            : 8 9 10 11 12 13 14 15 16 17 18 19 20
 SON                  : 
-STRING_LITERAL       : 28
-TCHOUAMENI           : 21
-VALDERRAMA           : 17 18
-WALKER               : 32
-ZIDANE               : 11 12
+STRING_LITERAL       : 29
+TCHOUAMENI           : 22
+VALDERRAMA           : 18 19
+WALKER               : 35
+ZIDANE               : 12 13
 error                : 
 
 Nonterminals, with rules where they appear
 
 assignment           : 4
-condition            : 32
+condition            : 32 33 35
 declaration          : 3
-expression           : 8 10 12 14 16 18 19 20 21 31
-factor               : 23 24 25
-method_call          : 7 30
-method_declaration   : 6
-program              : 2 32 33 0
+expression           : 9 11 13 15 17 19 20 21 22 34
+factor               : 24 25 26
+if_statement         : 6
+method_call          : 8 31
+method_declaration   : 7
+program              : 2 32 33 33 35 36 0
 statement            : 1 2
-term                 : 20 21 22 23 24
+term                 : 21 22 23 24 25
 while_loop           : 5
 
 Parsing method: LALR
@@ -112,56 +116,61 @@ state 0
     (3) statement -> . declaration
     (4) statement -> . assignment
     (5) statement -> . while_loop
-    (6) statement -> . method_declaration
-    (7) statement -> . method_call SEMICOLON
-    (8) statement -> . expression SEMICOLON
-    (9) declaration -> . MILITO IDENTIFIER SEMICOLON
-    (10) declaration -> . MILITO IDENTIFIER EQUALS expression SEMICOLON
-    (11) declaration -> . ZIDANE IDENTIFIER SEMICOLON
-    (12) declaration -> . ZIDANE IDENTIFIER EQUALS expression SEMICOLON
-    (13) declaration -> . SAVIOLA IDENTIFIER SEMICOLON
-    (14) declaration -> . SAVIOLA IDENTIFIER EQUALS expression SEMICOLON
-    (15) declaration -> . INIESTA IDENTIFIER SEMICOLON
-    (16) declaration -> . INIESTA IDENTIFIER EQUALS expression SEMICOLON
-    (17) declaration -> . VALDERRAMA IDENTIFIER SEMICOLON
-    (18) declaration -> . VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON
-    (19) assignment -> . IDENTIFIER EQUALS expression SEMICOLON
-    (32) while_loop -> . WALKER LPAREN condition RPAREN LBRACE program RBRACE
-    (33) method_declaration -> . IDENTIFIER LPAREN RPAREN LBRACE program RBRACE
-    (34) method_call -> . IDENTIFIER LPAREN RPAREN
-    (20) expression -> . expression CRISTIANO term
-    (21) expression -> . expression TCHOUAMENI term
-    (22) expression -> . term
-    (23) term -> . term MESSI factor
-    (24) term -> . term PEPE factor
-    (25) term -> . factor
-    (26) factor -> . NUMBER
-    (27) factor -> . IDENTIFIER
-    (28) factor -> . STRING_LITERAL
-    (29) factor -> . CHAR_LITERAL
-    (30) factor -> . method_call
+    (6) statement -> . if_statement
+    (7) statement -> . method_declaration
+    (8) statement -> . method_call SEMICOLON
+    (9) statement -> . expression SEMICOLON
+    (10) declaration -> . MILITO IDENTIFIER SEMICOLON
+    (11) declaration -> . MILITO IDENTIFIER EQUALS expression SEMICOLON
+    (12) declaration -> . ZIDANE IDENTIFIER SEMICOLON
+    (13) declaration -> . ZIDANE IDENTIFIER EQUALS expression SEMICOLON
+    (14) declaration -> . SAVIOLA IDENTIFIER SEMICOLON
+    (15) declaration -> . SAVIOLA IDENTIFIER EQUALS expression SEMICOLON
+    (16) declaration -> . INIESTA IDENTIFIER SEMICOLON
+    (17) declaration -> . INIESTA IDENTIFIER EQUALS expression SEMICOLON
+    (18) declaration -> . VALDERRAMA IDENTIFIER SEMICOLON
+    (19) declaration -> . VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON
+    (20) assignment -> . IDENTIFIER EQUALS expression SEMICOLON
+    (35) while_loop -> . WALKER LPAREN condition RPAREN LBRACE program RBRACE
+    (32) if_statement -> . BALLACK LPAREN condition RPAREN LBRACE program RBRACE
+    (33) if_statement -> . BALLACK LPAREN condition RPAREN LBRACE program RBRACE ROBBEN LBRACE program RBRACE
+    (36) method_declaration -> . IDENTIFIER LPAREN RPAREN LBRACE program RBRACE
+    (37) method_call -> . IDENTIFIER LPAREN RPAREN
+    (21) expression -> . expression CRISTIANO term
+    (22) expression -> . expression TCHOUAMENI term
+    (23) expression -> . term
+    (24) term -> . term MESSI factor
+    (25) term -> . term PEPE factor
+    (26) term -> . factor
+    (27) factor -> . NUMBER
+    (28) factor -> . IDENTIFIER
+    (29) factor -> . STRING_LITERAL
+    (30) factor -> . CHAR_LITERAL
+    (31) factor -> . method_call
 
-    MILITO          shift and go to state 9
-    ZIDANE          shift and go to state 11
-    SAVIOLA         shift and go to state 12
-    INIESTA         shift and go to state 13
-    VALDERRAMA      shift and go to state 14
-    IDENTIFIER      shift and go to state 10
-    WALKER          shift and go to state 15
-    NUMBER          shift and go to state 18
-    STRING_LITERAL  shift and go to state 19
-    CHAR_LITERAL    shift and go to state 20
+    MILITO          shift and go to state 10
+    ZIDANE          shift and go to state 12
+    SAVIOLA         shift and go to state 13
+    INIESTA         shift and go to state 14
+    VALDERRAMA      shift and go to state 15
+    IDENTIFIER      shift and go to state 11
+    WALKER          shift and go to state 16
+    BALLACK         shift and go to state 17
+    NUMBER          shift and go to state 20
+    STRING_LITERAL  shift and go to state 21
+    CHAR_LITERAL    shift and go to state 22
 
     program                        shift and go to state 1
     statement                      shift and go to state 2
     declaration                    shift and go to state 3
     assignment                     shift and go to state 4
     while_loop                     shift and go to state 5
-    method_declaration             shift and go to state 6
-    method_call                    shift and go to state 7
-    expression                     shift and go to state 8
-    term                           shift and go to state 16
-    factor                         shift and go to state 17
+    if_statement                   shift and go to state 6
+    method_declaration             shift and go to state 7
+    method_call                    shift and go to state 8
+    expression                     shift and go to state 9
+    term                           shift and go to state 18
+    factor                         shift and go to state 19
 
 state 1
 
@@ -170,55 +179,60 @@ state 1
     (3) statement -> . declaration
     (4) statement -> . assignment
     (5) statement -> . while_loop
-    (6) statement -> . method_declaration
-    (7) statement -> . method_call SEMICOLON
-    (8) statement -> . expression SEMICOLON
-    (9) declaration -> . MILITO IDENTIFIER SEMICOLON
-    (10) declaration -> . MILITO IDENTIFIER EQUALS expression SEMICOLON
-    (11) declaration -> . ZIDANE IDENTIFIER SEMICOLON
-    (12) declaration -> . ZIDANE IDENTIFIER EQUALS expression SEMICOLON
-    (13) declaration -> . SAVIOLA IDENTIFIER SEMICOLON
-    (14) declaration -> . SAVIOLA IDENTIFIER EQUALS expression SEMICOLON
-    (15) declaration -> . INIESTA IDENTIFIER SEMICOLON
-    (16) declaration -> . INIESTA IDENTIFIER EQUALS expression SEMICOLON
-    (17) declaration -> . VALDERRAMA IDENTIFIER SEMICOLON
-    (18) declaration -> . VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON
-    (19) assignment -> . IDENTIFIER EQUALS expression SEMICOLON
-    (32) while_loop -> . WALKER LPAREN condition RPAREN LBRACE program RBRACE
-    (33) method_declaration -> . IDENTIFIER LPAREN RPAREN LBRACE program RBRACE
-    (34) method_call -> . IDENTIFIER LPAREN RPAREN
-    (20) expression -> . expression CRISTIANO term
-    (21) expression -> . expression TCHOUAMENI term
-    (22) expression -> . term
-    (23) term -> . term MESSI factor
-    (24) term -> . term PEPE factor
-    (25) term -> . factor
-    (26) factor -> . NUMBER
-    (27) factor -> . IDENTIFIER
-    (28) factor -> . STRING_LITERAL
-    (29) factor -> . CHAR_LITERAL
-    (30) factor -> . method_call
+    (6) statement -> . if_statement
+    (7) statement -> . method_declaration
+    (8) statement -> . method_call SEMICOLON
+    (9) statement -> . expression SEMICOLON
+    (10) declaration -> . MILITO IDENTIFIER SEMICOLON
+    (11) declaration -> . MILITO IDENTIFIER EQUALS expression SEMICOLON
+    (12) declaration -> . ZIDANE IDENTIFIER SEMICOLON
+    (13) declaration -> . ZIDANE IDENTIFIER EQUALS expression SEMICOLON
+    (14) declaration -> . SAVIOLA IDENTIFIER SEMICOLON
+    (15) declaration -> . SAVIOLA IDENTIFIER EQUALS expression SEMICOLON
+    (16) declaration -> . INIESTA IDENTIFIER SEMICOLON
+    (17) declaration -> . INIESTA IDENTIFIER EQUALS expression SEMICOLON
+    (18) declaration -> . VALDERRAMA IDENTIFIER SEMICOLON
+    (19) declaration -> . VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON
+    (20) assignment -> . IDENTIFIER EQUALS expression SEMICOLON
+    (35) while_loop -> . WALKER LPAREN condition RPAREN LBRACE program RBRACE
+    (32) if_statement -> . BALLACK LPAREN condition RPAREN LBRACE program RBRACE
+    (33) if_statement -> . BALLACK LPAREN condition RPAREN LBRACE program RBRACE ROBBEN LBRACE program RBRACE
+    (36) method_declaration -> . IDENTIFIER LPAREN RPAREN LBRACE program RBRACE
+    (37) method_call -> . IDENTIFIER LPAREN RPAREN
+    (21) expression -> . expression CRISTIANO term
+    (22) expression -> . expression TCHOUAMENI term
+    (23) expression -> . term
+    (24) term -> . term MESSI factor
+    (25) term -> . term PEPE factor
+    (26) term -> . factor
+    (27) factor -> . NUMBER
+    (28) factor -> . IDENTIFIER
+    (29) factor -> . STRING_LITERAL
+    (30) factor -> . CHAR_LITERAL
+    (31) factor -> . method_call
 
-    MILITO          shift and go to state 9
-    ZIDANE          shift and go to state 11
-    SAVIOLA         shift and go to state 12
-    INIESTA         shift and go to state 13
-    VALDERRAMA      shift and go to state 14
-    IDENTIFIER      shift and go to state 10
-    WALKER          shift and go to state 15
-    NUMBER          shift and go to state 18
-    STRING_LITERAL  shift and go to state 19
-    CHAR_LITERAL    shift and go to state 20
+    MILITO          shift and go to state 10
+    ZIDANE          shift and go to state 12
+    SAVIOLA         shift and go to state 13
+    INIESTA         shift and go to state 14
+    VALDERRAMA      shift and go to state 15
+    IDENTIFIER      shift and go to state 11
+    WALKER          shift and go to state 16
+    BALLACK         shift and go to state 17
+    NUMBER          shift and go to state 20
+    STRING_LITERAL  shift and go to state 21
+    CHAR_LITERAL    shift and go to state 22
 
-    statement                      shift and go to state 21
+    statement                      shift and go to state 23
     declaration                    shift and go to state 3
     assignment                     shift and go to state 4
     while_loop                     shift and go to state 5
-    method_declaration             shift and go to state 6
-    method_call                    shift and go to state 7
-    expression                     shift and go to state 8
-    term                           shift and go to state 16
-    factor                         shift and go to state 17
+    if_statement                   shift and go to state 6
+    method_declaration             shift and go to state 7
+    method_call                    shift and go to state 8
+    expression                     shift and go to state 9
+    term                           shift and go to state 18
+    factor                         shift and go to state 19
 
 state 2
 
@@ -231,6 +245,7 @@ state 2
     VALDERRAMA      reduce using rule 1 (program -> statement .)
     IDENTIFIER      reduce using rule 1 (program -> statement .)
     WALKER          reduce using rule 1 (program -> statement .)
+    BALLACK         reduce using rule 1 (program -> statement .)
     NUMBER          reduce using rule 1 (program -> statement .)
     STRING_LITERAL  reduce using rule 1 (program -> statement .)
     CHAR_LITERAL    reduce using rule 1 (program -> statement .)
@@ -249,6 +264,7 @@ state 3
     VALDERRAMA      reduce using rule 3 (statement -> declaration .)
     IDENTIFIER      reduce using rule 3 (statement -> declaration .)
     WALKER          reduce using rule 3 (statement -> declaration .)
+    BALLACK         reduce using rule 3 (statement -> declaration .)
     NUMBER          reduce using rule 3 (statement -> declaration .)
     STRING_LITERAL  reduce using rule 3 (statement -> declaration .)
     CHAR_LITERAL    reduce using rule 3 (statement -> declaration .)
@@ -267,6 +283,7 @@ state 4
     VALDERRAMA      reduce using rule 4 (statement -> assignment .)
     IDENTIFIER      reduce using rule 4 (statement -> assignment .)
     WALKER          reduce using rule 4 (statement -> assignment .)
+    BALLACK         reduce using rule 4 (statement -> assignment .)
     NUMBER          reduce using rule 4 (statement -> assignment .)
     STRING_LITERAL  reduce using rule 4 (statement -> assignment .)
     CHAR_LITERAL    reduce using rule 4 (statement -> assignment .)
@@ -285,6 +302,7 @@ state 5
     VALDERRAMA      reduce using rule 5 (statement -> while_loop .)
     IDENTIFIER      reduce using rule 5 (statement -> while_loop .)
     WALKER          reduce using rule 5 (statement -> while_loop .)
+    BALLACK         reduce using rule 5 (statement -> while_loop .)
     NUMBER          reduce using rule 5 (statement -> while_loop .)
     STRING_LITERAL  reduce using rule 5 (statement -> while_loop .)
     CHAR_LITERAL    reduce using rule 5 (statement -> while_loop .)
@@ -294,174 +312,202 @@ state 5
 
 state 6
 
-    (6) statement -> method_declaration .
+    (6) statement -> if_statement .
 
-    MILITO          reduce using rule 6 (statement -> method_declaration .)
-    ZIDANE          reduce using rule 6 (statement -> method_declaration .)
-    SAVIOLA         reduce using rule 6 (statement -> method_declaration .)
-    INIESTA         reduce using rule 6 (statement -> method_declaration .)
-    VALDERRAMA      reduce using rule 6 (statement -> method_declaration .)
-    IDENTIFIER      reduce using rule 6 (statement -> method_declaration .)
-    WALKER          reduce using rule 6 (statement -> method_declaration .)
-    NUMBER          reduce using rule 6 (statement -> method_declaration .)
-    STRING_LITERAL  reduce using rule 6 (statement -> method_declaration .)
-    CHAR_LITERAL    reduce using rule 6 (statement -> method_declaration .)
-    $end            reduce using rule 6 (statement -> method_declaration .)
-    RBRACE          reduce using rule 6 (statement -> method_declaration .)
+    MILITO          reduce using rule 6 (statement -> if_statement .)
+    ZIDANE          reduce using rule 6 (statement -> if_statement .)
+    SAVIOLA         reduce using rule 6 (statement -> if_statement .)
+    INIESTA         reduce using rule 6 (statement -> if_statement .)
+    VALDERRAMA      reduce using rule 6 (statement -> if_statement .)
+    IDENTIFIER      reduce using rule 6 (statement -> if_statement .)
+    WALKER          reduce using rule 6 (statement -> if_statement .)
+    BALLACK         reduce using rule 6 (statement -> if_statement .)
+    NUMBER          reduce using rule 6 (statement -> if_statement .)
+    STRING_LITERAL  reduce using rule 6 (statement -> if_statement .)
+    CHAR_LITERAL    reduce using rule 6 (statement -> if_statement .)
+    $end            reduce using rule 6 (statement -> if_statement .)
+    RBRACE          reduce using rule 6 (statement -> if_statement .)
 
 
 state 7
 
-    (7) statement -> method_call . SEMICOLON
-    (30) factor -> method_call .
+    (7) statement -> method_declaration .
 
-  ! shift/reduce conflict for SEMICOLON resolved as shift
-    SEMICOLON       shift and go to state 22
-    MESSI           reduce using rule 30 (factor -> method_call .)
-    PEPE            reduce using rule 30 (factor -> method_call .)
-    CRISTIANO       reduce using rule 30 (factor -> method_call .)
-    TCHOUAMENI      reduce using rule 30 (factor -> method_call .)
-
-  ! SEMICOLON       [ reduce using rule 30 (factor -> method_call .) ]
+    MILITO          reduce using rule 7 (statement -> method_declaration .)
+    ZIDANE          reduce using rule 7 (statement -> method_declaration .)
+    SAVIOLA         reduce using rule 7 (statement -> method_declaration .)
+    INIESTA         reduce using rule 7 (statement -> method_declaration .)
+    VALDERRAMA      reduce using rule 7 (statement -> method_declaration .)
+    IDENTIFIER      reduce using rule 7 (statement -> method_declaration .)
+    WALKER          reduce using rule 7 (statement -> method_declaration .)
+    BALLACK         reduce using rule 7 (statement -> method_declaration .)
+    NUMBER          reduce using rule 7 (statement -> method_declaration .)
+    STRING_LITERAL  reduce using rule 7 (statement -> method_declaration .)
+    CHAR_LITERAL    reduce using rule 7 (statement -> method_declaration .)
+    $end            reduce using rule 7 (statement -> method_declaration .)
+    RBRACE          reduce using rule 7 (statement -> method_declaration .)
 
 
 state 8
 
-    (8) statement -> expression . SEMICOLON
-    (20) expression -> expression . CRISTIANO term
-    (21) expression -> expression . TCHOUAMENI term
+    (8) statement -> method_call . SEMICOLON
+    (31) factor -> method_call .
 
-    SEMICOLON       shift and go to state 23
-    CRISTIANO       shift and go to state 24
-    TCHOUAMENI      shift and go to state 25
+  ! shift/reduce conflict for SEMICOLON resolved as shift
+    SEMICOLON       shift and go to state 24
+    MESSI           reduce using rule 31 (factor -> method_call .)
+    PEPE            reduce using rule 31 (factor -> method_call .)
+    CRISTIANO       reduce using rule 31 (factor -> method_call .)
+    TCHOUAMENI      reduce using rule 31 (factor -> method_call .)
+
+  ! SEMICOLON       [ reduce using rule 31 (factor -> method_call .) ]
 
 
 state 9
 
-    (9) declaration -> MILITO . IDENTIFIER SEMICOLON
-    (10) declaration -> MILITO . IDENTIFIER EQUALS expression SEMICOLON
+    (9) statement -> expression . SEMICOLON
+    (21) expression -> expression . CRISTIANO term
+    (22) expression -> expression . TCHOUAMENI term
 
-    IDENTIFIER      shift and go to state 26
+    SEMICOLON       shift and go to state 25
+    CRISTIANO       shift and go to state 26
+    TCHOUAMENI      shift and go to state 27
 
 
 state 10
 
-    (19) assignment -> IDENTIFIER . EQUALS expression SEMICOLON
-    (33) method_declaration -> IDENTIFIER . LPAREN RPAREN LBRACE program RBRACE
-    (34) method_call -> IDENTIFIER . LPAREN RPAREN
-    (27) factor -> IDENTIFIER .
+    (10) declaration -> MILITO . IDENTIFIER SEMICOLON
+    (11) declaration -> MILITO . IDENTIFIER EQUALS expression SEMICOLON
 
-    EQUALS          shift and go to state 27
-    LPAREN          shift and go to state 28
-    MESSI           reduce using rule 27 (factor -> IDENTIFIER .)
-    PEPE            reduce using rule 27 (factor -> IDENTIFIER .)
-    SEMICOLON       reduce using rule 27 (factor -> IDENTIFIER .)
-    CRISTIANO       reduce using rule 27 (factor -> IDENTIFIER .)
-    TCHOUAMENI      reduce using rule 27 (factor -> IDENTIFIER .)
+    IDENTIFIER      shift and go to state 28
 
 
 state 11
 
-    (11) declaration -> ZIDANE . IDENTIFIER SEMICOLON
-    (12) declaration -> ZIDANE . IDENTIFIER EQUALS expression SEMICOLON
+    (20) assignment -> IDENTIFIER . EQUALS expression SEMICOLON
+    (36) method_declaration -> IDENTIFIER . LPAREN RPAREN LBRACE program RBRACE
+    (37) method_call -> IDENTIFIER . LPAREN RPAREN
+    (28) factor -> IDENTIFIER .
 
-    IDENTIFIER      shift and go to state 29
+    EQUALS          shift and go to state 29
+    LPAREN          shift and go to state 30
+    MESSI           reduce using rule 28 (factor -> IDENTIFIER .)
+    PEPE            reduce using rule 28 (factor -> IDENTIFIER .)
+    SEMICOLON       reduce using rule 28 (factor -> IDENTIFIER .)
+    CRISTIANO       reduce using rule 28 (factor -> IDENTIFIER .)
+    TCHOUAMENI      reduce using rule 28 (factor -> IDENTIFIER .)
 
 
 state 12
 
-    (13) declaration -> SAVIOLA . IDENTIFIER SEMICOLON
-    (14) declaration -> SAVIOLA . IDENTIFIER EQUALS expression SEMICOLON
-
-    IDENTIFIER      shift and go to state 30
-
-
-state 13
-
-    (15) declaration -> INIESTA . IDENTIFIER SEMICOLON
-    (16) declaration -> INIESTA . IDENTIFIER EQUALS expression SEMICOLON
+    (12) declaration -> ZIDANE . IDENTIFIER SEMICOLON
+    (13) declaration -> ZIDANE . IDENTIFIER EQUALS expression SEMICOLON
 
     IDENTIFIER      shift and go to state 31
 
 
-state 14
+state 13
 
-    (17) declaration -> VALDERRAMA . IDENTIFIER SEMICOLON
-    (18) declaration -> VALDERRAMA . IDENTIFIER EQUALS expression SEMICOLON
+    (14) declaration -> SAVIOLA . IDENTIFIER SEMICOLON
+    (15) declaration -> SAVIOLA . IDENTIFIER EQUALS expression SEMICOLON
 
     IDENTIFIER      shift and go to state 32
 
 
+state 14
+
+    (16) declaration -> INIESTA . IDENTIFIER SEMICOLON
+    (17) declaration -> INIESTA . IDENTIFIER EQUALS expression SEMICOLON
+
+    IDENTIFIER      shift and go to state 33
+
+
 state 15
 
-    (32) while_loop -> WALKER . LPAREN condition RPAREN LBRACE program RBRACE
+    (18) declaration -> VALDERRAMA . IDENTIFIER SEMICOLON
+    (19) declaration -> VALDERRAMA . IDENTIFIER EQUALS expression SEMICOLON
 
-    LPAREN          shift and go to state 33
+    IDENTIFIER      shift and go to state 34
 
 
 state 16
 
-    (22) expression -> term .
-    (23) term -> term . MESSI factor
-    (24) term -> term . PEPE factor
+    (35) while_loop -> WALKER . LPAREN condition RPAREN LBRACE program RBRACE
 
-    SEMICOLON       reduce using rule 22 (expression -> term .)
-    CRISTIANO       reduce using rule 22 (expression -> term .)
-    TCHOUAMENI      reduce using rule 22 (expression -> term .)
-    RPAREN          reduce using rule 22 (expression -> term .)
-    MESSI           shift and go to state 34
-    PEPE            shift and go to state 35
+    LPAREN          shift and go to state 35
 
 
 state 17
 
-    (25) term -> factor .
+    (32) if_statement -> BALLACK . LPAREN condition RPAREN LBRACE program RBRACE
+    (33) if_statement -> BALLACK . LPAREN condition RPAREN LBRACE program RBRACE ROBBEN LBRACE program RBRACE
 
-    MESSI           reduce using rule 25 (term -> factor .)
-    PEPE            reduce using rule 25 (term -> factor .)
-    SEMICOLON       reduce using rule 25 (term -> factor .)
-    CRISTIANO       reduce using rule 25 (term -> factor .)
-    TCHOUAMENI      reduce using rule 25 (term -> factor .)
-    RPAREN          reduce using rule 25 (term -> factor .)
+    LPAREN          shift and go to state 36
 
 
 state 18
 
-    (26) factor -> NUMBER .
+    (23) expression -> term .
+    (24) term -> term . MESSI factor
+    (25) term -> term . PEPE factor
 
-    MESSI           reduce using rule 26 (factor -> NUMBER .)
-    PEPE            reduce using rule 26 (factor -> NUMBER .)
-    SEMICOLON       reduce using rule 26 (factor -> NUMBER .)
-    CRISTIANO       reduce using rule 26 (factor -> NUMBER .)
-    TCHOUAMENI      reduce using rule 26 (factor -> NUMBER .)
-    RPAREN          reduce using rule 26 (factor -> NUMBER .)
+    SEMICOLON       reduce using rule 23 (expression -> term .)
+    CRISTIANO       reduce using rule 23 (expression -> term .)
+    TCHOUAMENI      reduce using rule 23 (expression -> term .)
+    RPAREN          reduce using rule 23 (expression -> term .)
+    MESSI           shift and go to state 37
+    PEPE            shift and go to state 38
 
 
 state 19
 
-    (28) factor -> STRING_LITERAL .
+    (26) term -> factor .
 
-    MESSI           reduce using rule 28 (factor -> STRING_LITERAL .)
-    PEPE            reduce using rule 28 (factor -> STRING_LITERAL .)
-    SEMICOLON       reduce using rule 28 (factor -> STRING_LITERAL .)
-    CRISTIANO       reduce using rule 28 (factor -> STRING_LITERAL .)
-    TCHOUAMENI      reduce using rule 28 (factor -> STRING_LITERAL .)
-    RPAREN          reduce using rule 28 (factor -> STRING_LITERAL .)
+    MESSI           reduce using rule 26 (term -> factor .)
+    PEPE            reduce using rule 26 (term -> factor .)
+    SEMICOLON       reduce using rule 26 (term -> factor .)
+    CRISTIANO       reduce using rule 26 (term -> factor .)
+    TCHOUAMENI      reduce using rule 26 (term -> factor .)
+    RPAREN          reduce using rule 26 (term -> factor .)
 
 
 state 20
 
-    (29) factor -> CHAR_LITERAL .
+    (27) factor -> NUMBER .
 
-    MESSI           reduce using rule 29 (factor -> CHAR_LITERAL .)
-    PEPE            reduce using rule 29 (factor -> CHAR_LITERAL .)
-    SEMICOLON       reduce using rule 29 (factor -> CHAR_LITERAL .)
-    CRISTIANO       reduce using rule 29 (factor -> CHAR_LITERAL .)
-    TCHOUAMENI      reduce using rule 29 (factor -> CHAR_LITERAL .)
-    RPAREN          reduce using rule 29 (factor -> CHAR_LITERAL .)
+    MESSI           reduce using rule 27 (factor -> NUMBER .)
+    PEPE            reduce using rule 27 (factor -> NUMBER .)
+    SEMICOLON       reduce using rule 27 (factor -> NUMBER .)
+    CRISTIANO       reduce using rule 27 (factor -> NUMBER .)
+    TCHOUAMENI      reduce using rule 27 (factor -> NUMBER .)
+    RPAREN          reduce using rule 27 (factor -> NUMBER .)
 
 
 state 21
+
+    (29) factor -> STRING_LITERAL .
+
+    MESSI           reduce using rule 29 (factor -> STRING_LITERAL .)
+    PEPE            reduce using rule 29 (factor -> STRING_LITERAL .)
+    SEMICOLON       reduce using rule 29 (factor -> STRING_LITERAL .)
+    CRISTIANO       reduce using rule 29 (factor -> STRING_LITERAL .)
+    TCHOUAMENI      reduce using rule 29 (factor -> STRING_LITERAL .)
+    RPAREN          reduce using rule 29 (factor -> STRING_LITERAL .)
+
+
+state 22
+
+    (30) factor -> CHAR_LITERAL .
+
+    MESSI           reduce using rule 30 (factor -> CHAR_LITERAL .)
+    PEPE            reduce using rule 30 (factor -> CHAR_LITERAL .)
+    SEMICOLON       reduce using rule 30 (factor -> CHAR_LITERAL .)
+    CRISTIANO       reduce using rule 30 (factor -> CHAR_LITERAL .)
+    TCHOUAMENI      reduce using rule 30 (factor -> CHAR_LITERAL .)
+    RPAREN          reduce using rule 30 (factor -> CHAR_LITERAL .)
+
+
+state 23
 
     (2) program -> program statement .
 
@@ -472,6 +518,7 @@ state 21
     VALDERRAMA      reduce using rule 2 (program -> program statement .)
     IDENTIFIER      reduce using rule 2 (program -> program statement .)
     WALKER          reduce using rule 2 (program -> program statement .)
+    BALLACK         reduce using rule 2 (program -> program statement .)
     NUMBER          reduce using rule 2 (program -> program statement .)
     STRING_LITERAL  reduce using rule 2 (program -> program statement .)
     CHAR_LITERAL    reduce using rule 2 (program -> program statement .)
@@ -479,1042 +526,1406 @@ state 21
     RBRACE          reduce using rule 2 (program -> program statement .)
 
 
-state 22
-
-    (7) statement -> method_call SEMICOLON .
-
-    MILITO          reduce using rule 7 (statement -> method_call SEMICOLON .)
-    ZIDANE          reduce using rule 7 (statement -> method_call SEMICOLON .)
-    SAVIOLA         reduce using rule 7 (statement -> method_call SEMICOLON .)
-    INIESTA         reduce using rule 7 (statement -> method_call SEMICOLON .)
-    VALDERRAMA      reduce using rule 7 (statement -> method_call SEMICOLON .)
-    IDENTIFIER      reduce using rule 7 (statement -> method_call SEMICOLON .)
-    WALKER          reduce using rule 7 (statement -> method_call SEMICOLON .)
-    NUMBER          reduce using rule 7 (statement -> method_call SEMICOLON .)
-    STRING_LITERAL  reduce using rule 7 (statement -> method_call SEMICOLON .)
-    CHAR_LITERAL    reduce using rule 7 (statement -> method_call SEMICOLON .)
-    $end            reduce using rule 7 (statement -> method_call SEMICOLON .)
-    RBRACE          reduce using rule 7 (statement -> method_call SEMICOLON .)
-
-
-state 23
-
-    (8) statement -> expression SEMICOLON .
-
-    MILITO          reduce using rule 8 (statement -> expression SEMICOLON .)
-    ZIDANE          reduce using rule 8 (statement -> expression SEMICOLON .)
-    SAVIOLA         reduce using rule 8 (statement -> expression SEMICOLON .)
-    INIESTA         reduce using rule 8 (statement -> expression SEMICOLON .)
-    VALDERRAMA      reduce using rule 8 (statement -> expression SEMICOLON .)
-    IDENTIFIER      reduce using rule 8 (statement -> expression SEMICOLON .)
-    WALKER          reduce using rule 8 (statement -> expression SEMICOLON .)
-    NUMBER          reduce using rule 8 (statement -> expression SEMICOLON .)
-    STRING_LITERAL  reduce using rule 8 (statement -> expression SEMICOLON .)
-    CHAR_LITERAL    reduce using rule 8 (statement -> expression SEMICOLON .)
-    $end            reduce using rule 8 (statement -> expression SEMICOLON .)
-    RBRACE          reduce using rule 8 (statement -> expression SEMICOLON .)
-
-
 state 24
 
-    (20) expression -> expression CRISTIANO . term
-    (23) term -> . term MESSI factor
-    (24) term -> . term PEPE factor
-    (25) term -> . factor
-    (26) factor -> . NUMBER
-    (27) factor -> . IDENTIFIER
-    (28) factor -> . STRING_LITERAL
-    (29) factor -> . CHAR_LITERAL
-    (30) factor -> . method_call
-    (34) method_call -> . IDENTIFIER LPAREN RPAREN
+    (8) statement -> method_call SEMICOLON .
 
-    NUMBER          shift and go to state 18
-    IDENTIFIER      shift and go to state 37
-    STRING_LITERAL  shift and go to state 19
-    CHAR_LITERAL    shift and go to state 20
+    MILITO          reduce using rule 8 (statement -> method_call SEMICOLON .)
+    ZIDANE          reduce using rule 8 (statement -> method_call SEMICOLON .)
+    SAVIOLA         reduce using rule 8 (statement -> method_call SEMICOLON .)
+    INIESTA         reduce using rule 8 (statement -> method_call SEMICOLON .)
+    VALDERRAMA      reduce using rule 8 (statement -> method_call SEMICOLON .)
+    IDENTIFIER      reduce using rule 8 (statement -> method_call SEMICOLON .)
+    WALKER          reduce using rule 8 (statement -> method_call SEMICOLON .)
+    BALLACK         reduce using rule 8 (statement -> method_call SEMICOLON .)
+    NUMBER          reduce using rule 8 (statement -> method_call SEMICOLON .)
+    STRING_LITERAL  reduce using rule 8 (statement -> method_call SEMICOLON .)
+    CHAR_LITERAL    reduce using rule 8 (statement -> method_call SEMICOLON .)
+    $end            reduce using rule 8 (statement -> method_call SEMICOLON .)
+    RBRACE          reduce using rule 8 (statement -> method_call SEMICOLON .)
 
-    term                           shift and go to state 36
-    factor                         shift and go to state 17
-    method_call                    shift and go to state 38
 
 state 25
 
-    (21) expression -> expression TCHOUAMENI . term
-    (23) term -> . term MESSI factor
-    (24) term -> . term PEPE factor
-    (25) term -> . factor
-    (26) factor -> . NUMBER
-    (27) factor -> . IDENTIFIER
-    (28) factor -> . STRING_LITERAL
-    (29) factor -> . CHAR_LITERAL
-    (30) factor -> . method_call
-    (34) method_call -> . IDENTIFIER LPAREN RPAREN
+    (9) statement -> expression SEMICOLON .
 
-    NUMBER          shift and go to state 18
-    IDENTIFIER      shift and go to state 37
-    STRING_LITERAL  shift and go to state 19
-    CHAR_LITERAL    shift and go to state 20
+    MILITO          reduce using rule 9 (statement -> expression SEMICOLON .)
+    ZIDANE          reduce using rule 9 (statement -> expression SEMICOLON .)
+    SAVIOLA         reduce using rule 9 (statement -> expression SEMICOLON .)
+    INIESTA         reduce using rule 9 (statement -> expression SEMICOLON .)
+    VALDERRAMA      reduce using rule 9 (statement -> expression SEMICOLON .)
+    IDENTIFIER      reduce using rule 9 (statement -> expression SEMICOLON .)
+    WALKER          reduce using rule 9 (statement -> expression SEMICOLON .)
+    BALLACK         reduce using rule 9 (statement -> expression SEMICOLON .)
+    NUMBER          reduce using rule 9 (statement -> expression SEMICOLON .)
+    STRING_LITERAL  reduce using rule 9 (statement -> expression SEMICOLON .)
+    CHAR_LITERAL    reduce using rule 9 (statement -> expression SEMICOLON .)
+    $end            reduce using rule 9 (statement -> expression SEMICOLON .)
+    RBRACE          reduce using rule 9 (statement -> expression SEMICOLON .)
 
-    term                           shift and go to state 39
-    factor                         shift and go to state 17
-    method_call                    shift and go to state 38
 
 state 26
 
-    (9) declaration -> MILITO IDENTIFIER . SEMICOLON
-    (10) declaration -> MILITO IDENTIFIER . EQUALS expression SEMICOLON
+    (21) expression -> expression CRISTIANO . term
+    (24) term -> . term MESSI factor
+    (25) term -> . term PEPE factor
+    (26) term -> . factor
+    (27) factor -> . NUMBER
+    (28) factor -> . IDENTIFIER
+    (29) factor -> . STRING_LITERAL
+    (30) factor -> . CHAR_LITERAL
+    (31) factor -> . method_call
+    (37) method_call -> . IDENTIFIER LPAREN RPAREN
 
-    SEMICOLON       shift and go to state 40
-    EQUALS          shift and go to state 41
+    NUMBER          shift and go to state 20
+    IDENTIFIER      shift and go to state 40
+    STRING_LITERAL  shift and go to state 21
+    CHAR_LITERAL    shift and go to state 22
 
+    term                           shift and go to state 39
+    factor                         shift and go to state 19
+    method_call                    shift and go to state 41
 
 state 27
 
-    (19) assignment -> IDENTIFIER EQUALS . expression SEMICOLON
-    (20) expression -> . expression CRISTIANO term
-    (21) expression -> . expression TCHOUAMENI term
-    (22) expression -> . term
-    (23) term -> . term MESSI factor
-    (24) term -> . term PEPE factor
-    (25) term -> . factor
-    (26) factor -> . NUMBER
-    (27) factor -> . IDENTIFIER
-    (28) factor -> . STRING_LITERAL
-    (29) factor -> . CHAR_LITERAL
-    (30) factor -> . method_call
-    (34) method_call -> . IDENTIFIER LPAREN RPAREN
+    (22) expression -> expression TCHOUAMENI . term
+    (24) term -> . term MESSI factor
+    (25) term -> . term PEPE factor
+    (26) term -> . factor
+    (27) factor -> . NUMBER
+    (28) factor -> . IDENTIFIER
+    (29) factor -> . STRING_LITERAL
+    (30) factor -> . CHAR_LITERAL
+    (31) factor -> . method_call
+    (37) method_call -> . IDENTIFIER LPAREN RPAREN
 
-    NUMBER          shift and go to state 18
-    IDENTIFIER      shift and go to state 37
-    STRING_LITERAL  shift and go to state 19
-    CHAR_LITERAL    shift and go to state 20
+    NUMBER          shift and go to state 20
+    IDENTIFIER      shift and go to state 40
+    STRING_LITERAL  shift and go to state 21
+    CHAR_LITERAL    shift and go to state 22
 
-    expression                     shift and go to state 42
-    term                           shift and go to state 16
-    factor                         shift and go to state 17
-    method_call                    shift and go to state 38
+    term                           shift and go to state 42
+    factor                         shift and go to state 19
+    method_call                    shift and go to state 41
 
 state 28
 
-    (33) method_declaration -> IDENTIFIER LPAREN . RPAREN LBRACE program RBRACE
-    (34) method_call -> IDENTIFIER LPAREN . RPAREN
+    (10) declaration -> MILITO IDENTIFIER . SEMICOLON
+    (11) declaration -> MILITO IDENTIFIER . EQUALS expression SEMICOLON
 
-    RPAREN          shift and go to state 43
+    SEMICOLON       shift and go to state 43
+    EQUALS          shift and go to state 44
 
 
 state 29
 
-    (11) declaration -> ZIDANE IDENTIFIER . SEMICOLON
-    (12) declaration -> ZIDANE IDENTIFIER . EQUALS expression SEMICOLON
+    (20) assignment -> IDENTIFIER EQUALS . expression SEMICOLON
+    (21) expression -> . expression CRISTIANO term
+    (22) expression -> . expression TCHOUAMENI term
+    (23) expression -> . term
+    (24) term -> . term MESSI factor
+    (25) term -> . term PEPE factor
+    (26) term -> . factor
+    (27) factor -> . NUMBER
+    (28) factor -> . IDENTIFIER
+    (29) factor -> . STRING_LITERAL
+    (30) factor -> . CHAR_LITERAL
+    (31) factor -> . method_call
+    (37) method_call -> . IDENTIFIER LPAREN RPAREN
 
-    SEMICOLON       shift and go to state 44
-    EQUALS          shift and go to state 45
+    NUMBER          shift and go to state 20
+    IDENTIFIER      shift and go to state 40
+    STRING_LITERAL  shift and go to state 21
+    CHAR_LITERAL    shift and go to state 22
 
+    expression                     shift and go to state 45
+    term                           shift and go to state 18
+    factor                         shift and go to state 19
+    method_call                    shift and go to state 41
 
 state 30
 
-    (13) declaration -> SAVIOLA IDENTIFIER . SEMICOLON
-    (14) declaration -> SAVIOLA IDENTIFIER . EQUALS expression SEMICOLON
+    (36) method_declaration -> IDENTIFIER LPAREN . RPAREN LBRACE program RBRACE
+    (37) method_call -> IDENTIFIER LPAREN . RPAREN
 
-    SEMICOLON       shift and go to state 46
-    EQUALS          shift and go to state 47
+    RPAREN          shift and go to state 46
 
 
 state 31
 
-    (15) declaration -> INIESTA IDENTIFIER . SEMICOLON
-    (16) declaration -> INIESTA IDENTIFIER . EQUALS expression SEMICOLON
+    (12) declaration -> ZIDANE IDENTIFIER . SEMICOLON
+    (13) declaration -> ZIDANE IDENTIFIER . EQUALS expression SEMICOLON
 
-    SEMICOLON       shift and go to state 48
-    EQUALS          shift and go to state 49
+    SEMICOLON       shift and go to state 47
+    EQUALS          shift and go to state 48
 
 
 state 32
 
-    (17) declaration -> VALDERRAMA IDENTIFIER . SEMICOLON
-    (18) declaration -> VALDERRAMA IDENTIFIER . EQUALS expression SEMICOLON
+    (14) declaration -> SAVIOLA IDENTIFIER . SEMICOLON
+    (15) declaration -> SAVIOLA IDENTIFIER . EQUALS expression SEMICOLON
 
-    SEMICOLON       shift and go to state 50
-    EQUALS          shift and go to state 51
+    SEMICOLON       shift and go to state 49
+    EQUALS          shift and go to state 50
 
 
 state 33
 
-    (32) while_loop -> WALKER LPAREN . condition RPAREN LBRACE program RBRACE
-    (31) condition -> . IDENTIFIER RELOP expression
+    (16) declaration -> INIESTA IDENTIFIER . SEMICOLON
+    (17) declaration -> INIESTA IDENTIFIER . EQUALS expression SEMICOLON
 
-    IDENTIFIER      shift and go to state 53
+    SEMICOLON       shift and go to state 51
+    EQUALS          shift and go to state 52
 
-    condition                      shift and go to state 52
 
 state 34
 
-    (23) term -> term MESSI . factor
-    (26) factor -> . NUMBER
-    (27) factor -> . IDENTIFIER
-    (28) factor -> . STRING_LITERAL
-    (29) factor -> . CHAR_LITERAL
-    (30) factor -> . method_call
-    (34) method_call -> . IDENTIFIER LPAREN RPAREN
+    (18) declaration -> VALDERRAMA IDENTIFIER . SEMICOLON
+    (19) declaration -> VALDERRAMA IDENTIFIER . EQUALS expression SEMICOLON
 
-    NUMBER          shift and go to state 18
-    IDENTIFIER      shift and go to state 37
-    STRING_LITERAL  shift and go to state 19
-    CHAR_LITERAL    shift and go to state 20
+    SEMICOLON       shift and go to state 53
+    EQUALS          shift and go to state 54
 
-    factor                         shift and go to state 54
-    method_call                    shift and go to state 38
 
 state 35
 
-    (24) term -> term PEPE . factor
-    (26) factor -> . NUMBER
-    (27) factor -> . IDENTIFIER
-    (28) factor -> . STRING_LITERAL
-    (29) factor -> . CHAR_LITERAL
-    (30) factor -> . method_call
-    (34) method_call -> . IDENTIFIER LPAREN RPAREN
+    (35) while_loop -> WALKER LPAREN . condition RPAREN LBRACE program RBRACE
+    (34) condition -> . IDENTIFIER RELOP expression
 
-    NUMBER          shift and go to state 18
-    IDENTIFIER      shift and go to state 37
-    STRING_LITERAL  shift and go to state 19
-    CHAR_LITERAL    shift and go to state 20
+    IDENTIFIER      shift and go to state 56
 
-    factor                         shift and go to state 55
-    method_call                    shift and go to state 38
+    condition                      shift and go to state 55
 
 state 36
 
-    (20) expression -> expression CRISTIANO term .
-    (23) term -> term . MESSI factor
-    (24) term -> term . PEPE factor
+    (32) if_statement -> BALLACK LPAREN . condition RPAREN LBRACE program RBRACE
+    (33) if_statement -> BALLACK LPAREN . condition RPAREN LBRACE program RBRACE ROBBEN LBRACE program RBRACE
+    (34) condition -> . IDENTIFIER RELOP expression
 
-    SEMICOLON       reduce using rule 20 (expression -> expression CRISTIANO term .)
-    CRISTIANO       reduce using rule 20 (expression -> expression CRISTIANO term .)
-    TCHOUAMENI      reduce using rule 20 (expression -> expression CRISTIANO term .)
-    RPAREN          reduce using rule 20 (expression -> expression CRISTIANO term .)
-    MESSI           shift and go to state 34
-    PEPE            shift and go to state 35
+    IDENTIFIER      shift and go to state 56
 
+    condition                      shift and go to state 57
 
 state 37
 
-    (27) factor -> IDENTIFIER .
-    (34) method_call -> IDENTIFIER . LPAREN RPAREN
+    (24) term -> term MESSI . factor
+    (27) factor -> . NUMBER
+    (28) factor -> . IDENTIFIER
+    (29) factor -> . STRING_LITERAL
+    (30) factor -> . CHAR_LITERAL
+    (31) factor -> . method_call
+    (37) method_call -> . IDENTIFIER LPAREN RPAREN
 
-    MESSI           reduce using rule 27 (factor -> IDENTIFIER .)
-    PEPE            reduce using rule 27 (factor -> IDENTIFIER .)
-    SEMICOLON       reduce using rule 27 (factor -> IDENTIFIER .)
-    CRISTIANO       reduce using rule 27 (factor -> IDENTIFIER .)
-    TCHOUAMENI      reduce using rule 27 (factor -> IDENTIFIER .)
-    RPAREN          reduce using rule 27 (factor -> IDENTIFIER .)
-    LPAREN          shift and go to state 56
+    NUMBER          shift and go to state 20
+    IDENTIFIER      shift and go to state 40
+    STRING_LITERAL  shift and go to state 21
+    CHAR_LITERAL    shift and go to state 22
 
+    factor                         shift and go to state 58
+    method_call                    shift and go to state 41
 
 state 38
 
-    (30) factor -> method_call .
+    (25) term -> term PEPE . factor
+    (27) factor -> . NUMBER
+    (28) factor -> . IDENTIFIER
+    (29) factor -> . STRING_LITERAL
+    (30) factor -> . CHAR_LITERAL
+    (31) factor -> . method_call
+    (37) method_call -> . IDENTIFIER LPAREN RPAREN
 
-    MESSI           reduce using rule 30 (factor -> method_call .)
-    PEPE            reduce using rule 30 (factor -> method_call .)
-    SEMICOLON       reduce using rule 30 (factor -> method_call .)
-    CRISTIANO       reduce using rule 30 (factor -> method_call .)
-    TCHOUAMENI      reduce using rule 30 (factor -> method_call .)
-    RPAREN          reduce using rule 30 (factor -> method_call .)
+    NUMBER          shift and go to state 20
+    IDENTIFIER      shift and go to state 40
+    STRING_LITERAL  shift and go to state 21
+    CHAR_LITERAL    shift and go to state 22
 
+    factor                         shift and go to state 59
+    method_call                    shift and go to state 41
 
 state 39
 
-    (21) expression -> expression TCHOUAMENI term .
-    (23) term -> term . MESSI factor
-    (24) term -> term . PEPE factor
+    (21) expression -> expression CRISTIANO term .
+    (24) term -> term . MESSI factor
+    (25) term -> term . PEPE factor
 
-    SEMICOLON       reduce using rule 21 (expression -> expression TCHOUAMENI term .)
-    CRISTIANO       reduce using rule 21 (expression -> expression TCHOUAMENI term .)
-    TCHOUAMENI      reduce using rule 21 (expression -> expression TCHOUAMENI term .)
-    RPAREN          reduce using rule 21 (expression -> expression TCHOUAMENI term .)
-    MESSI           shift and go to state 34
-    PEPE            shift and go to state 35
+    SEMICOLON       reduce using rule 21 (expression -> expression CRISTIANO term .)
+    CRISTIANO       reduce using rule 21 (expression -> expression CRISTIANO term .)
+    TCHOUAMENI      reduce using rule 21 (expression -> expression CRISTIANO term .)
+    RPAREN          reduce using rule 21 (expression -> expression CRISTIANO term .)
+    MESSI           shift and go to state 37
+    PEPE            shift and go to state 38
 
 
 state 40
 
-    (9) declaration -> MILITO IDENTIFIER SEMICOLON .
+    (28) factor -> IDENTIFIER .
+    (37) method_call -> IDENTIFIER . LPAREN RPAREN
 
-    MILITO          reduce using rule 9 (declaration -> MILITO IDENTIFIER SEMICOLON .)
-    ZIDANE          reduce using rule 9 (declaration -> MILITO IDENTIFIER SEMICOLON .)
-    SAVIOLA         reduce using rule 9 (declaration -> MILITO IDENTIFIER SEMICOLON .)
-    INIESTA         reduce using rule 9 (declaration -> MILITO IDENTIFIER SEMICOLON .)
-    VALDERRAMA      reduce using rule 9 (declaration -> MILITO IDENTIFIER SEMICOLON .)
-    IDENTIFIER      reduce using rule 9 (declaration -> MILITO IDENTIFIER SEMICOLON .)
-    WALKER          reduce using rule 9 (declaration -> MILITO IDENTIFIER SEMICOLON .)
-    NUMBER          reduce using rule 9 (declaration -> MILITO IDENTIFIER SEMICOLON .)
-    STRING_LITERAL  reduce using rule 9 (declaration -> MILITO IDENTIFIER SEMICOLON .)
-    CHAR_LITERAL    reduce using rule 9 (declaration -> MILITO IDENTIFIER SEMICOLON .)
-    $end            reduce using rule 9 (declaration -> MILITO IDENTIFIER SEMICOLON .)
-    RBRACE          reduce using rule 9 (declaration -> MILITO IDENTIFIER SEMICOLON .)
+    MESSI           reduce using rule 28 (factor -> IDENTIFIER .)
+    PEPE            reduce using rule 28 (factor -> IDENTIFIER .)
+    SEMICOLON       reduce using rule 28 (factor -> IDENTIFIER .)
+    CRISTIANO       reduce using rule 28 (factor -> IDENTIFIER .)
+    TCHOUAMENI      reduce using rule 28 (factor -> IDENTIFIER .)
+    RPAREN          reduce using rule 28 (factor -> IDENTIFIER .)
+    LPAREN          shift and go to state 60
 
 
 state 41
 
-    (10) declaration -> MILITO IDENTIFIER EQUALS . expression SEMICOLON
-    (20) expression -> . expression CRISTIANO term
-    (21) expression -> . expression TCHOUAMENI term
-    (22) expression -> . term
-    (23) term -> . term MESSI factor
-    (24) term -> . term PEPE factor
-    (25) term -> . factor
-    (26) factor -> . NUMBER
-    (27) factor -> . IDENTIFIER
-    (28) factor -> . STRING_LITERAL
-    (29) factor -> . CHAR_LITERAL
-    (30) factor -> . method_call
-    (34) method_call -> . IDENTIFIER LPAREN RPAREN
+    (31) factor -> method_call .
 
-    NUMBER          shift and go to state 18
-    IDENTIFIER      shift and go to state 37
-    STRING_LITERAL  shift and go to state 19
-    CHAR_LITERAL    shift and go to state 20
+    MESSI           reduce using rule 31 (factor -> method_call .)
+    PEPE            reduce using rule 31 (factor -> method_call .)
+    SEMICOLON       reduce using rule 31 (factor -> method_call .)
+    CRISTIANO       reduce using rule 31 (factor -> method_call .)
+    TCHOUAMENI      reduce using rule 31 (factor -> method_call .)
+    RPAREN          reduce using rule 31 (factor -> method_call .)
 
-    expression                     shift and go to state 57
-    term                           shift and go to state 16
-    factor                         shift and go to state 17
-    method_call                    shift and go to state 38
 
 state 42
 
-    (19) assignment -> IDENTIFIER EQUALS expression . SEMICOLON
-    (20) expression -> expression . CRISTIANO term
-    (21) expression -> expression . TCHOUAMENI term
+    (22) expression -> expression TCHOUAMENI term .
+    (24) term -> term . MESSI factor
+    (25) term -> term . PEPE factor
 
-    SEMICOLON       shift and go to state 58
-    CRISTIANO       shift and go to state 24
-    TCHOUAMENI      shift and go to state 25
+    SEMICOLON       reduce using rule 22 (expression -> expression TCHOUAMENI term .)
+    CRISTIANO       reduce using rule 22 (expression -> expression TCHOUAMENI term .)
+    TCHOUAMENI      reduce using rule 22 (expression -> expression TCHOUAMENI term .)
+    RPAREN          reduce using rule 22 (expression -> expression TCHOUAMENI term .)
+    MESSI           shift and go to state 37
+    PEPE            shift and go to state 38
 
 
 state 43
 
-    (33) method_declaration -> IDENTIFIER LPAREN RPAREN . LBRACE program RBRACE
-    (34) method_call -> IDENTIFIER LPAREN RPAREN .
+    (10) declaration -> MILITO IDENTIFIER SEMICOLON .
 
-    LBRACE          shift and go to state 59
-    SEMICOLON       reduce using rule 34 (method_call -> IDENTIFIER LPAREN RPAREN .)
-    MESSI           reduce using rule 34 (method_call -> IDENTIFIER LPAREN RPAREN .)
-    PEPE            reduce using rule 34 (method_call -> IDENTIFIER LPAREN RPAREN .)
-    CRISTIANO       reduce using rule 34 (method_call -> IDENTIFIER LPAREN RPAREN .)
-    TCHOUAMENI      reduce using rule 34 (method_call -> IDENTIFIER LPAREN RPAREN .)
+    MILITO          reduce using rule 10 (declaration -> MILITO IDENTIFIER SEMICOLON .)
+    ZIDANE          reduce using rule 10 (declaration -> MILITO IDENTIFIER SEMICOLON .)
+    SAVIOLA         reduce using rule 10 (declaration -> MILITO IDENTIFIER SEMICOLON .)
+    INIESTA         reduce using rule 10 (declaration -> MILITO IDENTIFIER SEMICOLON .)
+    VALDERRAMA      reduce using rule 10 (declaration -> MILITO IDENTIFIER SEMICOLON .)
+    IDENTIFIER      reduce using rule 10 (declaration -> MILITO IDENTIFIER SEMICOLON .)
+    WALKER          reduce using rule 10 (declaration -> MILITO IDENTIFIER SEMICOLON .)
+    BALLACK         reduce using rule 10 (declaration -> MILITO IDENTIFIER SEMICOLON .)
+    NUMBER          reduce using rule 10 (declaration -> MILITO IDENTIFIER SEMICOLON .)
+    STRING_LITERAL  reduce using rule 10 (declaration -> MILITO IDENTIFIER SEMICOLON .)
+    CHAR_LITERAL    reduce using rule 10 (declaration -> MILITO IDENTIFIER SEMICOLON .)
+    $end            reduce using rule 10 (declaration -> MILITO IDENTIFIER SEMICOLON .)
+    RBRACE          reduce using rule 10 (declaration -> MILITO IDENTIFIER SEMICOLON .)
 
 
 state 44
 
-    (11) declaration -> ZIDANE IDENTIFIER SEMICOLON .
+    (11) declaration -> MILITO IDENTIFIER EQUALS . expression SEMICOLON
+    (21) expression -> . expression CRISTIANO term
+    (22) expression -> . expression TCHOUAMENI term
+    (23) expression -> . term
+    (24) term -> . term MESSI factor
+    (25) term -> . term PEPE factor
+    (26) term -> . factor
+    (27) factor -> . NUMBER
+    (28) factor -> . IDENTIFIER
+    (29) factor -> . STRING_LITERAL
+    (30) factor -> . CHAR_LITERAL
+    (31) factor -> . method_call
+    (37) method_call -> . IDENTIFIER LPAREN RPAREN
 
-    MILITO          reduce using rule 11 (declaration -> ZIDANE IDENTIFIER SEMICOLON .)
-    ZIDANE          reduce using rule 11 (declaration -> ZIDANE IDENTIFIER SEMICOLON .)
-    SAVIOLA         reduce using rule 11 (declaration -> ZIDANE IDENTIFIER SEMICOLON .)
-    INIESTA         reduce using rule 11 (declaration -> ZIDANE IDENTIFIER SEMICOLON .)
-    VALDERRAMA      reduce using rule 11 (declaration -> ZIDANE IDENTIFIER SEMICOLON .)
-    IDENTIFIER      reduce using rule 11 (declaration -> ZIDANE IDENTIFIER SEMICOLON .)
-    WALKER          reduce using rule 11 (declaration -> ZIDANE IDENTIFIER SEMICOLON .)
-    NUMBER          reduce using rule 11 (declaration -> ZIDANE IDENTIFIER SEMICOLON .)
-    STRING_LITERAL  reduce using rule 11 (declaration -> ZIDANE IDENTIFIER SEMICOLON .)
-    CHAR_LITERAL    reduce using rule 11 (declaration -> ZIDANE IDENTIFIER SEMICOLON .)
-    $end            reduce using rule 11 (declaration -> ZIDANE IDENTIFIER SEMICOLON .)
-    RBRACE          reduce using rule 11 (declaration -> ZIDANE IDENTIFIER SEMICOLON .)
+    NUMBER          shift and go to state 20
+    IDENTIFIER      shift and go to state 40
+    STRING_LITERAL  shift and go to state 21
+    CHAR_LITERAL    shift and go to state 22
 
+    expression                     shift and go to state 61
+    term                           shift and go to state 18
+    factor                         shift and go to state 19
+    method_call                    shift and go to state 41
 
 state 45
 
-    (12) declaration -> ZIDANE IDENTIFIER EQUALS . expression SEMICOLON
-    (20) expression -> . expression CRISTIANO term
-    (21) expression -> . expression TCHOUAMENI term
-    (22) expression -> . term
-    (23) term -> . term MESSI factor
-    (24) term -> . term PEPE factor
-    (25) term -> . factor
-    (26) factor -> . NUMBER
-    (27) factor -> . IDENTIFIER
-    (28) factor -> . STRING_LITERAL
-    (29) factor -> . CHAR_LITERAL
-    (30) factor -> . method_call
-    (34) method_call -> . IDENTIFIER LPAREN RPAREN
+    (20) assignment -> IDENTIFIER EQUALS expression . SEMICOLON
+    (21) expression -> expression . CRISTIANO term
+    (22) expression -> expression . TCHOUAMENI term
 
-    NUMBER          shift and go to state 18
-    IDENTIFIER      shift and go to state 37
-    STRING_LITERAL  shift and go to state 19
-    CHAR_LITERAL    shift and go to state 20
+    SEMICOLON       shift and go to state 62
+    CRISTIANO       shift and go to state 26
+    TCHOUAMENI      shift and go to state 27
 
-    expression                     shift and go to state 60
-    term                           shift and go to state 16
-    factor                         shift and go to state 17
-    method_call                    shift and go to state 38
 
 state 46
 
-    (13) declaration -> SAVIOLA IDENTIFIER SEMICOLON .
+    (36) method_declaration -> IDENTIFIER LPAREN RPAREN . LBRACE program RBRACE
+    (37) method_call -> IDENTIFIER LPAREN RPAREN .
 
-    MILITO          reduce using rule 13 (declaration -> SAVIOLA IDENTIFIER SEMICOLON .)
-    ZIDANE          reduce using rule 13 (declaration -> SAVIOLA IDENTIFIER SEMICOLON .)
-    SAVIOLA         reduce using rule 13 (declaration -> SAVIOLA IDENTIFIER SEMICOLON .)
-    INIESTA         reduce using rule 13 (declaration -> SAVIOLA IDENTIFIER SEMICOLON .)
-    VALDERRAMA      reduce using rule 13 (declaration -> SAVIOLA IDENTIFIER SEMICOLON .)
-    IDENTIFIER      reduce using rule 13 (declaration -> SAVIOLA IDENTIFIER SEMICOLON .)
-    WALKER          reduce using rule 13 (declaration -> SAVIOLA IDENTIFIER SEMICOLON .)
-    NUMBER          reduce using rule 13 (declaration -> SAVIOLA IDENTIFIER SEMICOLON .)
-    STRING_LITERAL  reduce using rule 13 (declaration -> SAVIOLA IDENTIFIER SEMICOLON .)
-    CHAR_LITERAL    reduce using rule 13 (declaration -> SAVIOLA IDENTIFIER SEMICOLON .)
-    $end            reduce using rule 13 (declaration -> SAVIOLA IDENTIFIER SEMICOLON .)
-    RBRACE          reduce using rule 13 (declaration -> SAVIOLA IDENTIFIER SEMICOLON .)
+    LBRACE          shift and go to state 63
+    SEMICOLON       reduce using rule 37 (method_call -> IDENTIFIER LPAREN RPAREN .)
+    MESSI           reduce using rule 37 (method_call -> IDENTIFIER LPAREN RPAREN .)
+    PEPE            reduce using rule 37 (method_call -> IDENTIFIER LPAREN RPAREN .)
+    CRISTIANO       reduce using rule 37 (method_call -> IDENTIFIER LPAREN RPAREN .)
+    TCHOUAMENI      reduce using rule 37 (method_call -> IDENTIFIER LPAREN RPAREN .)
 
 
 state 47
 
-    (14) declaration -> SAVIOLA IDENTIFIER EQUALS . expression SEMICOLON
-    (20) expression -> . expression CRISTIANO term
-    (21) expression -> . expression TCHOUAMENI term
-    (22) expression -> . term
-    (23) term -> . term MESSI factor
-    (24) term -> . term PEPE factor
-    (25) term -> . factor
-    (26) factor -> . NUMBER
-    (27) factor -> . IDENTIFIER
-    (28) factor -> . STRING_LITERAL
-    (29) factor -> . CHAR_LITERAL
-    (30) factor -> . method_call
-    (34) method_call -> . IDENTIFIER LPAREN RPAREN
+    (12) declaration -> ZIDANE IDENTIFIER SEMICOLON .
 
-    NUMBER          shift and go to state 18
-    IDENTIFIER      shift and go to state 37
-    STRING_LITERAL  shift and go to state 19
-    CHAR_LITERAL    shift and go to state 20
+    MILITO          reduce using rule 12 (declaration -> ZIDANE IDENTIFIER SEMICOLON .)
+    ZIDANE          reduce using rule 12 (declaration -> ZIDANE IDENTIFIER SEMICOLON .)
+    SAVIOLA         reduce using rule 12 (declaration -> ZIDANE IDENTIFIER SEMICOLON .)
+    INIESTA         reduce using rule 12 (declaration -> ZIDANE IDENTIFIER SEMICOLON .)
+    VALDERRAMA      reduce using rule 12 (declaration -> ZIDANE IDENTIFIER SEMICOLON .)
+    IDENTIFIER      reduce using rule 12 (declaration -> ZIDANE IDENTIFIER SEMICOLON .)
+    WALKER          reduce using rule 12 (declaration -> ZIDANE IDENTIFIER SEMICOLON .)
+    BALLACK         reduce using rule 12 (declaration -> ZIDANE IDENTIFIER SEMICOLON .)
+    NUMBER          reduce using rule 12 (declaration -> ZIDANE IDENTIFIER SEMICOLON .)
+    STRING_LITERAL  reduce using rule 12 (declaration -> ZIDANE IDENTIFIER SEMICOLON .)
+    CHAR_LITERAL    reduce using rule 12 (declaration -> ZIDANE IDENTIFIER SEMICOLON .)
+    $end            reduce using rule 12 (declaration -> ZIDANE IDENTIFIER SEMICOLON .)
+    RBRACE          reduce using rule 12 (declaration -> ZIDANE IDENTIFIER SEMICOLON .)
 
-    expression                     shift and go to state 61
-    term                           shift and go to state 16
-    factor                         shift and go to state 17
-    method_call                    shift and go to state 38
 
 state 48
 
-    (15) declaration -> INIESTA IDENTIFIER SEMICOLON .
+    (13) declaration -> ZIDANE IDENTIFIER EQUALS . expression SEMICOLON
+    (21) expression -> . expression CRISTIANO term
+    (22) expression -> . expression TCHOUAMENI term
+    (23) expression -> . term
+    (24) term -> . term MESSI factor
+    (25) term -> . term PEPE factor
+    (26) term -> . factor
+    (27) factor -> . NUMBER
+    (28) factor -> . IDENTIFIER
+    (29) factor -> . STRING_LITERAL
+    (30) factor -> . CHAR_LITERAL
+    (31) factor -> . method_call
+    (37) method_call -> . IDENTIFIER LPAREN RPAREN
 
-    MILITO          reduce using rule 15 (declaration -> INIESTA IDENTIFIER SEMICOLON .)
-    ZIDANE          reduce using rule 15 (declaration -> INIESTA IDENTIFIER SEMICOLON .)
-    SAVIOLA         reduce using rule 15 (declaration -> INIESTA IDENTIFIER SEMICOLON .)
-    INIESTA         reduce using rule 15 (declaration -> INIESTA IDENTIFIER SEMICOLON .)
-    VALDERRAMA      reduce using rule 15 (declaration -> INIESTA IDENTIFIER SEMICOLON .)
-    IDENTIFIER      reduce using rule 15 (declaration -> INIESTA IDENTIFIER SEMICOLON .)
-    WALKER          reduce using rule 15 (declaration -> INIESTA IDENTIFIER SEMICOLON .)
-    NUMBER          reduce using rule 15 (declaration -> INIESTA IDENTIFIER SEMICOLON .)
-    STRING_LITERAL  reduce using rule 15 (declaration -> INIESTA IDENTIFIER SEMICOLON .)
-    CHAR_LITERAL    reduce using rule 15 (declaration -> INIESTA IDENTIFIER SEMICOLON .)
-    $end            reduce using rule 15 (declaration -> INIESTA IDENTIFIER SEMICOLON .)
-    RBRACE          reduce using rule 15 (declaration -> INIESTA IDENTIFIER SEMICOLON .)
+    NUMBER          shift and go to state 20
+    IDENTIFIER      shift and go to state 40
+    STRING_LITERAL  shift and go to state 21
+    CHAR_LITERAL    shift and go to state 22
 
+    expression                     shift and go to state 64
+    term                           shift and go to state 18
+    factor                         shift and go to state 19
+    method_call                    shift and go to state 41
 
 state 49
 
-    (16) declaration -> INIESTA IDENTIFIER EQUALS . expression SEMICOLON
-    (20) expression -> . expression CRISTIANO term
-    (21) expression -> . expression TCHOUAMENI term
-    (22) expression -> . term
-    (23) term -> . term MESSI factor
-    (24) term -> . term PEPE factor
-    (25) term -> . factor
-    (26) factor -> . NUMBER
-    (27) factor -> . IDENTIFIER
-    (28) factor -> . STRING_LITERAL
-    (29) factor -> . CHAR_LITERAL
-    (30) factor -> . method_call
-    (34) method_call -> . IDENTIFIER LPAREN RPAREN
+    (14) declaration -> SAVIOLA IDENTIFIER SEMICOLON .
 
-    NUMBER          shift and go to state 18
-    IDENTIFIER      shift and go to state 37
-    STRING_LITERAL  shift and go to state 19
-    CHAR_LITERAL    shift and go to state 20
+    MILITO          reduce using rule 14 (declaration -> SAVIOLA IDENTIFIER SEMICOLON .)
+    ZIDANE          reduce using rule 14 (declaration -> SAVIOLA IDENTIFIER SEMICOLON .)
+    SAVIOLA         reduce using rule 14 (declaration -> SAVIOLA IDENTIFIER SEMICOLON .)
+    INIESTA         reduce using rule 14 (declaration -> SAVIOLA IDENTIFIER SEMICOLON .)
+    VALDERRAMA      reduce using rule 14 (declaration -> SAVIOLA IDENTIFIER SEMICOLON .)
+    IDENTIFIER      reduce using rule 14 (declaration -> SAVIOLA IDENTIFIER SEMICOLON .)
+    WALKER          reduce using rule 14 (declaration -> SAVIOLA IDENTIFIER SEMICOLON .)
+    BALLACK         reduce using rule 14 (declaration -> SAVIOLA IDENTIFIER SEMICOLON .)
+    NUMBER          reduce using rule 14 (declaration -> SAVIOLA IDENTIFIER SEMICOLON .)
+    STRING_LITERAL  reduce using rule 14 (declaration -> SAVIOLA IDENTIFIER SEMICOLON .)
+    CHAR_LITERAL    reduce using rule 14 (declaration -> SAVIOLA IDENTIFIER SEMICOLON .)
+    $end            reduce using rule 14 (declaration -> SAVIOLA IDENTIFIER SEMICOLON .)
+    RBRACE          reduce using rule 14 (declaration -> SAVIOLA IDENTIFIER SEMICOLON .)
 
-    expression                     shift and go to state 62
-    term                           shift and go to state 16
-    factor                         shift and go to state 17
-    method_call                    shift and go to state 38
 
 state 50
 
-    (17) declaration -> VALDERRAMA IDENTIFIER SEMICOLON .
+    (15) declaration -> SAVIOLA IDENTIFIER EQUALS . expression SEMICOLON
+    (21) expression -> . expression CRISTIANO term
+    (22) expression -> . expression TCHOUAMENI term
+    (23) expression -> . term
+    (24) term -> . term MESSI factor
+    (25) term -> . term PEPE factor
+    (26) term -> . factor
+    (27) factor -> . NUMBER
+    (28) factor -> . IDENTIFIER
+    (29) factor -> . STRING_LITERAL
+    (30) factor -> . CHAR_LITERAL
+    (31) factor -> . method_call
+    (37) method_call -> . IDENTIFIER LPAREN RPAREN
 
-    MILITO          reduce using rule 17 (declaration -> VALDERRAMA IDENTIFIER SEMICOLON .)
-    ZIDANE          reduce using rule 17 (declaration -> VALDERRAMA IDENTIFIER SEMICOLON .)
-    SAVIOLA         reduce using rule 17 (declaration -> VALDERRAMA IDENTIFIER SEMICOLON .)
-    INIESTA         reduce using rule 17 (declaration -> VALDERRAMA IDENTIFIER SEMICOLON .)
-    VALDERRAMA      reduce using rule 17 (declaration -> VALDERRAMA IDENTIFIER SEMICOLON .)
-    IDENTIFIER      reduce using rule 17 (declaration -> VALDERRAMA IDENTIFIER SEMICOLON .)
-    WALKER          reduce using rule 17 (declaration -> VALDERRAMA IDENTIFIER SEMICOLON .)
-    NUMBER          reduce using rule 17 (declaration -> VALDERRAMA IDENTIFIER SEMICOLON .)
-    STRING_LITERAL  reduce using rule 17 (declaration -> VALDERRAMA IDENTIFIER SEMICOLON .)
-    CHAR_LITERAL    reduce using rule 17 (declaration -> VALDERRAMA IDENTIFIER SEMICOLON .)
-    $end            reduce using rule 17 (declaration -> VALDERRAMA IDENTIFIER SEMICOLON .)
-    RBRACE          reduce using rule 17 (declaration -> VALDERRAMA IDENTIFIER SEMICOLON .)
+    NUMBER          shift and go to state 20
+    IDENTIFIER      shift and go to state 40
+    STRING_LITERAL  shift and go to state 21
+    CHAR_LITERAL    shift and go to state 22
 
+    expression                     shift and go to state 65
+    term                           shift and go to state 18
+    factor                         shift and go to state 19
+    method_call                    shift and go to state 41
 
 state 51
 
-    (18) declaration -> VALDERRAMA IDENTIFIER EQUALS . expression SEMICOLON
-    (20) expression -> . expression CRISTIANO term
-    (21) expression -> . expression TCHOUAMENI term
-    (22) expression -> . term
-    (23) term -> . term MESSI factor
-    (24) term -> . term PEPE factor
-    (25) term -> . factor
-    (26) factor -> . NUMBER
-    (27) factor -> . IDENTIFIER
-    (28) factor -> . STRING_LITERAL
-    (29) factor -> . CHAR_LITERAL
-    (30) factor -> . method_call
-    (34) method_call -> . IDENTIFIER LPAREN RPAREN
+    (16) declaration -> INIESTA IDENTIFIER SEMICOLON .
 
-    NUMBER          shift and go to state 18
-    IDENTIFIER      shift and go to state 37
-    STRING_LITERAL  shift and go to state 19
-    CHAR_LITERAL    shift and go to state 20
+    MILITO          reduce using rule 16 (declaration -> INIESTA IDENTIFIER SEMICOLON .)
+    ZIDANE          reduce using rule 16 (declaration -> INIESTA IDENTIFIER SEMICOLON .)
+    SAVIOLA         reduce using rule 16 (declaration -> INIESTA IDENTIFIER SEMICOLON .)
+    INIESTA         reduce using rule 16 (declaration -> INIESTA IDENTIFIER SEMICOLON .)
+    VALDERRAMA      reduce using rule 16 (declaration -> INIESTA IDENTIFIER SEMICOLON .)
+    IDENTIFIER      reduce using rule 16 (declaration -> INIESTA IDENTIFIER SEMICOLON .)
+    WALKER          reduce using rule 16 (declaration -> INIESTA IDENTIFIER SEMICOLON .)
+    BALLACK         reduce using rule 16 (declaration -> INIESTA IDENTIFIER SEMICOLON .)
+    NUMBER          reduce using rule 16 (declaration -> INIESTA IDENTIFIER SEMICOLON .)
+    STRING_LITERAL  reduce using rule 16 (declaration -> INIESTA IDENTIFIER SEMICOLON .)
+    CHAR_LITERAL    reduce using rule 16 (declaration -> INIESTA IDENTIFIER SEMICOLON .)
+    $end            reduce using rule 16 (declaration -> INIESTA IDENTIFIER SEMICOLON .)
+    RBRACE          reduce using rule 16 (declaration -> INIESTA IDENTIFIER SEMICOLON .)
 
-    expression                     shift and go to state 63
-    term                           shift and go to state 16
-    factor                         shift and go to state 17
-    method_call                    shift and go to state 38
 
 state 52
 
-    (32) while_loop -> WALKER LPAREN condition . RPAREN LBRACE program RBRACE
+    (17) declaration -> INIESTA IDENTIFIER EQUALS . expression SEMICOLON
+    (21) expression -> . expression CRISTIANO term
+    (22) expression -> . expression TCHOUAMENI term
+    (23) expression -> . term
+    (24) term -> . term MESSI factor
+    (25) term -> . term PEPE factor
+    (26) term -> . factor
+    (27) factor -> . NUMBER
+    (28) factor -> . IDENTIFIER
+    (29) factor -> . STRING_LITERAL
+    (30) factor -> . CHAR_LITERAL
+    (31) factor -> . method_call
+    (37) method_call -> . IDENTIFIER LPAREN RPAREN
 
-    RPAREN          shift and go to state 64
+    NUMBER          shift and go to state 20
+    IDENTIFIER      shift and go to state 40
+    STRING_LITERAL  shift and go to state 21
+    CHAR_LITERAL    shift and go to state 22
 
+    expression                     shift and go to state 66
+    term                           shift and go to state 18
+    factor                         shift and go to state 19
+    method_call                    shift and go to state 41
 
 state 53
 
-    (31) condition -> IDENTIFIER . RELOP expression
+    (18) declaration -> VALDERRAMA IDENTIFIER SEMICOLON .
 
-    RELOP           shift and go to state 65
+    MILITO          reduce using rule 18 (declaration -> VALDERRAMA IDENTIFIER SEMICOLON .)
+    ZIDANE          reduce using rule 18 (declaration -> VALDERRAMA IDENTIFIER SEMICOLON .)
+    SAVIOLA         reduce using rule 18 (declaration -> VALDERRAMA IDENTIFIER SEMICOLON .)
+    INIESTA         reduce using rule 18 (declaration -> VALDERRAMA IDENTIFIER SEMICOLON .)
+    VALDERRAMA      reduce using rule 18 (declaration -> VALDERRAMA IDENTIFIER SEMICOLON .)
+    IDENTIFIER      reduce using rule 18 (declaration -> VALDERRAMA IDENTIFIER SEMICOLON .)
+    WALKER          reduce using rule 18 (declaration -> VALDERRAMA IDENTIFIER SEMICOLON .)
+    BALLACK         reduce using rule 18 (declaration -> VALDERRAMA IDENTIFIER SEMICOLON .)
+    NUMBER          reduce using rule 18 (declaration -> VALDERRAMA IDENTIFIER SEMICOLON .)
+    STRING_LITERAL  reduce using rule 18 (declaration -> VALDERRAMA IDENTIFIER SEMICOLON .)
+    CHAR_LITERAL    reduce using rule 18 (declaration -> VALDERRAMA IDENTIFIER SEMICOLON .)
+    $end            reduce using rule 18 (declaration -> VALDERRAMA IDENTIFIER SEMICOLON .)
+    RBRACE          reduce using rule 18 (declaration -> VALDERRAMA IDENTIFIER SEMICOLON .)
 
 
 state 54
 
-    (23) term -> term MESSI factor .
+    (19) declaration -> VALDERRAMA IDENTIFIER EQUALS . expression SEMICOLON
+    (21) expression -> . expression CRISTIANO term
+    (22) expression -> . expression TCHOUAMENI term
+    (23) expression -> . term
+    (24) term -> . term MESSI factor
+    (25) term -> . term PEPE factor
+    (26) term -> . factor
+    (27) factor -> . NUMBER
+    (28) factor -> . IDENTIFIER
+    (29) factor -> . STRING_LITERAL
+    (30) factor -> . CHAR_LITERAL
+    (31) factor -> . method_call
+    (37) method_call -> . IDENTIFIER LPAREN RPAREN
 
-    MESSI           reduce using rule 23 (term -> term MESSI factor .)
-    PEPE            reduce using rule 23 (term -> term MESSI factor .)
-    SEMICOLON       reduce using rule 23 (term -> term MESSI factor .)
-    CRISTIANO       reduce using rule 23 (term -> term MESSI factor .)
-    TCHOUAMENI      reduce using rule 23 (term -> term MESSI factor .)
-    RPAREN          reduce using rule 23 (term -> term MESSI factor .)
+    NUMBER          shift and go to state 20
+    IDENTIFIER      shift and go to state 40
+    STRING_LITERAL  shift and go to state 21
+    CHAR_LITERAL    shift and go to state 22
 
+    expression                     shift and go to state 67
+    term                           shift and go to state 18
+    factor                         shift and go to state 19
+    method_call                    shift and go to state 41
 
 state 55
 
-    (24) term -> term PEPE factor .
+    (35) while_loop -> WALKER LPAREN condition . RPAREN LBRACE program RBRACE
 
-    MESSI           reduce using rule 24 (term -> term PEPE factor .)
-    PEPE            reduce using rule 24 (term -> term PEPE factor .)
-    SEMICOLON       reduce using rule 24 (term -> term PEPE factor .)
-    CRISTIANO       reduce using rule 24 (term -> term PEPE factor .)
-    TCHOUAMENI      reduce using rule 24 (term -> term PEPE factor .)
-    RPAREN          reduce using rule 24 (term -> term PEPE factor .)
+    RPAREN          shift and go to state 68
 
 
 state 56
 
-    (34) method_call -> IDENTIFIER LPAREN . RPAREN
+    (34) condition -> IDENTIFIER . RELOP expression
 
-    RPAREN          shift and go to state 66
+    RELOP           shift and go to state 69
 
 
 state 57
 
-    (10) declaration -> MILITO IDENTIFIER EQUALS expression . SEMICOLON
-    (20) expression -> expression . CRISTIANO term
-    (21) expression -> expression . TCHOUAMENI term
+    (32) if_statement -> BALLACK LPAREN condition . RPAREN LBRACE program RBRACE
+    (33) if_statement -> BALLACK LPAREN condition . RPAREN LBRACE program RBRACE ROBBEN LBRACE program RBRACE
 
-    SEMICOLON       shift and go to state 67
-    CRISTIANO       shift and go to state 24
-    TCHOUAMENI      shift and go to state 25
+    RPAREN          shift and go to state 70
 
 
 state 58
 
-    (19) assignment -> IDENTIFIER EQUALS expression SEMICOLON .
+    (24) term -> term MESSI factor .
 
-    MILITO          reduce using rule 19 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
-    ZIDANE          reduce using rule 19 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
-    SAVIOLA         reduce using rule 19 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
-    INIESTA         reduce using rule 19 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
-    VALDERRAMA      reduce using rule 19 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
-    IDENTIFIER      reduce using rule 19 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
-    WALKER          reduce using rule 19 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
-    NUMBER          reduce using rule 19 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
-    STRING_LITERAL  reduce using rule 19 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
-    CHAR_LITERAL    reduce using rule 19 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
-    $end            reduce using rule 19 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
-    RBRACE          reduce using rule 19 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
+    MESSI           reduce using rule 24 (term -> term MESSI factor .)
+    PEPE            reduce using rule 24 (term -> term MESSI factor .)
+    SEMICOLON       reduce using rule 24 (term -> term MESSI factor .)
+    CRISTIANO       reduce using rule 24 (term -> term MESSI factor .)
+    TCHOUAMENI      reduce using rule 24 (term -> term MESSI factor .)
+    RPAREN          reduce using rule 24 (term -> term MESSI factor .)
 
 
 state 59
 
-    (33) method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE . program RBRACE
-    (1) program -> . statement
-    (2) program -> . program statement
-    (3) statement -> . declaration
-    (4) statement -> . assignment
-    (5) statement -> . while_loop
-    (6) statement -> . method_declaration
-    (7) statement -> . method_call SEMICOLON
-    (8) statement -> . expression SEMICOLON
-    (9) declaration -> . MILITO IDENTIFIER SEMICOLON
-    (10) declaration -> . MILITO IDENTIFIER EQUALS expression SEMICOLON
-    (11) declaration -> . ZIDANE IDENTIFIER SEMICOLON
-    (12) declaration -> . ZIDANE IDENTIFIER EQUALS expression SEMICOLON
-    (13) declaration -> . SAVIOLA IDENTIFIER SEMICOLON
-    (14) declaration -> . SAVIOLA IDENTIFIER EQUALS expression SEMICOLON
-    (15) declaration -> . INIESTA IDENTIFIER SEMICOLON
-    (16) declaration -> . INIESTA IDENTIFIER EQUALS expression SEMICOLON
-    (17) declaration -> . VALDERRAMA IDENTIFIER SEMICOLON
-    (18) declaration -> . VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON
-    (19) assignment -> . IDENTIFIER EQUALS expression SEMICOLON
-    (32) while_loop -> . WALKER LPAREN condition RPAREN LBRACE program RBRACE
-    (33) method_declaration -> . IDENTIFIER LPAREN RPAREN LBRACE program RBRACE
-    (34) method_call -> . IDENTIFIER LPAREN RPAREN
-    (20) expression -> . expression CRISTIANO term
-    (21) expression -> . expression TCHOUAMENI term
-    (22) expression -> . term
-    (23) term -> . term MESSI factor
-    (24) term -> . term PEPE factor
-    (25) term -> . factor
-    (26) factor -> . NUMBER
-    (27) factor -> . IDENTIFIER
-    (28) factor -> . STRING_LITERAL
-    (29) factor -> . CHAR_LITERAL
-    (30) factor -> . method_call
+    (25) term -> term PEPE factor .
 
-    MILITO          shift and go to state 9
-    ZIDANE          shift and go to state 11
-    SAVIOLA         shift and go to state 12
-    INIESTA         shift and go to state 13
-    VALDERRAMA      shift and go to state 14
-    IDENTIFIER      shift and go to state 10
-    WALKER          shift and go to state 15
-    NUMBER          shift and go to state 18
-    STRING_LITERAL  shift and go to state 19
-    CHAR_LITERAL    shift and go to state 20
+    MESSI           reduce using rule 25 (term -> term PEPE factor .)
+    PEPE            reduce using rule 25 (term -> term PEPE factor .)
+    SEMICOLON       reduce using rule 25 (term -> term PEPE factor .)
+    CRISTIANO       reduce using rule 25 (term -> term PEPE factor .)
+    TCHOUAMENI      reduce using rule 25 (term -> term PEPE factor .)
+    RPAREN          reduce using rule 25 (term -> term PEPE factor .)
 
-    program                        shift and go to state 68
-    statement                      shift and go to state 2
-    declaration                    shift and go to state 3
-    assignment                     shift and go to state 4
-    while_loop                     shift and go to state 5
-    method_declaration             shift and go to state 6
-    method_call                    shift and go to state 7
-    expression                     shift and go to state 8
-    term                           shift and go to state 16
-    factor                         shift and go to state 17
 
 state 60
 
-    (12) declaration -> ZIDANE IDENTIFIER EQUALS expression . SEMICOLON
-    (20) expression -> expression . CRISTIANO term
-    (21) expression -> expression . TCHOUAMENI term
+    (37) method_call -> IDENTIFIER LPAREN . RPAREN
 
-    SEMICOLON       shift and go to state 69
-    CRISTIANO       shift and go to state 24
-    TCHOUAMENI      shift and go to state 25
+    RPAREN          shift and go to state 71
 
 
 state 61
 
-    (14) declaration -> SAVIOLA IDENTIFIER EQUALS expression . SEMICOLON
-    (20) expression -> expression . CRISTIANO term
-    (21) expression -> expression . TCHOUAMENI term
+    (11) declaration -> MILITO IDENTIFIER EQUALS expression . SEMICOLON
+    (21) expression -> expression . CRISTIANO term
+    (22) expression -> expression . TCHOUAMENI term
 
-    SEMICOLON       shift and go to state 70
-    CRISTIANO       shift and go to state 24
-    TCHOUAMENI      shift and go to state 25
+    SEMICOLON       shift and go to state 72
+    CRISTIANO       shift and go to state 26
+    TCHOUAMENI      shift and go to state 27
 
 
 state 62
 
-    (16) declaration -> INIESTA IDENTIFIER EQUALS expression . SEMICOLON
-    (20) expression -> expression . CRISTIANO term
-    (21) expression -> expression . TCHOUAMENI term
+    (20) assignment -> IDENTIFIER EQUALS expression SEMICOLON .
 
-    SEMICOLON       shift and go to state 71
-    CRISTIANO       shift and go to state 24
-    TCHOUAMENI      shift and go to state 25
+    MILITO          reduce using rule 20 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
+    ZIDANE          reduce using rule 20 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
+    SAVIOLA         reduce using rule 20 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
+    INIESTA         reduce using rule 20 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
+    VALDERRAMA      reduce using rule 20 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
+    IDENTIFIER      reduce using rule 20 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
+    WALKER          reduce using rule 20 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
+    BALLACK         reduce using rule 20 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
+    NUMBER          reduce using rule 20 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
+    STRING_LITERAL  reduce using rule 20 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
+    CHAR_LITERAL    reduce using rule 20 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
+    $end            reduce using rule 20 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
+    RBRACE          reduce using rule 20 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
 
 
 state 63
 
-    (18) declaration -> VALDERRAMA IDENTIFIER EQUALS expression . SEMICOLON
-    (20) expression -> expression . CRISTIANO term
-    (21) expression -> expression . TCHOUAMENI term
-
-    SEMICOLON       shift and go to state 72
-    CRISTIANO       shift and go to state 24
-    TCHOUAMENI      shift and go to state 25
-
-
-state 64
-
-    (32) while_loop -> WALKER LPAREN condition RPAREN . LBRACE program RBRACE
-
-    LBRACE          shift and go to state 73
-
-
-state 65
-
-    (31) condition -> IDENTIFIER RELOP . expression
-    (20) expression -> . expression CRISTIANO term
-    (21) expression -> . expression TCHOUAMENI term
-    (22) expression -> . term
-    (23) term -> . term MESSI factor
-    (24) term -> . term PEPE factor
-    (25) term -> . factor
-    (26) factor -> . NUMBER
-    (27) factor -> . IDENTIFIER
-    (28) factor -> . STRING_LITERAL
-    (29) factor -> . CHAR_LITERAL
-    (30) factor -> . method_call
-    (34) method_call -> . IDENTIFIER LPAREN RPAREN
-
-    NUMBER          shift and go to state 18
-    IDENTIFIER      shift and go to state 37
-    STRING_LITERAL  shift and go to state 19
-    CHAR_LITERAL    shift and go to state 20
-
-    expression                     shift and go to state 74
-    term                           shift and go to state 16
-    factor                         shift and go to state 17
-    method_call                    shift and go to state 38
-
-state 66
-
-    (34) method_call -> IDENTIFIER LPAREN RPAREN .
-
-    MESSI           reduce using rule 34 (method_call -> IDENTIFIER LPAREN RPAREN .)
-    PEPE            reduce using rule 34 (method_call -> IDENTIFIER LPAREN RPAREN .)
-    SEMICOLON       reduce using rule 34 (method_call -> IDENTIFIER LPAREN RPAREN .)
-    CRISTIANO       reduce using rule 34 (method_call -> IDENTIFIER LPAREN RPAREN .)
-    TCHOUAMENI      reduce using rule 34 (method_call -> IDENTIFIER LPAREN RPAREN .)
-    RPAREN          reduce using rule 34 (method_call -> IDENTIFIER LPAREN RPAREN .)
-
-
-state 67
-
-    (10) declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .
-
-    MILITO          reduce using rule 10 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
-    ZIDANE          reduce using rule 10 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
-    SAVIOLA         reduce using rule 10 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
-    INIESTA         reduce using rule 10 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
-    VALDERRAMA      reduce using rule 10 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
-    IDENTIFIER      reduce using rule 10 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
-    WALKER          reduce using rule 10 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
-    NUMBER          reduce using rule 10 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
-    STRING_LITERAL  reduce using rule 10 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
-    CHAR_LITERAL    reduce using rule 10 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
-    $end            reduce using rule 10 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
-    RBRACE          reduce using rule 10 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
-
-
-state 68
-
-    (33) method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE program . RBRACE
-    (2) program -> program . statement
-    (3) statement -> . declaration
-    (4) statement -> . assignment
-    (5) statement -> . while_loop
-    (6) statement -> . method_declaration
-    (7) statement -> . method_call SEMICOLON
-    (8) statement -> . expression SEMICOLON
-    (9) declaration -> . MILITO IDENTIFIER SEMICOLON
-    (10) declaration -> . MILITO IDENTIFIER EQUALS expression SEMICOLON
-    (11) declaration -> . ZIDANE IDENTIFIER SEMICOLON
-    (12) declaration -> . ZIDANE IDENTIFIER EQUALS expression SEMICOLON
-    (13) declaration -> . SAVIOLA IDENTIFIER SEMICOLON
-    (14) declaration -> . SAVIOLA IDENTIFIER EQUALS expression SEMICOLON
-    (15) declaration -> . INIESTA IDENTIFIER SEMICOLON
-    (16) declaration -> . INIESTA IDENTIFIER EQUALS expression SEMICOLON
-    (17) declaration -> . VALDERRAMA IDENTIFIER SEMICOLON
-    (18) declaration -> . VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON
-    (19) assignment -> . IDENTIFIER EQUALS expression SEMICOLON
-    (32) while_loop -> . WALKER LPAREN condition RPAREN LBRACE program RBRACE
-    (33) method_declaration -> . IDENTIFIER LPAREN RPAREN LBRACE program RBRACE
-    (34) method_call -> . IDENTIFIER LPAREN RPAREN
-    (20) expression -> . expression CRISTIANO term
-    (21) expression -> . expression TCHOUAMENI term
-    (22) expression -> . term
-    (23) term -> . term MESSI factor
-    (24) term -> . term PEPE factor
-    (25) term -> . factor
-    (26) factor -> . NUMBER
-    (27) factor -> . IDENTIFIER
-    (28) factor -> . STRING_LITERAL
-    (29) factor -> . CHAR_LITERAL
-    (30) factor -> . method_call
-
-    RBRACE          shift and go to state 75
-    MILITO          shift and go to state 9
-    ZIDANE          shift and go to state 11
-    SAVIOLA         shift and go to state 12
-    INIESTA         shift and go to state 13
-    VALDERRAMA      shift and go to state 14
-    IDENTIFIER      shift and go to state 10
-    WALKER          shift and go to state 15
-    NUMBER          shift and go to state 18
-    STRING_LITERAL  shift and go to state 19
-    CHAR_LITERAL    shift and go to state 20
-
-    statement                      shift and go to state 21
-    declaration                    shift and go to state 3
-    assignment                     shift and go to state 4
-    while_loop                     shift and go to state 5
-    method_declaration             shift and go to state 6
-    method_call                    shift and go to state 7
-    expression                     shift and go to state 8
-    term                           shift and go to state 16
-    factor                         shift and go to state 17
-
-state 69
-
-    (12) declaration -> ZIDANE IDENTIFIER EQUALS expression SEMICOLON .
-
-    MILITO          reduce using rule 12 (declaration -> ZIDANE IDENTIFIER EQUALS expression SEMICOLON .)
-    ZIDANE          reduce using rule 12 (declaration -> ZIDANE IDENTIFIER EQUALS expression SEMICOLON .)
-    SAVIOLA         reduce using rule 12 (declaration -> ZIDANE IDENTIFIER EQUALS expression SEMICOLON .)
-    INIESTA         reduce using rule 12 (declaration -> ZIDANE IDENTIFIER EQUALS expression SEMICOLON .)
-    VALDERRAMA      reduce using rule 12 (declaration -> ZIDANE IDENTIFIER EQUALS expression SEMICOLON .)
-    IDENTIFIER      reduce using rule 12 (declaration -> ZIDANE IDENTIFIER EQUALS expression SEMICOLON .)
-    WALKER          reduce using rule 12 (declaration -> ZIDANE IDENTIFIER EQUALS expression SEMICOLON .)
-    NUMBER          reduce using rule 12 (declaration -> ZIDANE IDENTIFIER EQUALS expression SEMICOLON .)
-    STRING_LITERAL  reduce using rule 12 (declaration -> ZIDANE IDENTIFIER EQUALS expression SEMICOLON .)
-    CHAR_LITERAL    reduce using rule 12 (declaration -> ZIDANE IDENTIFIER EQUALS expression SEMICOLON .)
-    $end            reduce using rule 12 (declaration -> ZIDANE IDENTIFIER EQUALS expression SEMICOLON .)
-    RBRACE          reduce using rule 12 (declaration -> ZIDANE IDENTIFIER EQUALS expression SEMICOLON .)
-
-
-state 70
-
-    (14) declaration -> SAVIOLA IDENTIFIER EQUALS expression SEMICOLON .
-
-    MILITO          reduce using rule 14 (declaration -> SAVIOLA IDENTIFIER EQUALS expression SEMICOLON .)
-    ZIDANE          reduce using rule 14 (declaration -> SAVIOLA IDENTIFIER EQUALS expression SEMICOLON .)
-    SAVIOLA         reduce using rule 14 (declaration -> SAVIOLA IDENTIFIER EQUALS expression SEMICOLON .)
-    INIESTA         reduce using rule 14 (declaration -> SAVIOLA IDENTIFIER EQUALS expression SEMICOLON .)
-    VALDERRAMA      reduce using rule 14 (declaration -> SAVIOLA IDENTIFIER EQUALS expression SEMICOLON .)
-    IDENTIFIER      reduce using rule 14 (declaration -> SAVIOLA IDENTIFIER EQUALS expression SEMICOLON .)
-    WALKER          reduce using rule 14 (declaration -> SAVIOLA IDENTIFIER EQUALS expression SEMICOLON .)
-    NUMBER          reduce using rule 14 (declaration -> SAVIOLA IDENTIFIER EQUALS expression SEMICOLON .)
-    STRING_LITERAL  reduce using rule 14 (declaration -> SAVIOLA IDENTIFIER EQUALS expression SEMICOLON .)
-    CHAR_LITERAL    reduce using rule 14 (declaration -> SAVIOLA IDENTIFIER EQUALS expression SEMICOLON .)
-    $end            reduce using rule 14 (declaration -> SAVIOLA IDENTIFIER EQUALS expression SEMICOLON .)
-    RBRACE          reduce using rule 14 (declaration -> SAVIOLA IDENTIFIER EQUALS expression SEMICOLON .)
-
-
-state 71
-
-    (16) declaration -> INIESTA IDENTIFIER EQUALS expression SEMICOLON .
-
-    MILITO          reduce using rule 16 (declaration -> INIESTA IDENTIFIER EQUALS expression SEMICOLON .)
-    ZIDANE          reduce using rule 16 (declaration -> INIESTA IDENTIFIER EQUALS expression SEMICOLON .)
-    SAVIOLA         reduce using rule 16 (declaration -> INIESTA IDENTIFIER EQUALS expression SEMICOLON .)
-    INIESTA         reduce using rule 16 (declaration -> INIESTA IDENTIFIER EQUALS expression SEMICOLON .)
-    VALDERRAMA      reduce using rule 16 (declaration -> INIESTA IDENTIFIER EQUALS expression SEMICOLON .)
-    IDENTIFIER      reduce using rule 16 (declaration -> INIESTA IDENTIFIER EQUALS expression SEMICOLON .)
-    WALKER          reduce using rule 16 (declaration -> INIESTA IDENTIFIER EQUALS expression SEMICOLON .)
-    NUMBER          reduce using rule 16 (declaration -> INIESTA IDENTIFIER EQUALS expression SEMICOLON .)
-    STRING_LITERAL  reduce using rule 16 (declaration -> INIESTA IDENTIFIER EQUALS expression SEMICOLON .)
-    CHAR_LITERAL    reduce using rule 16 (declaration -> INIESTA IDENTIFIER EQUALS expression SEMICOLON .)
-    $end            reduce using rule 16 (declaration -> INIESTA IDENTIFIER EQUALS expression SEMICOLON .)
-    RBRACE          reduce using rule 16 (declaration -> INIESTA IDENTIFIER EQUALS expression SEMICOLON .)
-
-
-state 72
-
-    (18) declaration -> VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON .
-
-    MILITO          reduce using rule 18 (declaration -> VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON .)
-    ZIDANE          reduce using rule 18 (declaration -> VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON .)
-    SAVIOLA         reduce using rule 18 (declaration -> VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON .)
-    INIESTA         reduce using rule 18 (declaration -> VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON .)
-    VALDERRAMA      reduce using rule 18 (declaration -> VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON .)
-    IDENTIFIER      reduce using rule 18 (declaration -> VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON .)
-    WALKER          reduce using rule 18 (declaration -> VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON .)
-    NUMBER          reduce using rule 18 (declaration -> VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON .)
-    STRING_LITERAL  reduce using rule 18 (declaration -> VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON .)
-    CHAR_LITERAL    reduce using rule 18 (declaration -> VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON .)
-    $end            reduce using rule 18 (declaration -> VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON .)
-    RBRACE          reduce using rule 18 (declaration -> VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON .)
-
-
-state 73
-
-    (32) while_loop -> WALKER LPAREN condition RPAREN LBRACE . program RBRACE
+    (36) method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE . program RBRACE
     (1) program -> . statement
     (2) program -> . program statement
     (3) statement -> . declaration
     (4) statement -> . assignment
     (5) statement -> . while_loop
-    (6) statement -> . method_declaration
-    (7) statement -> . method_call SEMICOLON
-    (8) statement -> . expression SEMICOLON
-    (9) declaration -> . MILITO IDENTIFIER SEMICOLON
-    (10) declaration -> . MILITO IDENTIFIER EQUALS expression SEMICOLON
-    (11) declaration -> . ZIDANE IDENTIFIER SEMICOLON
-    (12) declaration -> . ZIDANE IDENTIFIER EQUALS expression SEMICOLON
-    (13) declaration -> . SAVIOLA IDENTIFIER SEMICOLON
-    (14) declaration -> . SAVIOLA IDENTIFIER EQUALS expression SEMICOLON
-    (15) declaration -> . INIESTA IDENTIFIER SEMICOLON
-    (16) declaration -> . INIESTA IDENTIFIER EQUALS expression SEMICOLON
-    (17) declaration -> . VALDERRAMA IDENTIFIER SEMICOLON
-    (18) declaration -> . VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON
-    (19) assignment -> . IDENTIFIER EQUALS expression SEMICOLON
-    (32) while_loop -> . WALKER LPAREN condition RPAREN LBRACE program RBRACE
-    (33) method_declaration -> . IDENTIFIER LPAREN RPAREN LBRACE program RBRACE
-    (34) method_call -> . IDENTIFIER LPAREN RPAREN
-    (20) expression -> . expression CRISTIANO term
-    (21) expression -> . expression TCHOUAMENI term
-    (22) expression -> . term
-    (23) term -> . term MESSI factor
-    (24) term -> . term PEPE factor
-    (25) term -> . factor
-    (26) factor -> . NUMBER
-    (27) factor -> . IDENTIFIER
-    (28) factor -> . STRING_LITERAL
-    (29) factor -> . CHAR_LITERAL
-    (30) factor -> . method_call
+    (6) statement -> . if_statement
+    (7) statement -> . method_declaration
+    (8) statement -> . method_call SEMICOLON
+    (9) statement -> . expression SEMICOLON
+    (10) declaration -> . MILITO IDENTIFIER SEMICOLON
+    (11) declaration -> . MILITO IDENTIFIER EQUALS expression SEMICOLON
+    (12) declaration -> . ZIDANE IDENTIFIER SEMICOLON
+    (13) declaration -> . ZIDANE IDENTIFIER EQUALS expression SEMICOLON
+    (14) declaration -> . SAVIOLA IDENTIFIER SEMICOLON
+    (15) declaration -> . SAVIOLA IDENTIFIER EQUALS expression SEMICOLON
+    (16) declaration -> . INIESTA IDENTIFIER SEMICOLON
+    (17) declaration -> . INIESTA IDENTIFIER EQUALS expression SEMICOLON
+    (18) declaration -> . VALDERRAMA IDENTIFIER SEMICOLON
+    (19) declaration -> . VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON
+    (20) assignment -> . IDENTIFIER EQUALS expression SEMICOLON
+    (35) while_loop -> . WALKER LPAREN condition RPAREN LBRACE program RBRACE
+    (32) if_statement -> . BALLACK LPAREN condition RPAREN LBRACE program RBRACE
+    (33) if_statement -> . BALLACK LPAREN condition RPAREN LBRACE program RBRACE ROBBEN LBRACE program RBRACE
+    (36) method_declaration -> . IDENTIFIER LPAREN RPAREN LBRACE program RBRACE
+    (37) method_call -> . IDENTIFIER LPAREN RPAREN
+    (21) expression -> . expression CRISTIANO term
+    (22) expression -> . expression TCHOUAMENI term
+    (23) expression -> . term
+    (24) term -> . term MESSI factor
+    (25) term -> . term PEPE factor
+    (26) term -> . factor
+    (27) factor -> . NUMBER
+    (28) factor -> . IDENTIFIER
+    (29) factor -> . STRING_LITERAL
+    (30) factor -> . CHAR_LITERAL
+    (31) factor -> . method_call
 
-    MILITO          shift and go to state 9
-    ZIDANE          shift and go to state 11
-    SAVIOLA         shift and go to state 12
-    INIESTA         shift and go to state 13
-    VALDERRAMA      shift and go to state 14
-    IDENTIFIER      shift and go to state 10
-    WALKER          shift and go to state 15
-    NUMBER          shift and go to state 18
-    STRING_LITERAL  shift and go to state 19
-    CHAR_LITERAL    shift and go to state 20
+    MILITO          shift and go to state 10
+    ZIDANE          shift and go to state 12
+    SAVIOLA         shift and go to state 13
+    INIESTA         shift and go to state 14
+    VALDERRAMA      shift and go to state 15
+    IDENTIFIER      shift and go to state 11
+    WALKER          shift and go to state 16
+    BALLACK         shift and go to state 17
+    NUMBER          shift and go to state 20
+    STRING_LITERAL  shift and go to state 21
+    CHAR_LITERAL    shift and go to state 22
 
-    program                        shift and go to state 76
+    program                        shift and go to state 73
     statement                      shift and go to state 2
     declaration                    shift and go to state 3
     assignment                     shift and go to state 4
     while_loop                     shift and go to state 5
-    method_declaration             shift and go to state 6
-    method_call                    shift and go to state 7
-    expression                     shift and go to state 8
-    term                           shift and go to state 16
-    factor                         shift and go to state 17
+    if_statement                   shift and go to state 6
+    method_declaration             shift and go to state 7
+    method_call                    shift and go to state 8
+    expression                     shift and go to state 9
+    term                           shift and go to state 18
+    factor                         shift and go to state 19
 
-state 74
+state 64
 
-    (31) condition -> IDENTIFIER RELOP expression .
-    (20) expression -> expression . CRISTIANO term
-    (21) expression -> expression . TCHOUAMENI term
+    (13) declaration -> ZIDANE IDENTIFIER EQUALS expression . SEMICOLON
+    (21) expression -> expression . CRISTIANO term
+    (22) expression -> expression . TCHOUAMENI term
 
-    RPAREN          reduce using rule 31 (condition -> IDENTIFIER RELOP expression .)
-    CRISTIANO       shift and go to state 24
-    TCHOUAMENI      shift and go to state 25
-
-
-state 75
-
-    (33) method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE program RBRACE .
-
-    MILITO          reduce using rule 33 (method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE program RBRACE .)
-    ZIDANE          reduce using rule 33 (method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE program RBRACE .)
-    SAVIOLA         reduce using rule 33 (method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE program RBRACE .)
-    INIESTA         reduce using rule 33 (method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE program RBRACE .)
-    VALDERRAMA      reduce using rule 33 (method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE program RBRACE .)
-    IDENTIFIER      reduce using rule 33 (method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE program RBRACE .)
-    WALKER          reduce using rule 33 (method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE program RBRACE .)
-    NUMBER          reduce using rule 33 (method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE program RBRACE .)
-    STRING_LITERAL  reduce using rule 33 (method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE program RBRACE .)
-    CHAR_LITERAL    reduce using rule 33 (method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE program RBRACE .)
-    $end            reduce using rule 33 (method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE program RBRACE .)
-    RBRACE          reduce using rule 33 (method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE program RBRACE .)
+    SEMICOLON       shift and go to state 74
+    CRISTIANO       shift and go to state 26
+    TCHOUAMENI      shift and go to state 27
 
 
-state 76
+state 65
 
-    (32) while_loop -> WALKER LPAREN condition RPAREN LBRACE program . RBRACE
+    (15) declaration -> SAVIOLA IDENTIFIER EQUALS expression . SEMICOLON
+    (21) expression -> expression . CRISTIANO term
+    (22) expression -> expression . TCHOUAMENI term
+
+    SEMICOLON       shift and go to state 75
+    CRISTIANO       shift and go to state 26
+    TCHOUAMENI      shift and go to state 27
+
+
+state 66
+
+    (17) declaration -> INIESTA IDENTIFIER EQUALS expression . SEMICOLON
+    (21) expression -> expression . CRISTIANO term
+    (22) expression -> expression . TCHOUAMENI term
+
+    SEMICOLON       shift and go to state 76
+    CRISTIANO       shift and go to state 26
+    TCHOUAMENI      shift and go to state 27
+
+
+state 67
+
+    (19) declaration -> VALDERRAMA IDENTIFIER EQUALS expression . SEMICOLON
+    (21) expression -> expression . CRISTIANO term
+    (22) expression -> expression . TCHOUAMENI term
+
+    SEMICOLON       shift and go to state 77
+    CRISTIANO       shift and go to state 26
+    TCHOUAMENI      shift and go to state 27
+
+
+state 68
+
+    (35) while_loop -> WALKER LPAREN condition RPAREN . LBRACE program RBRACE
+
+    LBRACE          shift and go to state 78
+
+
+state 69
+
+    (34) condition -> IDENTIFIER RELOP . expression
+    (21) expression -> . expression CRISTIANO term
+    (22) expression -> . expression TCHOUAMENI term
+    (23) expression -> . term
+    (24) term -> . term MESSI factor
+    (25) term -> . term PEPE factor
+    (26) term -> . factor
+    (27) factor -> . NUMBER
+    (28) factor -> . IDENTIFIER
+    (29) factor -> . STRING_LITERAL
+    (30) factor -> . CHAR_LITERAL
+    (31) factor -> . method_call
+    (37) method_call -> . IDENTIFIER LPAREN RPAREN
+
+    NUMBER          shift and go to state 20
+    IDENTIFIER      shift and go to state 40
+    STRING_LITERAL  shift and go to state 21
+    CHAR_LITERAL    shift and go to state 22
+
+    expression                     shift and go to state 79
+    term                           shift and go to state 18
+    factor                         shift and go to state 19
+    method_call                    shift and go to state 41
+
+state 70
+
+    (32) if_statement -> BALLACK LPAREN condition RPAREN . LBRACE program RBRACE
+    (33) if_statement -> BALLACK LPAREN condition RPAREN . LBRACE program RBRACE ROBBEN LBRACE program RBRACE
+
+    LBRACE          shift and go to state 80
+
+
+state 71
+
+    (37) method_call -> IDENTIFIER LPAREN RPAREN .
+
+    MESSI           reduce using rule 37 (method_call -> IDENTIFIER LPAREN RPAREN .)
+    PEPE            reduce using rule 37 (method_call -> IDENTIFIER LPAREN RPAREN .)
+    SEMICOLON       reduce using rule 37 (method_call -> IDENTIFIER LPAREN RPAREN .)
+    CRISTIANO       reduce using rule 37 (method_call -> IDENTIFIER LPAREN RPAREN .)
+    TCHOUAMENI      reduce using rule 37 (method_call -> IDENTIFIER LPAREN RPAREN .)
+    RPAREN          reduce using rule 37 (method_call -> IDENTIFIER LPAREN RPAREN .)
+
+
+state 72
+
+    (11) declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .
+
+    MILITO          reduce using rule 11 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    ZIDANE          reduce using rule 11 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    SAVIOLA         reduce using rule 11 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    INIESTA         reduce using rule 11 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    VALDERRAMA      reduce using rule 11 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    IDENTIFIER      reduce using rule 11 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    WALKER          reduce using rule 11 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    BALLACK         reduce using rule 11 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    NUMBER          reduce using rule 11 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    STRING_LITERAL  reduce using rule 11 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    CHAR_LITERAL    reduce using rule 11 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    $end            reduce using rule 11 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    RBRACE          reduce using rule 11 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+
+
+state 73
+
+    (36) method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE program . RBRACE
     (2) program -> program . statement
     (3) statement -> . declaration
     (4) statement -> . assignment
     (5) statement -> . while_loop
-    (6) statement -> . method_declaration
-    (7) statement -> . method_call SEMICOLON
-    (8) statement -> . expression SEMICOLON
-    (9) declaration -> . MILITO IDENTIFIER SEMICOLON
-    (10) declaration -> . MILITO IDENTIFIER EQUALS expression SEMICOLON
-    (11) declaration -> . ZIDANE IDENTIFIER SEMICOLON
-    (12) declaration -> . ZIDANE IDENTIFIER EQUALS expression SEMICOLON
-    (13) declaration -> . SAVIOLA IDENTIFIER SEMICOLON
-    (14) declaration -> . SAVIOLA IDENTIFIER EQUALS expression SEMICOLON
-    (15) declaration -> . INIESTA IDENTIFIER SEMICOLON
-    (16) declaration -> . INIESTA IDENTIFIER EQUALS expression SEMICOLON
-    (17) declaration -> . VALDERRAMA IDENTIFIER SEMICOLON
-    (18) declaration -> . VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON
-    (19) assignment -> . IDENTIFIER EQUALS expression SEMICOLON
-    (32) while_loop -> . WALKER LPAREN condition RPAREN LBRACE program RBRACE
-    (33) method_declaration -> . IDENTIFIER LPAREN RPAREN LBRACE program RBRACE
-    (34) method_call -> . IDENTIFIER LPAREN RPAREN
-    (20) expression -> . expression CRISTIANO term
-    (21) expression -> . expression TCHOUAMENI term
-    (22) expression -> . term
-    (23) term -> . term MESSI factor
-    (24) term -> . term PEPE factor
-    (25) term -> . factor
-    (26) factor -> . NUMBER
-    (27) factor -> . IDENTIFIER
-    (28) factor -> . STRING_LITERAL
-    (29) factor -> . CHAR_LITERAL
-    (30) factor -> . method_call
+    (6) statement -> . if_statement
+    (7) statement -> . method_declaration
+    (8) statement -> . method_call SEMICOLON
+    (9) statement -> . expression SEMICOLON
+    (10) declaration -> . MILITO IDENTIFIER SEMICOLON
+    (11) declaration -> . MILITO IDENTIFIER EQUALS expression SEMICOLON
+    (12) declaration -> . ZIDANE IDENTIFIER SEMICOLON
+    (13) declaration -> . ZIDANE IDENTIFIER EQUALS expression SEMICOLON
+    (14) declaration -> . SAVIOLA IDENTIFIER SEMICOLON
+    (15) declaration -> . SAVIOLA IDENTIFIER EQUALS expression SEMICOLON
+    (16) declaration -> . INIESTA IDENTIFIER SEMICOLON
+    (17) declaration -> . INIESTA IDENTIFIER EQUALS expression SEMICOLON
+    (18) declaration -> . VALDERRAMA IDENTIFIER SEMICOLON
+    (19) declaration -> . VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON
+    (20) assignment -> . IDENTIFIER EQUALS expression SEMICOLON
+    (35) while_loop -> . WALKER LPAREN condition RPAREN LBRACE program RBRACE
+    (32) if_statement -> . BALLACK LPAREN condition RPAREN LBRACE program RBRACE
+    (33) if_statement -> . BALLACK LPAREN condition RPAREN LBRACE program RBRACE ROBBEN LBRACE program RBRACE
+    (36) method_declaration -> . IDENTIFIER LPAREN RPAREN LBRACE program RBRACE
+    (37) method_call -> . IDENTIFIER LPAREN RPAREN
+    (21) expression -> . expression CRISTIANO term
+    (22) expression -> . expression TCHOUAMENI term
+    (23) expression -> . term
+    (24) term -> . term MESSI factor
+    (25) term -> . term PEPE factor
+    (26) term -> . factor
+    (27) factor -> . NUMBER
+    (28) factor -> . IDENTIFIER
+    (29) factor -> . STRING_LITERAL
+    (30) factor -> . CHAR_LITERAL
+    (31) factor -> . method_call
 
-    RBRACE          shift and go to state 77
-    MILITO          shift and go to state 9
-    ZIDANE          shift and go to state 11
-    SAVIOLA         shift and go to state 12
-    INIESTA         shift and go to state 13
-    VALDERRAMA      shift and go to state 14
-    IDENTIFIER      shift and go to state 10
-    WALKER          shift and go to state 15
-    NUMBER          shift and go to state 18
-    STRING_LITERAL  shift and go to state 19
-    CHAR_LITERAL    shift and go to state 20
+    RBRACE          shift and go to state 81
+    MILITO          shift and go to state 10
+    ZIDANE          shift and go to state 12
+    SAVIOLA         shift and go to state 13
+    INIESTA         shift and go to state 14
+    VALDERRAMA      shift and go to state 15
+    IDENTIFIER      shift and go to state 11
+    WALKER          shift and go to state 16
+    BALLACK         shift and go to state 17
+    NUMBER          shift and go to state 20
+    STRING_LITERAL  shift and go to state 21
+    CHAR_LITERAL    shift and go to state 22
 
-    statement                      shift and go to state 21
+    statement                      shift and go to state 23
     declaration                    shift and go to state 3
     assignment                     shift and go to state 4
     while_loop                     shift and go to state 5
-    method_declaration             shift and go to state 6
-    method_call                    shift and go to state 7
-    expression                     shift and go to state 8
-    term                           shift and go to state 16
-    factor                         shift and go to state 17
+    if_statement                   shift and go to state 6
+    method_declaration             shift and go to state 7
+    method_call                    shift and go to state 8
+    expression                     shift and go to state 9
+    term                           shift and go to state 18
+    factor                         shift and go to state 19
+
+state 74
+
+    (13) declaration -> ZIDANE IDENTIFIER EQUALS expression SEMICOLON .
+
+    MILITO          reduce using rule 13 (declaration -> ZIDANE IDENTIFIER EQUALS expression SEMICOLON .)
+    ZIDANE          reduce using rule 13 (declaration -> ZIDANE IDENTIFIER EQUALS expression SEMICOLON .)
+    SAVIOLA         reduce using rule 13 (declaration -> ZIDANE IDENTIFIER EQUALS expression SEMICOLON .)
+    INIESTA         reduce using rule 13 (declaration -> ZIDANE IDENTIFIER EQUALS expression SEMICOLON .)
+    VALDERRAMA      reduce using rule 13 (declaration -> ZIDANE IDENTIFIER EQUALS expression SEMICOLON .)
+    IDENTIFIER      reduce using rule 13 (declaration -> ZIDANE IDENTIFIER EQUALS expression SEMICOLON .)
+    WALKER          reduce using rule 13 (declaration -> ZIDANE IDENTIFIER EQUALS expression SEMICOLON .)
+    BALLACK         reduce using rule 13 (declaration -> ZIDANE IDENTIFIER EQUALS expression SEMICOLON .)
+    NUMBER          reduce using rule 13 (declaration -> ZIDANE IDENTIFIER EQUALS expression SEMICOLON .)
+    STRING_LITERAL  reduce using rule 13 (declaration -> ZIDANE IDENTIFIER EQUALS expression SEMICOLON .)
+    CHAR_LITERAL    reduce using rule 13 (declaration -> ZIDANE IDENTIFIER EQUALS expression SEMICOLON .)
+    $end            reduce using rule 13 (declaration -> ZIDANE IDENTIFIER EQUALS expression SEMICOLON .)
+    RBRACE          reduce using rule 13 (declaration -> ZIDANE IDENTIFIER EQUALS expression SEMICOLON .)
+
+
+state 75
+
+    (15) declaration -> SAVIOLA IDENTIFIER EQUALS expression SEMICOLON .
+
+    MILITO          reduce using rule 15 (declaration -> SAVIOLA IDENTIFIER EQUALS expression SEMICOLON .)
+    ZIDANE          reduce using rule 15 (declaration -> SAVIOLA IDENTIFIER EQUALS expression SEMICOLON .)
+    SAVIOLA         reduce using rule 15 (declaration -> SAVIOLA IDENTIFIER EQUALS expression SEMICOLON .)
+    INIESTA         reduce using rule 15 (declaration -> SAVIOLA IDENTIFIER EQUALS expression SEMICOLON .)
+    VALDERRAMA      reduce using rule 15 (declaration -> SAVIOLA IDENTIFIER EQUALS expression SEMICOLON .)
+    IDENTIFIER      reduce using rule 15 (declaration -> SAVIOLA IDENTIFIER EQUALS expression SEMICOLON .)
+    WALKER          reduce using rule 15 (declaration -> SAVIOLA IDENTIFIER EQUALS expression SEMICOLON .)
+    BALLACK         reduce using rule 15 (declaration -> SAVIOLA IDENTIFIER EQUALS expression SEMICOLON .)
+    NUMBER          reduce using rule 15 (declaration -> SAVIOLA IDENTIFIER EQUALS expression SEMICOLON .)
+    STRING_LITERAL  reduce using rule 15 (declaration -> SAVIOLA IDENTIFIER EQUALS expression SEMICOLON .)
+    CHAR_LITERAL    reduce using rule 15 (declaration -> SAVIOLA IDENTIFIER EQUALS expression SEMICOLON .)
+    $end            reduce using rule 15 (declaration -> SAVIOLA IDENTIFIER EQUALS expression SEMICOLON .)
+    RBRACE          reduce using rule 15 (declaration -> SAVIOLA IDENTIFIER EQUALS expression SEMICOLON .)
+
+
+state 76
+
+    (17) declaration -> INIESTA IDENTIFIER EQUALS expression SEMICOLON .
+
+    MILITO          reduce using rule 17 (declaration -> INIESTA IDENTIFIER EQUALS expression SEMICOLON .)
+    ZIDANE          reduce using rule 17 (declaration -> INIESTA IDENTIFIER EQUALS expression SEMICOLON .)
+    SAVIOLA         reduce using rule 17 (declaration -> INIESTA IDENTIFIER EQUALS expression SEMICOLON .)
+    INIESTA         reduce using rule 17 (declaration -> INIESTA IDENTIFIER EQUALS expression SEMICOLON .)
+    VALDERRAMA      reduce using rule 17 (declaration -> INIESTA IDENTIFIER EQUALS expression SEMICOLON .)
+    IDENTIFIER      reduce using rule 17 (declaration -> INIESTA IDENTIFIER EQUALS expression SEMICOLON .)
+    WALKER          reduce using rule 17 (declaration -> INIESTA IDENTIFIER EQUALS expression SEMICOLON .)
+    BALLACK         reduce using rule 17 (declaration -> INIESTA IDENTIFIER EQUALS expression SEMICOLON .)
+    NUMBER          reduce using rule 17 (declaration -> INIESTA IDENTIFIER EQUALS expression SEMICOLON .)
+    STRING_LITERAL  reduce using rule 17 (declaration -> INIESTA IDENTIFIER EQUALS expression SEMICOLON .)
+    CHAR_LITERAL    reduce using rule 17 (declaration -> INIESTA IDENTIFIER EQUALS expression SEMICOLON .)
+    $end            reduce using rule 17 (declaration -> INIESTA IDENTIFIER EQUALS expression SEMICOLON .)
+    RBRACE          reduce using rule 17 (declaration -> INIESTA IDENTIFIER EQUALS expression SEMICOLON .)
+
 
 state 77
 
-    (32) while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .
+    (19) declaration -> VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON .
 
-    MILITO          reduce using rule 32 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
-    ZIDANE          reduce using rule 32 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
-    SAVIOLA         reduce using rule 32 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
-    INIESTA         reduce using rule 32 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
-    VALDERRAMA      reduce using rule 32 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
-    IDENTIFIER      reduce using rule 32 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
-    WALKER          reduce using rule 32 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
-    NUMBER          reduce using rule 32 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
-    STRING_LITERAL  reduce using rule 32 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
-    CHAR_LITERAL    reduce using rule 32 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
-    $end            reduce using rule 32 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
-    RBRACE          reduce using rule 32 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
+    MILITO          reduce using rule 19 (declaration -> VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON .)
+    ZIDANE          reduce using rule 19 (declaration -> VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON .)
+    SAVIOLA         reduce using rule 19 (declaration -> VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON .)
+    INIESTA         reduce using rule 19 (declaration -> VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON .)
+    VALDERRAMA      reduce using rule 19 (declaration -> VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON .)
+    IDENTIFIER      reduce using rule 19 (declaration -> VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON .)
+    WALKER          reduce using rule 19 (declaration -> VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON .)
+    BALLACK         reduce using rule 19 (declaration -> VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON .)
+    NUMBER          reduce using rule 19 (declaration -> VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON .)
+    STRING_LITERAL  reduce using rule 19 (declaration -> VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON .)
+    CHAR_LITERAL    reduce using rule 19 (declaration -> VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON .)
+    $end            reduce using rule 19 (declaration -> VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON .)
+    RBRACE          reduce using rule 19 (declaration -> VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON .)
+
+
+state 78
+
+    (35) while_loop -> WALKER LPAREN condition RPAREN LBRACE . program RBRACE
+    (1) program -> . statement
+    (2) program -> . program statement
+    (3) statement -> . declaration
+    (4) statement -> . assignment
+    (5) statement -> . while_loop
+    (6) statement -> . if_statement
+    (7) statement -> . method_declaration
+    (8) statement -> . method_call SEMICOLON
+    (9) statement -> . expression SEMICOLON
+    (10) declaration -> . MILITO IDENTIFIER SEMICOLON
+    (11) declaration -> . MILITO IDENTIFIER EQUALS expression SEMICOLON
+    (12) declaration -> . ZIDANE IDENTIFIER SEMICOLON
+    (13) declaration -> . ZIDANE IDENTIFIER EQUALS expression SEMICOLON
+    (14) declaration -> . SAVIOLA IDENTIFIER SEMICOLON
+    (15) declaration -> . SAVIOLA IDENTIFIER EQUALS expression SEMICOLON
+    (16) declaration -> . INIESTA IDENTIFIER SEMICOLON
+    (17) declaration -> . INIESTA IDENTIFIER EQUALS expression SEMICOLON
+    (18) declaration -> . VALDERRAMA IDENTIFIER SEMICOLON
+    (19) declaration -> . VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON
+    (20) assignment -> . IDENTIFIER EQUALS expression SEMICOLON
+    (35) while_loop -> . WALKER LPAREN condition RPAREN LBRACE program RBRACE
+    (32) if_statement -> . BALLACK LPAREN condition RPAREN LBRACE program RBRACE
+    (33) if_statement -> . BALLACK LPAREN condition RPAREN LBRACE program RBRACE ROBBEN LBRACE program RBRACE
+    (36) method_declaration -> . IDENTIFIER LPAREN RPAREN LBRACE program RBRACE
+    (37) method_call -> . IDENTIFIER LPAREN RPAREN
+    (21) expression -> . expression CRISTIANO term
+    (22) expression -> . expression TCHOUAMENI term
+    (23) expression -> . term
+    (24) term -> . term MESSI factor
+    (25) term -> . term PEPE factor
+    (26) term -> . factor
+    (27) factor -> . NUMBER
+    (28) factor -> . IDENTIFIER
+    (29) factor -> . STRING_LITERAL
+    (30) factor -> . CHAR_LITERAL
+    (31) factor -> . method_call
+
+    MILITO          shift and go to state 10
+    ZIDANE          shift and go to state 12
+    SAVIOLA         shift and go to state 13
+    INIESTA         shift and go to state 14
+    VALDERRAMA      shift and go to state 15
+    IDENTIFIER      shift and go to state 11
+    WALKER          shift and go to state 16
+    BALLACK         shift and go to state 17
+    NUMBER          shift and go to state 20
+    STRING_LITERAL  shift and go to state 21
+    CHAR_LITERAL    shift and go to state 22
+
+    program                        shift and go to state 82
+    statement                      shift and go to state 2
+    declaration                    shift and go to state 3
+    assignment                     shift and go to state 4
+    while_loop                     shift and go to state 5
+    if_statement                   shift and go to state 6
+    method_declaration             shift and go to state 7
+    method_call                    shift and go to state 8
+    expression                     shift and go to state 9
+    term                           shift and go to state 18
+    factor                         shift and go to state 19
+
+state 79
+
+    (34) condition -> IDENTIFIER RELOP expression .
+    (21) expression -> expression . CRISTIANO term
+    (22) expression -> expression . TCHOUAMENI term
+
+    RPAREN          reduce using rule 34 (condition -> IDENTIFIER RELOP expression .)
+    CRISTIANO       shift and go to state 26
+    TCHOUAMENI      shift and go to state 27
+
+
+state 80
+
+    (32) if_statement -> BALLACK LPAREN condition RPAREN LBRACE . program RBRACE
+    (33) if_statement -> BALLACK LPAREN condition RPAREN LBRACE . program RBRACE ROBBEN LBRACE program RBRACE
+    (1) program -> . statement
+    (2) program -> . program statement
+    (3) statement -> . declaration
+    (4) statement -> . assignment
+    (5) statement -> . while_loop
+    (6) statement -> . if_statement
+    (7) statement -> . method_declaration
+    (8) statement -> . method_call SEMICOLON
+    (9) statement -> . expression SEMICOLON
+    (10) declaration -> . MILITO IDENTIFIER SEMICOLON
+    (11) declaration -> . MILITO IDENTIFIER EQUALS expression SEMICOLON
+    (12) declaration -> . ZIDANE IDENTIFIER SEMICOLON
+    (13) declaration -> . ZIDANE IDENTIFIER EQUALS expression SEMICOLON
+    (14) declaration -> . SAVIOLA IDENTIFIER SEMICOLON
+    (15) declaration -> . SAVIOLA IDENTIFIER EQUALS expression SEMICOLON
+    (16) declaration -> . INIESTA IDENTIFIER SEMICOLON
+    (17) declaration -> . INIESTA IDENTIFIER EQUALS expression SEMICOLON
+    (18) declaration -> . VALDERRAMA IDENTIFIER SEMICOLON
+    (19) declaration -> . VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON
+    (20) assignment -> . IDENTIFIER EQUALS expression SEMICOLON
+    (35) while_loop -> . WALKER LPAREN condition RPAREN LBRACE program RBRACE
+    (32) if_statement -> . BALLACK LPAREN condition RPAREN LBRACE program RBRACE
+    (33) if_statement -> . BALLACK LPAREN condition RPAREN LBRACE program RBRACE ROBBEN LBRACE program RBRACE
+    (36) method_declaration -> . IDENTIFIER LPAREN RPAREN LBRACE program RBRACE
+    (37) method_call -> . IDENTIFIER LPAREN RPAREN
+    (21) expression -> . expression CRISTIANO term
+    (22) expression -> . expression TCHOUAMENI term
+    (23) expression -> . term
+    (24) term -> . term MESSI factor
+    (25) term -> . term PEPE factor
+    (26) term -> . factor
+    (27) factor -> . NUMBER
+    (28) factor -> . IDENTIFIER
+    (29) factor -> . STRING_LITERAL
+    (30) factor -> . CHAR_LITERAL
+    (31) factor -> . method_call
+
+    MILITO          shift and go to state 10
+    ZIDANE          shift and go to state 12
+    SAVIOLA         shift and go to state 13
+    INIESTA         shift and go to state 14
+    VALDERRAMA      shift and go to state 15
+    IDENTIFIER      shift and go to state 11
+    WALKER          shift and go to state 16
+    BALLACK         shift and go to state 17
+    NUMBER          shift and go to state 20
+    STRING_LITERAL  shift and go to state 21
+    CHAR_LITERAL    shift and go to state 22
+
+    program                        shift and go to state 83
+    statement                      shift and go to state 2
+    declaration                    shift and go to state 3
+    assignment                     shift and go to state 4
+    while_loop                     shift and go to state 5
+    if_statement                   shift and go to state 6
+    method_declaration             shift and go to state 7
+    method_call                    shift and go to state 8
+    expression                     shift and go to state 9
+    term                           shift and go to state 18
+    factor                         shift and go to state 19
+
+state 81
+
+    (36) method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE program RBRACE .
+
+    MILITO          reduce using rule 36 (method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE program RBRACE .)
+    ZIDANE          reduce using rule 36 (method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE program RBRACE .)
+    SAVIOLA         reduce using rule 36 (method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE program RBRACE .)
+    INIESTA         reduce using rule 36 (method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE program RBRACE .)
+    VALDERRAMA      reduce using rule 36 (method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE program RBRACE .)
+    IDENTIFIER      reduce using rule 36 (method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE program RBRACE .)
+    WALKER          reduce using rule 36 (method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE program RBRACE .)
+    BALLACK         reduce using rule 36 (method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE program RBRACE .)
+    NUMBER          reduce using rule 36 (method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE program RBRACE .)
+    STRING_LITERAL  reduce using rule 36 (method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE program RBRACE .)
+    CHAR_LITERAL    reduce using rule 36 (method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE program RBRACE .)
+    $end            reduce using rule 36 (method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE program RBRACE .)
+    RBRACE          reduce using rule 36 (method_declaration -> IDENTIFIER LPAREN RPAREN LBRACE program RBRACE .)
+
+
+state 82
+
+    (35) while_loop -> WALKER LPAREN condition RPAREN LBRACE program . RBRACE
+    (2) program -> program . statement
+    (3) statement -> . declaration
+    (4) statement -> . assignment
+    (5) statement -> . while_loop
+    (6) statement -> . if_statement
+    (7) statement -> . method_declaration
+    (8) statement -> . method_call SEMICOLON
+    (9) statement -> . expression SEMICOLON
+    (10) declaration -> . MILITO IDENTIFIER SEMICOLON
+    (11) declaration -> . MILITO IDENTIFIER EQUALS expression SEMICOLON
+    (12) declaration -> . ZIDANE IDENTIFIER SEMICOLON
+    (13) declaration -> . ZIDANE IDENTIFIER EQUALS expression SEMICOLON
+    (14) declaration -> . SAVIOLA IDENTIFIER SEMICOLON
+    (15) declaration -> . SAVIOLA IDENTIFIER EQUALS expression SEMICOLON
+    (16) declaration -> . INIESTA IDENTIFIER SEMICOLON
+    (17) declaration -> . INIESTA IDENTIFIER EQUALS expression SEMICOLON
+    (18) declaration -> . VALDERRAMA IDENTIFIER SEMICOLON
+    (19) declaration -> . VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON
+    (20) assignment -> . IDENTIFIER EQUALS expression SEMICOLON
+    (35) while_loop -> . WALKER LPAREN condition RPAREN LBRACE program RBRACE
+    (32) if_statement -> . BALLACK LPAREN condition RPAREN LBRACE program RBRACE
+    (33) if_statement -> . BALLACK LPAREN condition RPAREN LBRACE program RBRACE ROBBEN LBRACE program RBRACE
+    (36) method_declaration -> . IDENTIFIER LPAREN RPAREN LBRACE program RBRACE
+    (37) method_call -> . IDENTIFIER LPAREN RPAREN
+    (21) expression -> . expression CRISTIANO term
+    (22) expression -> . expression TCHOUAMENI term
+    (23) expression -> . term
+    (24) term -> . term MESSI factor
+    (25) term -> . term PEPE factor
+    (26) term -> . factor
+    (27) factor -> . NUMBER
+    (28) factor -> . IDENTIFIER
+    (29) factor -> . STRING_LITERAL
+    (30) factor -> . CHAR_LITERAL
+    (31) factor -> . method_call
+
+    RBRACE          shift and go to state 84
+    MILITO          shift and go to state 10
+    ZIDANE          shift and go to state 12
+    SAVIOLA         shift and go to state 13
+    INIESTA         shift and go to state 14
+    VALDERRAMA      shift and go to state 15
+    IDENTIFIER      shift and go to state 11
+    WALKER          shift and go to state 16
+    BALLACK         shift and go to state 17
+    NUMBER          shift and go to state 20
+    STRING_LITERAL  shift and go to state 21
+    CHAR_LITERAL    shift and go to state 22
+
+    statement                      shift and go to state 23
+    declaration                    shift and go to state 3
+    assignment                     shift and go to state 4
+    while_loop                     shift and go to state 5
+    if_statement                   shift and go to state 6
+    method_declaration             shift and go to state 7
+    method_call                    shift and go to state 8
+    expression                     shift and go to state 9
+    term                           shift and go to state 18
+    factor                         shift and go to state 19
+
+state 83
+
+    (32) if_statement -> BALLACK LPAREN condition RPAREN LBRACE program . RBRACE
+    (33) if_statement -> BALLACK LPAREN condition RPAREN LBRACE program . RBRACE ROBBEN LBRACE program RBRACE
+    (2) program -> program . statement
+    (3) statement -> . declaration
+    (4) statement -> . assignment
+    (5) statement -> . while_loop
+    (6) statement -> . if_statement
+    (7) statement -> . method_declaration
+    (8) statement -> . method_call SEMICOLON
+    (9) statement -> . expression SEMICOLON
+    (10) declaration -> . MILITO IDENTIFIER SEMICOLON
+    (11) declaration -> . MILITO IDENTIFIER EQUALS expression SEMICOLON
+    (12) declaration -> . ZIDANE IDENTIFIER SEMICOLON
+    (13) declaration -> . ZIDANE IDENTIFIER EQUALS expression SEMICOLON
+    (14) declaration -> . SAVIOLA IDENTIFIER SEMICOLON
+    (15) declaration -> . SAVIOLA IDENTIFIER EQUALS expression SEMICOLON
+    (16) declaration -> . INIESTA IDENTIFIER SEMICOLON
+    (17) declaration -> . INIESTA IDENTIFIER EQUALS expression SEMICOLON
+    (18) declaration -> . VALDERRAMA IDENTIFIER SEMICOLON
+    (19) declaration -> . VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON
+    (20) assignment -> . IDENTIFIER EQUALS expression SEMICOLON
+    (35) while_loop -> . WALKER LPAREN condition RPAREN LBRACE program RBRACE
+    (32) if_statement -> . BALLACK LPAREN condition RPAREN LBRACE program RBRACE
+    (33) if_statement -> . BALLACK LPAREN condition RPAREN LBRACE program RBRACE ROBBEN LBRACE program RBRACE
+    (36) method_declaration -> . IDENTIFIER LPAREN RPAREN LBRACE program RBRACE
+    (37) method_call -> . IDENTIFIER LPAREN RPAREN
+    (21) expression -> . expression CRISTIANO term
+    (22) expression -> . expression TCHOUAMENI term
+    (23) expression -> . term
+    (24) term -> . term MESSI factor
+    (25) term -> . term PEPE factor
+    (26) term -> . factor
+    (27) factor -> . NUMBER
+    (28) factor -> . IDENTIFIER
+    (29) factor -> . STRING_LITERAL
+    (30) factor -> . CHAR_LITERAL
+    (31) factor -> . method_call
+
+    RBRACE          shift and go to state 85
+    MILITO          shift and go to state 10
+    ZIDANE          shift and go to state 12
+    SAVIOLA         shift and go to state 13
+    INIESTA         shift and go to state 14
+    VALDERRAMA      shift and go to state 15
+    IDENTIFIER      shift and go to state 11
+    WALKER          shift and go to state 16
+    BALLACK         shift and go to state 17
+    NUMBER          shift and go to state 20
+    STRING_LITERAL  shift and go to state 21
+    CHAR_LITERAL    shift and go to state 22
+
+    statement                      shift and go to state 23
+    declaration                    shift and go to state 3
+    assignment                     shift and go to state 4
+    while_loop                     shift and go to state 5
+    if_statement                   shift and go to state 6
+    method_declaration             shift and go to state 7
+    method_call                    shift and go to state 8
+    expression                     shift and go to state 9
+    term                           shift and go to state 18
+    factor                         shift and go to state 19
+
+state 84
+
+    (35) while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .
+
+    MILITO          reduce using rule 35 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
+    ZIDANE          reduce using rule 35 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
+    SAVIOLA         reduce using rule 35 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
+    INIESTA         reduce using rule 35 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
+    VALDERRAMA      reduce using rule 35 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
+    IDENTIFIER      reduce using rule 35 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
+    WALKER          reduce using rule 35 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
+    BALLACK         reduce using rule 35 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
+    NUMBER          reduce using rule 35 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
+    STRING_LITERAL  reduce using rule 35 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
+    CHAR_LITERAL    reduce using rule 35 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
+    $end            reduce using rule 35 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
+    RBRACE          reduce using rule 35 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
+
+
+state 85
+
+    (32) if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE .
+    (33) if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE . ROBBEN LBRACE program RBRACE
+
+    MILITO          reduce using rule 32 (if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE .)
+    ZIDANE          reduce using rule 32 (if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE .)
+    SAVIOLA         reduce using rule 32 (if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE .)
+    INIESTA         reduce using rule 32 (if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE .)
+    VALDERRAMA      reduce using rule 32 (if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE .)
+    IDENTIFIER      reduce using rule 32 (if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE .)
+    WALKER          reduce using rule 32 (if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE .)
+    BALLACK         reduce using rule 32 (if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE .)
+    NUMBER          reduce using rule 32 (if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE .)
+    STRING_LITERAL  reduce using rule 32 (if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE .)
+    CHAR_LITERAL    reduce using rule 32 (if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE .)
+    $end            reduce using rule 32 (if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE .)
+    RBRACE          reduce using rule 32 (if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE .)
+    ROBBEN          shift and go to state 86
+
+
+state 86
+
+    (33) if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE ROBBEN . LBRACE program RBRACE
+
+    LBRACE          shift and go to state 87
+
+
+state 87
+
+    (33) if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE ROBBEN LBRACE . program RBRACE
+    (1) program -> . statement
+    (2) program -> . program statement
+    (3) statement -> . declaration
+    (4) statement -> . assignment
+    (5) statement -> . while_loop
+    (6) statement -> . if_statement
+    (7) statement -> . method_declaration
+    (8) statement -> . method_call SEMICOLON
+    (9) statement -> . expression SEMICOLON
+    (10) declaration -> . MILITO IDENTIFIER SEMICOLON
+    (11) declaration -> . MILITO IDENTIFIER EQUALS expression SEMICOLON
+    (12) declaration -> . ZIDANE IDENTIFIER SEMICOLON
+    (13) declaration -> . ZIDANE IDENTIFIER EQUALS expression SEMICOLON
+    (14) declaration -> . SAVIOLA IDENTIFIER SEMICOLON
+    (15) declaration -> . SAVIOLA IDENTIFIER EQUALS expression SEMICOLON
+    (16) declaration -> . INIESTA IDENTIFIER SEMICOLON
+    (17) declaration -> . INIESTA IDENTIFIER EQUALS expression SEMICOLON
+    (18) declaration -> . VALDERRAMA IDENTIFIER SEMICOLON
+    (19) declaration -> . VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON
+    (20) assignment -> . IDENTIFIER EQUALS expression SEMICOLON
+    (35) while_loop -> . WALKER LPAREN condition RPAREN LBRACE program RBRACE
+    (32) if_statement -> . BALLACK LPAREN condition RPAREN LBRACE program RBRACE
+    (33) if_statement -> . BALLACK LPAREN condition RPAREN LBRACE program RBRACE ROBBEN LBRACE program RBRACE
+    (36) method_declaration -> . IDENTIFIER LPAREN RPAREN LBRACE program RBRACE
+    (37) method_call -> . IDENTIFIER LPAREN RPAREN
+    (21) expression -> . expression CRISTIANO term
+    (22) expression -> . expression TCHOUAMENI term
+    (23) expression -> . term
+    (24) term -> . term MESSI factor
+    (25) term -> . term PEPE factor
+    (26) term -> . factor
+    (27) factor -> . NUMBER
+    (28) factor -> . IDENTIFIER
+    (29) factor -> . STRING_LITERAL
+    (30) factor -> . CHAR_LITERAL
+    (31) factor -> . method_call
+
+    MILITO          shift and go to state 10
+    ZIDANE          shift and go to state 12
+    SAVIOLA         shift and go to state 13
+    INIESTA         shift and go to state 14
+    VALDERRAMA      shift and go to state 15
+    IDENTIFIER      shift and go to state 11
+    WALKER          shift and go to state 16
+    BALLACK         shift and go to state 17
+    NUMBER          shift and go to state 20
+    STRING_LITERAL  shift and go to state 21
+    CHAR_LITERAL    shift and go to state 22
+
+    program                        shift and go to state 88
+    statement                      shift and go to state 2
+    declaration                    shift and go to state 3
+    assignment                     shift and go to state 4
+    while_loop                     shift and go to state 5
+    if_statement                   shift and go to state 6
+    method_declaration             shift and go to state 7
+    method_call                    shift and go to state 8
+    expression                     shift and go to state 9
+    term                           shift and go to state 18
+    factor                         shift and go to state 19
+
+state 88
+
+    (33) if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE ROBBEN LBRACE program . RBRACE
+    (2) program -> program . statement
+    (3) statement -> . declaration
+    (4) statement -> . assignment
+    (5) statement -> . while_loop
+    (6) statement -> . if_statement
+    (7) statement -> . method_declaration
+    (8) statement -> . method_call SEMICOLON
+    (9) statement -> . expression SEMICOLON
+    (10) declaration -> . MILITO IDENTIFIER SEMICOLON
+    (11) declaration -> . MILITO IDENTIFIER EQUALS expression SEMICOLON
+    (12) declaration -> . ZIDANE IDENTIFIER SEMICOLON
+    (13) declaration -> . ZIDANE IDENTIFIER EQUALS expression SEMICOLON
+    (14) declaration -> . SAVIOLA IDENTIFIER SEMICOLON
+    (15) declaration -> . SAVIOLA IDENTIFIER EQUALS expression SEMICOLON
+    (16) declaration -> . INIESTA IDENTIFIER SEMICOLON
+    (17) declaration -> . INIESTA IDENTIFIER EQUALS expression SEMICOLON
+    (18) declaration -> . VALDERRAMA IDENTIFIER SEMICOLON
+    (19) declaration -> . VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON
+    (20) assignment -> . IDENTIFIER EQUALS expression SEMICOLON
+    (35) while_loop -> . WALKER LPAREN condition RPAREN LBRACE program RBRACE
+    (32) if_statement -> . BALLACK LPAREN condition RPAREN LBRACE program RBRACE
+    (33) if_statement -> . BALLACK LPAREN condition RPAREN LBRACE program RBRACE ROBBEN LBRACE program RBRACE
+    (36) method_declaration -> . IDENTIFIER LPAREN RPAREN LBRACE program RBRACE
+    (37) method_call -> . IDENTIFIER LPAREN RPAREN
+    (21) expression -> . expression CRISTIANO term
+    (22) expression -> . expression TCHOUAMENI term
+    (23) expression -> . term
+    (24) term -> . term MESSI factor
+    (25) term -> . term PEPE factor
+    (26) term -> . factor
+    (27) factor -> . NUMBER
+    (28) factor -> . IDENTIFIER
+    (29) factor -> . STRING_LITERAL
+    (30) factor -> . CHAR_LITERAL
+    (31) factor -> . method_call
+
+    RBRACE          shift and go to state 89
+    MILITO          shift and go to state 10
+    ZIDANE          shift and go to state 12
+    SAVIOLA         shift and go to state 13
+    INIESTA         shift and go to state 14
+    VALDERRAMA      shift and go to state 15
+    IDENTIFIER      shift and go to state 11
+    WALKER          shift and go to state 16
+    BALLACK         shift and go to state 17
+    NUMBER          shift and go to state 20
+    STRING_LITERAL  shift and go to state 21
+    CHAR_LITERAL    shift and go to state 22
+
+    statement                      shift and go to state 23
+    declaration                    shift and go to state 3
+    assignment                     shift and go to state 4
+    while_loop                     shift and go to state 5
+    if_statement                   shift and go to state 6
+    method_declaration             shift and go to state 7
+    method_call                    shift and go to state 8
+    expression                     shift and go to state 9
+    term                           shift and go to state 18
+    factor                         shift and go to state 19
+
+state 89
+
+    (33) if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE ROBBEN LBRACE program RBRACE .
+
+    MILITO          reduce using rule 33 (if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE ROBBEN LBRACE program RBRACE .)
+    ZIDANE          reduce using rule 33 (if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE ROBBEN LBRACE program RBRACE .)
+    SAVIOLA         reduce using rule 33 (if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE ROBBEN LBRACE program RBRACE .)
+    INIESTA         reduce using rule 33 (if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE ROBBEN LBRACE program RBRACE .)
+    VALDERRAMA      reduce using rule 33 (if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE ROBBEN LBRACE program RBRACE .)
+    IDENTIFIER      reduce using rule 33 (if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE ROBBEN LBRACE program RBRACE .)
+    WALKER          reduce using rule 33 (if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE ROBBEN LBRACE program RBRACE .)
+    BALLACK         reduce using rule 33 (if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE ROBBEN LBRACE program RBRACE .)
+    NUMBER          reduce using rule 33 (if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE ROBBEN LBRACE program RBRACE .)
+    STRING_LITERAL  reduce using rule 33 (if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE ROBBEN LBRACE program RBRACE .)
+    CHAR_LITERAL    reduce using rule 33 (if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE ROBBEN LBRACE program RBRACE .)
+    $end            reduce using rule 33 (if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE ROBBEN LBRACE program RBRACE .)
+    RBRACE          reduce using rule 33 (if_statement -> BALLACK LPAREN condition RPAREN LBRACE program RBRACE ROBBEN LBRACE program RBRACE .)
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: shift/reduce conflict for SEMICOLON in state 7 resolved as shift
+WARNING: shift/reduce conflict for SEMICOLON in state 8 resolved as shift

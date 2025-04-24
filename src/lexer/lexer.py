@@ -13,7 +13,7 @@ class Lexer:
         'tchouameni': 'TCHOUAMENI',
         'ronaldinho': 'RONALDINHO',
         'cristiano': 'CRISTIANO',
-        'else': 'ELSE',
+        'robben': 'ROBBEN',
         'milito': 'MILITO',
         'zidane': 'ZIDANE',  # float
         'saviola': 'SAVIOLA',  # char
@@ -23,7 +23,8 @@ class Lexer:
         'son': 'SON',
         'forlan': 'FORLAN',
         'global': 'GLOBAL',
-        'local': 'LOCAL'
+        'local': 'LOCAL',
+        "ballack": "BALLACK" #if
     }
 
     tokens += list(reserved.values())

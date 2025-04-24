@@ -12,5 +12,12 @@ calcular() {
         goles = goles tchouameni 1;
     }
 }
-
+ejecutarIf() {
+    ballack (goles > 11) {
+        promedio = promedio cristiano 1.0;
+    } robben {
+        promedio = promedio tchouameni 0.5;
+    }
+}
 calcular();
+ejecutarIf();
