@@ -43,7 +43,7 @@ python main.py
 - `tests/`: Directorio con pruebas unitarias.
 - `errors.py`: Bitácora de errores
 - `semantic.py`: Lógica relacionada que se ejecutará en el parser. 
-- `interCodeGenerator.py`: Genera instrucciones de código intermedio en formato de tres direcciones (Three Address Code), típicamente usadas para representar operaciones matemáticas y asignaciones.`: Crea operaciones matemáticas en 3 direcciones.
+- `interCodeGenerator.py`: Genera instrucciones de código intermedio en formato de tres direcciones (Three Address Code), típicamente usadas para representar operaciones matemáticas y asignaciones.: Crea operaciones matemáticas en 3 direcciones.
 ## Contribuciones
 Las contribuciones son bienvenidas. Por favor, abre un issue o envía un pull request.
 
