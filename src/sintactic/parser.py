@@ -68,14 +68,14 @@ class Parser:
         body = p[10] if isinstance(p[10], list) else []
 
         if not callable(condition):
-            self.errors.encolar_error("❌ La condición del for no es válida.")
+            self.errors.encolar_error(" La condición del for no es válida.")
             p[0] = lambda: None
             return
 
         try:
             p[0] = self.semantic.handle_for(init, condition, update, body)
         except Exception as e:
-            self.errors.encolar_error(f"❌ Error en el cuerpo del for: {e}")
+            self.errors.encolar_error(f" Error en el cuerpo del for: {e}")
             p[0] = lambda: None
 
     def p_do_while_loop(self, p):
@@ -113,7 +113,12 @@ class Parser:
 
     def p_factor_grouped(self, p):
         'factor : LPAREN expression RPAREN'
-        p[0] = p[2]
+        #En este caso la expresion es una tupla entonces la convertimos en código intermedio
+        if isinstance(p[2], tuple) and len(p[2]) == 3:
+            p[0] = self.semantic.handle_expression(*p[2])
+        else:
+            p[0] = p[2]
+
 
     def p_assignment(self, p):
         'assignment : IDENTIFIER EQUALS expression SEMICOLON'
@@ -215,11 +220,11 @@ class Parser:
             try:
                 col = self.errors.find_column(p)
                 row = self.errors.find_line(p)
-                self.errors.encolar_error(f"❌ Error de sintaxis en '{p.value}' en la fila {row} y columna {col}")
+                self.errors.encolar_error(f" Error de sintaxis en '{p.value}' en la fila {row} y columna {col}")
             except Exception:
-                self.errors.encolar_error(f"❌ Error de sintaxis en token inesperado.")
+                self.errors.encolar_error(f" Error de sintaxis en token inesperado.")
         else:
-            self.errors.encolar_error("❌ Error de sintaxis: expresión incompleta o final inesperado.")
+            self.errors.encolar_error(" Error de sintaxis: expresión incompleta o final inesperado.")
 
     def parse(self, data):
         self.lexer.lexer.input(data)

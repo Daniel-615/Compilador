@@ -6,6 +6,7 @@ import json
 import os
 import webbrowser
 
+from src.intercode.interCodeGenerator import interCodeGenerator
 from src.utils.files import Files as FileLoader
 from src.lexer.lexer import Lexer
 from src.sintactic.parser import Parser
@@ -42,9 +43,11 @@ class Main:
             self.lexic_errors = Errors(self.content)
             self.sintatic_errors = Errors(self.content)
             self.semantic_errors = Errors(self.content)
-
+            
+            # Generar código intermedio
+            inter_code_generator=interCodeGenerator()
             self.lexer = Lexer(self.lexic_errors)
-            self.semantic = Semantic(self.symbol_table, self.semantic_errors, self.lexer)
+            self.semantic = Semantic(self.symbol_table, self.semantic_errors, self.lexer,inter_code_generator)
             self.parser = Parser(self.lexer, self.sintatic_errors, self.semantic)
 
             self.thread = threading.Thread(target=self.run_analysis)
@@ -59,7 +62,9 @@ class Main:
 
             tokens = self.lexer.tokenize(self.content)
             self.parser.parse(self.content)
-
+            print("\n💡 Código intermedio generado:")
+            for line in self.semantic.intercode_generator.get_code():
+                print(line)
             with open("./templates/compilador.html", "r", encoding="utf-8") as tpl_file:
                 template = tpl_file.read()
 

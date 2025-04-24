@@ -3,11 +3,12 @@ from threading import Event
 import json, os, tempfile
 from datetime import datetime
 class Semantic:
-    def __init__(self, symbol_table, errors, lexer):
+    def __init__(self, symbol_table, errors, lexer,intercode_generator):
         self.symbol_table = symbol_table
         self.errors = errors
         self.lexer = lexer
         self.methods = {}
+        self.intercode_generator = intercode_generator
 
 
     def handle_declaration(self, name, var_type, scope, value=None):
@@ -22,19 +23,27 @@ class Semantic:
             print(f"Recibido en asignación para '{name}': {value}")
             try:
                 value_eval = None
+
                 if isinstance(value, tuple):
+                    # Si es una expresión tipo (left, op, right)
                     if len(value) == 3:
                         value_eval = self.handle_expression(*value)
+                        
                     else:
                         self.errors.encolar_error(f" Error: La expresión para '{name}' debe tener 3 elementos (left, op, right), pero tiene {len(value)}.")
                         print(f" Tupla inválida para '{name}': {value}")
                         return
                 else:
+                    # Si es un valor literal o una variable
                     value_eval = self._get_value(value)
 
+                # Verifica si la variable está declarada
                 if self.symbol_table.get_symbol(name) is not None:
                     self.symbol_table.update_symbol(name, value_eval)
                     print(f"Asignación: {name} = {value_eval}")
+
+                    #  Código intermedio: asignación directa
+                    self.intercode_generator.emit(f"{name} = {value_eval}")
                 else:
                     self.errors.encolar_error(f" Error: Variable '{name}' no declarada.")
             except Exception as e:
@@ -43,17 +52,26 @@ class Semantic:
         return action
 
 
-
+    #codigo intermedio operadores
+    def _map_operator(self, op):
+        return {
+            'cristiano': '+',
+            'tchouameni': '-',
+            'messi': '*',
+            'pepe': '/'
+        }.get(op, op)
 
     def handle_expression(self, left, operator, right):
         val1 = self._get_value(left)
         val2 = self._get_value(right)
+
         if val1 is None or val2 is None:
             self.errors.encolar_error(f" Error: Operación inválida: {left} {operator} {right}")
             return None
-        result = self._apply_operator(val1, operator, val2)
-        print(f" Evaluación: {val1} {operator} {val2} = {result}")
-        return result
+
+        temp = self.intercode_generator.new_temp()
+        self.intercode_generator.emit(f"{temp} = {val1} {self._map_operator(operator)} {val2}")
+        return temp  # Regresa el temporal generado
 
     def handle_term(self, left, operator, right):
         return self.handle_expression(left, operator, right)
