@@ -24,35 +24,32 @@ class Parser:
         p[0] = p[1]
 
     def p_declaration(self, p):
-        '''declaration : GLOBAL INT IDENTIFIER SEMICOLON
-                    | LOCAL INT IDENTIFIER SEMICOLON
-                    | INT IDENTIFIER SEMICOLON
-                    | INT IDENTIFIER EQUALS expression SEMICOLON
-                    | GLOBAL INT IDENTIFIER EQUALS expression SEMICOLON
-                    | LOCAL INT IDENTIFIER EQUALS expression SEMICOLON'''
-        reserved = {v: k for k, v in self.lexer.reserved.items()}
-        
-        if p[1] == reserved.get('GLOBAL'):
-            scope = 'global'
-            identifier = p[3]
-            type_ = p[2]
-            value = p[5] if len(p) > 5 else None
-            action = self.semantic.handle_declaration(identifier, type_, scope, value)
-        elif p[1] == reserved.get('LOCAL'):
-            scope = 'local'
-            identifier = p[3]
-            type_ = p[2]
-            value = p[5] if len(p) > 5 else None
-            action = self.semantic.handle_declaration(identifier, type_, scope, value)
+        '''declaration : GLOBAL MILITO IDENTIFIER SEMICOLON
+                   | LOCAL MILITO IDENTIFIER SEMICOLON
+                   | MILITO IDENTIFIER SEMICOLON
+                   | MILITO IDENTIFIER EQUALS expression SEMICOLON
+                   | GLOBAL MILITO IDENTIFIER EQUALS expression SEMICOLON
+                   | LOCAL MILITO IDENTIFIER EQUALS expression SEMICOLON'''
+    
+        if p[1] == 'global':
+           scope = 'global'
+           type_ = p[2]  # p[2] = 'milito'
+           identifier = p[3]
+           value = p[5] if len(p) > 5 else None
+           action = self.semantic.handle_declaration(identifier, type_, scope, value)
+        elif p[1] == 'local':
+           scope = 'local'
+           type_ = p[2]  # p[2] = 'milito'
+           identifier = p[3]
+           value = p[5] if len(p) > 5 else None
+           action = self.semantic.handle_declaration(identifier, type_, scope, value)
         else:
-            # Si no se especifica alcance, asumimos que es global
-            scope = 'global'
-            identifier = p[2]
-            type_ = p[1]
-            value = p[4] if len(p) > 4 else None
-            action = self.semantic.handle_declaration(identifier, type_, scope, value)
-        
-        # Ejecutar la acción para agregar la variable a la tabla de símbolos
+           scope = 'local'  # default scope
+           type_ = p[1]  # p[1] = 'milito'
+           identifier = p[2]
+           value = p[4] if len(p) > 4 else None
+           action = self.semantic.handle_declaration(identifier, type_, scope, value)
+
         action()
 
     def p_assignment(self, p):
@@ -60,18 +57,20 @@ class Parser:
         p[0] = self.semantic.handle_assignment(p[1], p[3])
 
     def p_expression(self, p):
-        '''expression : expression PLUS term
-                      | expression MINUS term
-                      | term'''
+        '''expression : expression CRISTIANO term
+                  | expression TCHOUAMENI term
+                  | term'''
+
         if len(p) == 4:
             p[0] = self.semantic.handle_expression(p[1], p[2], p[3])
         else:
             p[0] = p[1]
 
     def p_term(self, p):
-        '''term : term TIMES factor
-                | term DIVIDE factor
-                | factor'''
+        '''term : term MESSI factor
+            | term PEPE factor
+            | factor'''
+
         if len(p) == 4:
             p[0] = self.semantic.handle_term(p[1], p[2], p[3])
         else:
@@ -84,13 +83,14 @@ class Parser:
 
     def p_condition(self, p):
         'condition : IDENTIFIER RELOP expression'
-        var_name = p[1]  # Esto es un string como 'x'
+        var_name = p[1]
         op = p[2]
         value_expr = p[3]
         p[0] = lambda: self.semantic.evaluate_condition_dynamic(var_name, op, value_expr)
 
+
     def p_while_loop(self, p):
-        'while_loop : WHILE LPAREN condition RPAREN LBRACE program RBRACE'
+        'while_loop : WALKER LPAREN condition RPAREN LBRACE program RBRACE'
         p[0] = self.semantic.handle_while(p[3], p[6])
 
     def p_error(self, p):

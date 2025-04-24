@@ -3,7 +3,6 @@ import webbrowser
 
 class SymbolTable:
     def __init__(self):
-        # Diccionario para almacenar los símbolos (identificadores y sus valores)
         self.symbols = {}
 
     def add_symbol(self, name, type_, scope, value=None):
@@ -17,12 +16,15 @@ class SymbolTable:
         """Actualiza el valor de un símbolo existente en la tabla."""
         if identifier in self.symbols:
             self.symbols[identifier]['value'] = value
+            print(f"Actualizado {identifier} a {value}")
+            #self.toHtml()  
         else:
             print(f"Error: La variable '{identifier}' no ha sido declarada.")
 
     def get_symbol(self, identifier):
         """Obtiene el valor de una variable si existe en la tabla."""
         if identifier in self.symbols:
+            print(f"Valor del simbolo en la tabla de simbolos: {self.symbols[identifier]['value']}")
             return self.symbols[identifier]['value']
         else:
             print(f"Error: La variable '{identifier}' no ha sido declarada.")

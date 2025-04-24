@@ -42,6 +42,7 @@ python main.py
 - `ccodeGen.py`: Generación de código máquina.
 - `tests/`: Directorio con pruebas unitarias.
 - `errors.py`: Bitácora de errores
+-`semantic.py`: Lógica relacionada que se ejecutará en el parser 
 
 ## Contribuciones
 Las contribuciones son bienvenidas. Por favor, abre un issue o envía un pull request.

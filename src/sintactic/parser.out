@@ -2,17 +2,17 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
-    CHAR
     COMMA
-    DO
     DOT
     ELSE
-    FLOAT
-    FOR
+    FORLAN
     GT
-    IF
     LT
     QUOTE
+    RONALDINHO
+    SAVIOLA
+    SON
+    ZIDANE
 
 Grammar
 
@@ -23,54 +23,54 @@ Rule 3     statement -> declaration
 Rule 4     statement -> assignment
 Rule 5     statement -> while_loop
 Rule 6     statement -> expression SEMICOLON
-Rule 7     declaration -> GLOBAL INT IDENTIFIER SEMICOLON
-Rule 8     declaration -> LOCAL INT IDENTIFIER SEMICOLON
-Rule 9     declaration -> INT IDENTIFIER SEMICOLON
-Rule 10    declaration -> INT IDENTIFIER EQUALS expression SEMICOLON
-Rule 11    declaration -> GLOBAL INT IDENTIFIER EQUALS expression SEMICOLON
-Rule 12    declaration -> LOCAL INT IDENTIFIER EQUALS expression SEMICOLON
+Rule 7     declaration -> GLOBAL MILITO IDENTIFIER SEMICOLON
+Rule 8     declaration -> LOCAL MILITO IDENTIFIER SEMICOLON
+Rule 9     declaration -> MILITO IDENTIFIER SEMICOLON
+Rule 10    declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON
+Rule 11    declaration -> GLOBAL MILITO IDENTIFIER EQUALS expression SEMICOLON
+Rule 12    declaration -> LOCAL MILITO IDENTIFIER EQUALS expression SEMICOLON
 Rule 13    assignment -> IDENTIFIER EQUALS expression SEMICOLON
-Rule 14    expression -> expression PLUS term
-Rule 15    expression -> expression MINUS term
+Rule 14    expression -> expression CRISTIANO term
+Rule 15    expression -> expression TCHOUAMENI term
 Rule 16    expression -> term
-Rule 17    term -> term TIMES factor
-Rule 18    term -> term DIVIDE factor
+Rule 17    term -> term MESSI factor
+Rule 18    term -> term PEPE factor
 Rule 19    term -> factor
 Rule 20    factor -> NUMBER
 Rule 21    factor -> IDENTIFIER
 Rule 22    condition -> IDENTIFIER RELOP expression
-Rule 23    while_loop -> WHILE LPAREN condition RPAREN LBRACE program RBRACE
+Rule 23    while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE
 
 Terminals, with rules where they appear
 
-CHAR                 : 
 COMMA                : 
-DIVIDE               : 18
-DO                   : 
+CRISTIANO            : 14
 DOT                  : 
 ELSE                 : 
 EQUALS               : 10 11 12 13
-FLOAT                : 
-FOR                  : 
+FORLAN               : 
 GLOBAL               : 7 11
 GT                   : 
 IDENTIFIER           : 7 8 9 10 11 12 13 21 22
-IF                   : 
-INT                  : 7 8 9 10 11 12
 LBRACE               : 23
 LOCAL                : 8 12
 LPAREN               : 23
 LT                   : 
-MINUS                : 15
+MESSI                : 17
+MILITO               : 7 8 9 10 11 12
 NUMBER               : 20
-PLUS                 : 14
+PEPE                 : 18
 QUOTE                : 
 RBRACE               : 23
 RELOP                : 22
+RONALDINHO           : 
 RPAREN               : 23
+SAVIOLA              : 
 SEMICOLON            : 6 7 8 9 10 11 12 13
-TIMES                : 17
-WHILE                : 23
+SON                  : 
+TCHOUAMENI           : 15
+WALKER               : 23
+ZIDANE               : 
 error                : 
 
 Nonterminals, with rules where they appear
@@ -96,28 +96,28 @@ state 0
     (4) statement -> . assignment
     (5) statement -> . while_loop
     (6) statement -> . expression SEMICOLON
-    (7) declaration -> . GLOBAL INT IDENTIFIER SEMICOLON
-    (8) declaration -> . LOCAL INT IDENTIFIER SEMICOLON
-    (9) declaration -> . INT IDENTIFIER SEMICOLON
-    (10) declaration -> . INT IDENTIFIER EQUALS expression SEMICOLON
-    (11) declaration -> . GLOBAL INT IDENTIFIER EQUALS expression SEMICOLON
-    (12) declaration -> . LOCAL INT IDENTIFIER EQUALS expression SEMICOLON
+    (7) declaration -> . GLOBAL MILITO IDENTIFIER SEMICOLON
+    (8) declaration -> . LOCAL MILITO IDENTIFIER SEMICOLON
+    (9) declaration -> . MILITO IDENTIFIER SEMICOLON
+    (10) declaration -> . MILITO IDENTIFIER EQUALS expression SEMICOLON
+    (11) declaration -> . GLOBAL MILITO IDENTIFIER EQUALS expression SEMICOLON
+    (12) declaration -> . LOCAL MILITO IDENTIFIER EQUALS expression SEMICOLON
     (13) assignment -> . IDENTIFIER EQUALS expression SEMICOLON
-    (23) while_loop -> . WHILE LPAREN condition RPAREN LBRACE program RBRACE
-    (14) expression -> . expression PLUS term
-    (15) expression -> . expression MINUS term
+    (23) while_loop -> . WALKER LPAREN condition RPAREN LBRACE program RBRACE
+    (14) expression -> . expression CRISTIANO term
+    (15) expression -> . expression TCHOUAMENI term
     (16) expression -> . term
-    (17) term -> . term TIMES factor
-    (18) term -> . term DIVIDE factor
+    (17) term -> . term MESSI factor
+    (18) term -> . term PEPE factor
     (19) term -> . factor
     (20) factor -> . NUMBER
     (21) factor -> . IDENTIFIER
 
     GLOBAL          shift and go to state 7
     LOCAL           shift and go to state 10
-    INT             shift and go to state 8
+    MILITO          shift and go to state 8
     IDENTIFIER      shift and go to state 9
-    WHILE           shift and go to state 11
+    WALKER          shift and go to state 11
     NUMBER          shift and go to state 14
 
     program                        shift and go to state 1
@@ -137,28 +137,28 @@ state 1
     (4) statement -> . assignment
     (5) statement -> . while_loop
     (6) statement -> . expression SEMICOLON
-    (7) declaration -> . GLOBAL INT IDENTIFIER SEMICOLON
-    (8) declaration -> . LOCAL INT IDENTIFIER SEMICOLON
-    (9) declaration -> . INT IDENTIFIER SEMICOLON
-    (10) declaration -> . INT IDENTIFIER EQUALS expression SEMICOLON
-    (11) declaration -> . GLOBAL INT IDENTIFIER EQUALS expression SEMICOLON
-    (12) declaration -> . LOCAL INT IDENTIFIER EQUALS expression SEMICOLON
+    (7) declaration -> . GLOBAL MILITO IDENTIFIER SEMICOLON
+    (8) declaration -> . LOCAL MILITO IDENTIFIER SEMICOLON
+    (9) declaration -> . MILITO IDENTIFIER SEMICOLON
+    (10) declaration -> . MILITO IDENTIFIER EQUALS expression SEMICOLON
+    (11) declaration -> . GLOBAL MILITO IDENTIFIER EQUALS expression SEMICOLON
+    (12) declaration -> . LOCAL MILITO IDENTIFIER EQUALS expression SEMICOLON
     (13) assignment -> . IDENTIFIER EQUALS expression SEMICOLON
-    (23) while_loop -> . WHILE LPAREN condition RPAREN LBRACE program RBRACE
-    (14) expression -> . expression PLUS term
-    (15) expression -> . expression MINUS term
+    (23) while_loop -> . WALKER LPAREN condition RPAREN LBRACE program RBRACE
+    (14) expression -> . expression CRISTIANO term
+    (15) expression -> . expression TCHOUAMENI term
     (16) expression -> . term
-    (17) term -> . term TIMES factor
-    (18) term -> . term DIVIDE factor
+    (17) term -> . term MESSI factor
+    (18) term -> . term PEPE factor
     (19) term -> . factor
     (20) factor -> . NUMBER
     (21) factor -> . IDENTIFIER
 
     GLOBAL          shift and go to state 7
     LOCAL           shift and go to state 10
-    INT             shift and go to state 8
+    MILITO          shift and go to state 8
     IDENTIFIER      shift and go to state 9
-    WHILE           shift and go to state 11
+    WALKER          shift and go to state 11
     NUMBER          shift and go to state 14
 
     statement                      shift and go to state 15
@@ -175,9 +175,9 @@ state 2
 
     GLOBAL          reduce using rule 1 (program -> statement .)
     LOCAL           reduce using rule 1 (program -> statement .)
-    INT             reduce using rule 1 (program -> statement .)
+    MILITO          reduce using rule 1 (program -> statement .)
     IDENTIFIER      reduce using rule 1 (program -> statement .)
-    WHILE           reduce using rule 1 (program -> statement .)
+    WALKER          reduce using rule 1 (program -> statement .)
     NUMBER          reduce using rule 1 (program -> statement .)
     $end            reduce using rule 1 (program -> statement .)
     RBRACE          reduce using rule 1 (program -> statement .)
@@ -189,9 +189,9 @@ state 3
 
     GLOBAL          reduce using rule 3 (statement -> declaration .)
     LOCAL           reduce using rule 3 (statement -> declaration .)
-    INT             reduce using rule 3 (statement -> declaration .)
+    MILITO          reduce using rule 3 (statement -> declaration .)
     IDENTIFIER      reduce using rule 3 (statement -> declaration .)
-    WHILE           reduce using rule 3 (statement -> declaration .)
+    WALKER          reduce using rule 3 (statement -> declaration .)
     NUMBER          reduce using rule 3 (statement -> declaration .)
     $end            reduce using rule 3 (statement -> declaration .)
     RBRACE          reduce using rule 3 (statement -> declaration .)
@@ -203,9 +203,9 @@ state 4
 
     GLOBAL          reduce using rule 4 (statement -> assignment .)
     LOCAL           reduce using rule 4 (statement -> assignment .)
-    INT             reduce using rule 4 (statement -> assignment .)
+    MILITO          reduce using rule 4 (statement -> assignment .)
     IDENTIFIER      reduce using rule 4 (statement -> assignment .)
-    WHILE           reduce using rule 4 (statement -> assignment .)
+    WALKER          reduce using rule 4 (statement -> assignment .)
     NUMBER          reduce using rule 4 (statement -> assignment .)
     $end            reduce using rule 4 (statement -> assignment .)
     RBRACE          reduce using rule 4 (statement -> assignment .)
@@ -217,9 +217,9 @@ state 5
 
     GLOBAL          reduce using rule 5 (statement -> while_loop .)
     LOCAL           reduce using rule 5 (statement -> while_loop .)
-    INT             reduce using rule 5 (statement -> while_loop .)
+    MILITO          reduce using rule 5 (statement -> while_loop .)
     IDENTIFIER      reduce using rule 5 (statement -> while_loop .)
-    WHILE           reduce using rule 5 (statement -> while_loop .)
+    WALKER          reduce using rule 5 (statement -> while_loop .)
     NUMBER          reduce using rule 5 (statement -> while_loop .)
     $end            reduce using rule 5 (statement -> while_loop .)
     RBRACE          reduce using rule 5 (statement -> while_loop .)
@@ -228,26 +228,26 @@ state 5
 state 6
 
     (6) statement -> expression . SEMICOLON
-    (14) expression -> expression . PLUS term
-    (15) expression -> expression . MINUS term
+    (14) expression -> expression . CRISTIANO term
+    (15) expression -> expression . TCHOUAMENI term
 
     SEMICOLON       shift and go to state 16
-    PLUS            shift and go to state 17
-    MINUS           shift and go to state 18
+    CRISTIANO       shift and go to state 17
+    TCHOUAMENI      shift and go to state 18
 
 
 state 7
 
-    (7) declaration -> GLOBAL . INT IDENTIFIER SEMICOLON
-    (11) declaration -> GLOBAL . INT IDENTIFIER EQUALS expression SEMICOLON
+    (7) declaration -> GLOBAL . MILITO IDENTIFIER SEMICOLON
+    (11) declaration -> GLOBAL . MILITO IDENTIFIER EQUALS expression SEMICOLON
 
-    INT             shift and go to state 19
+    MILITO          shift and go to state 19
 
 
 state 8
 
-    (9) declaration -> INT . IDENTIFIER SEMICOLON
-    (10) declaration -> INT . IDENTIFIER EQUALS expression SEMICOLON
+    (9) declaration -> MILITO . IDENTIFIER SEMICOLON
+    (10) declaration -> MILITO . IDENTIFIER EQUALS expression SEMICOLON
 
     IDENTIFIER      shift and go to state 20
 
@@ -258,24 +258,24 @@ state 9
     (21) factor -> IDENTIFIER .
 
     EQUALS          shift and go to state 21
-    TIMES           reduce using rule 21 (factor -> IDENTIFIER .)
-    DIVIDE          reduce using rule 21 (factor -> IDENTIFIER .)
+    MESSI           reduce using rule 21 (factor -> IDENTIFIER .)
+    PEPE            reduce using rule 21 (factor -> IDENTIFIER .)
     SEMICOLON       reduce using rule 21 (factor -> IDENTIFIER .)
-    PLUS            reduce using rule 21 (factor -> IDENTIFIER .)
-    MINUS           reduce using rule 21 (factor -> IDENTIFIER .)
+    CRISTIANO       reduce using rule 21 (factor -> IDENTIFIER .)
+    TCHOUAMENI      reduce using rule 21 (factor -> IDENTIFIER .)
 
 
 state 10
 
-    (8) declaration -> LOCAL . INT IDENTIFIER SEMICOLON
-    (12) declaration -> LOCAL . INT IDENTIFIER EQUALS expression SEMICOLON
+    (8) declaration -> LOCAL . MILITO IDENTIFIER SEMICOLON
+    (12) declaration -> LOCAL . MILITO IDENTIFIER EQUALS expression SEMICOLON
 
-    INT             shift and go to state 22
+    MILITO          shift and go to state 22
 
 
 state 11
 
-    (23) while_loop -> WHILE . LPAREN condition RPAREN LBRACE program RBRACE
+    (23) while_loop -> WALKER . LPAREN condition RPAREN LBRACE program RBRACE
 
     LPAREN          shift and go to state 23
 
@@ -283,26 +283,26 @@ state 11
 state 12
 
     (16) expression -> term .
-    (17) term -> term . TIMES factor
-    (18) term -> term . DIVIDE factor
+    (17) term -> term . MESSI factor
+    (18) term -> term . PEPE factor
 
     SEMICOLON       reduce using rule 16 (expression -> term .)
-    PLUS            reduce using rule 16 (expression -> term .)
-    MINUS           reduce using rule 16 (expression -> term .)
+    CRISTIANO       reduce using rule 16 (expression -> term .)
+    TCHOUAMENI      reduce using rule 16 (expression -> term .)
     RPAREN          reduce using rule 16 (expression -> term .)
-    TIMES           shift and go to state 24
-    DIVIDE          shift and go to state 25
+    MESSI           shift and go to state 24
+    PEPE            shift and go to state 25
 
 
 state 13
 
     (19) term -> factor .
 
-    TIMES           reduce using rule 19 (term -> factor .)
-    DIVIDE          reduce using rule 19 (term -> factor .)
+    MESSI           reduce using rule 19 (term -> factor .)
+    PEPE            reduce using rule 19 (term -> factor .)
     SEMICOLON       reduce using rule 19 (term -> factor .)
-    PLUS            reduce using rule 19 (term -> factor .)
-    MINUS           reduce using rule 19 (term -> factor .)
+    CRISTIANO       reduce using rule 19 (term -> factor .)
+    TCHOUAMENI      reduce using rule 19 (term -> factor .)
     RPAREN          reduce using rule 19 (term -> factor .)
 
 
@@ -310,11 +310,11 @@ state 14
 
     (20) factor -> NUMBER .
 
-    TIMES           reduce using rule 20 (factor -> NUMBER .)
-    DIVIDE          reduce using rule 20 (factor -> NUMBER .)
+    MESSI           reduce using rule 20 (factor -> NUMBER .)
+    PEPE            reduce using rule 20 (factor -> NUMBER .)
     SEMICOLON       reduce using rule 20 (factor -> NUMBER .)
-    PLUS            reduce using rule 20 (factor -> NUMBER .)
-    MINUS           reduce using rule 20 (factor -> NUMBER .)
+    CRISTIANO       reduce using rule 20 (factor -> NUMBER .)
+    TCHOUAMENI      reduce using rule 20 (factor -> NUMBER .)
     RPAREN          reduce using rule 20 (factor -> NUMBER .)
 
 
@@ -324,9 +324,9 @@ state 15
 
     GLOBAL          reduce using rule 2 (program -> program statement .)
     LOCAL           reduce using rule 2 (program -> program statement .)
-    INT             reduce using rule 2 (program -> program statement .)
+    MILITO          reduce using rule 2 (program -> program statement .)
     IDENTIFIER      reduce using rule 2 (program -> program statement .)
-    WHILE           reduce using rule 2 (program -> program statement .)
+    WALKER          reduce using rule 2 (program -> program statement .)
     NUMBER          reduce using rule 2 (program -> program statement .)
     $end            reduce using rule 2 (program -> program statement .)
     RBRACE          reduce using rule 2 (program -> program statement .)
@@ -338,9 +338,9 @@ state 16
 
     GLOBAL          reduce using rule 6 (statement -> expression SEMICOLON .)
     LOCAL           reduce using rule 6 (statement -> expression SEMICOLON .)
-    INT             reduce using rule 6 (statement -> expression SEMICOLON .)
+    MILITO          reduce using rule 6 (statement -> expression SEMICOLON .)
     IDENTIFIER      reduce using rule 6 (statement -> expression SEMICOLON .)
-    WHILE           reduce using rule 6 (statement -> expression SEMICOLON .)
+    WALKER          reduce using rule 6 (statement -> expression SEMICOLON .)
     NUMBER          reduce using rule 6 (statement -> expression SEMICOLON .)
     $end            reduce using rule 6 (statement -> expression SEMICOLON .)
     RBRACE          reduce using rule 6 (statement -> expression SEMICOLON .)
@@ -348,9 +348,9 @@ state 16
 
 state 17
 
-    (14) expression -> expression PLUS . term
-    (17) term -> . term TIMES factor
-    (18) term -> . term DIVIDE factor
+    (14) expression -> expression CRISTIANO . term
+    (17) term -> . term MESSI factor
+    (18) term -> . term PEPE factor
     (19) term -> . factor
     (20) factor -> . NUMBER
     (21) factor -> . IDENTIFIER
@@ -363,9 +363,9 @@ state 17
 
 state 18
 
-    (15) expression -> expression MINUS . term
-    (17) term -> . term TIMES factor
-    (18) term -> . term DIVIDE factor
+    (15) expression -> expression TCHOUAMENI . term
+    (17) term -> . term MESSI factor
+    (18) term -> . term PEPE factor
     (19) term -> . factor
     (20) factor -> . NUMBER
     (21) factor -> . IDENTIFIER
@@ -378,16 +378,16 @@ state 18
 
 state 19
 
-    (7) declaration -> GLOBAL INT . IDENTIFIER SEMICOLON
-    (11) declaration -> GLOBAL INT . IDENTIFIER EQUALS expression SEMICOLON
+    (7) declaration -> GLOBAL MILITO . IDENTIFIER SEMICOLON
+    (11) declaration -> GLOBAL MILITO . IDENTIFIER EQUALS expression SEMICOLON
 
     IDENTIFIER      shift and go to state 29
 
 
 state 20
 
-    (9) declaration -> INT IDENTIFIER . SEMICOLON
-    (10) declaration -> INT IDENTIFIER . EQUALS expression SEMICOLON
+    (9) declaration -> MILITO IDENTIFIER . SEMICOLON
+    (10) declaration -> MILITO IDENTIFIER . EQUALS expression SEMICOLON
 
     SEMICOLON       shift and go to state 30
     EQUALS          shift and go to state 31
@@ -396,11 +396,11 @@ state 20
 state 21
 
     (13) assignment -> IDENTIFIER EQUALS . expression SEMICOLON
-    (14) expression -> . expression PLUS term
-    (15) expression -> . expression MINUS term
+    (14) expression -> . expression CRISTIANO term
+    (15) expression -> . expression TCHOUAMENI term
     (16) expression -> . term
-    (17) term -> . term TIMES factor
-    (18) term -> . term DIVIDE factor
+    (17) term -> . term MESSI factor
+    (18) term -> . term PEPE factor
     (19) term -> . factor
     (20) factor -> . NUMBER
     (21) factor -> . IDENTIFIER
@@ -414,15 +414,15 @@ state 21
 
 state 22
 
-    (8) declaration -> LOCAL INT . IDENTIFIER SEMICOLON
-    (12) declaration -> LOCAL INT . IDENTIFIER EQUALS expression SEMICOLON
+    (8) declaration -> LOCAL MILITO . IDENTIFIER SEMICOLON
+    (12) declaration -> LOCAL MILITO . IDENTIFIER EQUALS expression SEMICOLON
 
     IDENTIFIER      shift and go to state 33
 
 
 state 23
 
-    (23) while_loop -> WHILE LPAREN . condition RPAREN LBRACE program RBRACE
+    (23) while_loop -> WALKER LPAREN . condition RPAREN LBRACE program RBRACE
     (22) condition -> . IDENTIFIER RELOP expression
 
     IDENTIFIER      shift and go to state 35
@@ -431,7 +431,7 @@ state 23
 
 state 24
 
-    (17) term -> term TIMES . factor
+    (17) term -> term MESSI . factor
     (20) factor -> . NUMBER
     (21) factor -> . IDENTIFIER
 
@@ -442,7 +442,7 @@ state 24
 
 state 25
 
-    (18) term -> term DIVIDE . factor
+    (18) term -> term PEPE . factor
     (20) factor -> . NUMBER
     (21) factor -> . IDENTIFIER
 
@@ -453,48 +453,48 @@ state 25
 
 state 26
 
-    (14) expression -> expression PLUS term .
-    (17) term -> term . TIMES factor
-    (18) term -> term . DIVIDE factor
+    (14) expression -> expression CRISTIANO term .
+    (17) term -> term . MESSI factor
+    (18) term -> term . PEPE factor
 
-    SEMICOLON       reduce using rule 14 (expression -> expression PLUS term .)
-    PLUS            reduce using rule 14 (expression -> expression PLUS term .)
-    MINUS           reduce using rule 14 (expression -> expression PLUS term .)
-    RPAREN          reduce using rule 14 (expression -> expression PLUS term .)
-    TIMES           shift and go to state 24
-    DIVIDE          shift and go to state 25
+    SEMICOLON       reduce using rule 14 (expression -> expression CRISTIANO term .)
+    CRISTIANO       reduce using rule 14 (expression -> expression CRISTIANO term .)
+    TCHOUAMENI      reduce using rule 14 (expression -> expression CRISTIANO term .)
+    RPAREN          reduce using rule 14 (expression -> expression CRISTIANO term .)
+    MESSI           shift and go to state 24
+    PEPE            shift and go to state 25
 
 
 state 27
 
     (21) factor -> IDENTIFIER .
 
-    TIMES           reduce using rule 21 (factor -> IDENTIFIER .)
-    DIVIDE          reduce using rule 21 (factor -> IDENTIFIER .)
+    MESSI           reduce using rule 21 (factor -> IDENTIFIER .)
+    PEPE            reduce using rule 21 (factor -> IDENTIFIER .)
     SEMICOLON       reduce using rule 21 (factor -> IDENTIFIER .)
-    PLUS            reduce using rule 21 (factor -> IDENTIFIER .)
-    MINUS           reduce using rule 21 (factor -> IDENTIFIER .)
+    CRISTIANO       reduce using rule 21 (factor -> IDENTIFIER .)
+    TCHOUAMENI      reduce using rule 21 (factor -> IDENTIFIER .)
     RPAREN          reduce using rule 21 (factor -> IDENTIFIER .)
 
 
 state 28
 
-    (15) expression -> expression MINUS term .
-    (17) term -> term . TIMES factor
-    (18) term -> term . DIVIDE factor
+    (15) expression -> expression TCHOUAMENI term .
+    (17) term -> term . MESSI factor
+    (18) term -> term . PEPE factor
 
-    SEMICOLON       reduce using rule 15 (expression -> expression MINUS term .)
-    PLUS            reduce using rule 15 (expression -> expression MINUS term .)
-    MINUS           reduce using rule 15 (expression -> expression MINUS term .)
-    RPAREN          reduce using rule 15 (expression -> expression MINUS term .)
-    TIMES           shift and go to state 24
-    DIVIDE          shift and go to state 25
+    SEMICOLON       reduce using rule 15 (expression -> expression TCHOUAMENI term .)
+    CRISTIANO       reduce using rule 15 (expression -> expression TCHOUAMENI term .)
+    TCHOUAMENI      reduce using rule 15 (expression -> expression TCHOUAMENI term .)
+    RPAREN          reduce using rule 15 (expression -> expression TCHOUAMENI term .)
+    MESSI           shift and go to state 24
+    PEPE            shift and go to state 25
 
 
 state 29
 
-    (7) declaration -> GLOBAL INT IDENTIFIER . SEMICOLON
-    (11) declaration -> GLOBAL INT IDENTIFIER . EQUALS expression SEMICOLON
+    (7) declaration -> GLOBAL MILITO IDENTIFIER . SEMICOLON
+    (11) declaration -> GLOBAL MILITO IDENTIFIER . EQUALS expression SEMICOLON
 
     SEMICOLON       shift and go to state 38
     EQUALS          shift and go to state 39
@@ -502,26 +502,26 @@ state 29
 
 state 30
 
-    (9) declaration -> INT IDENTIFIER SEMICOLON .
+    (9) declaration -> MILITO IDENTIFIER SEMICOLON .
 
-    GLOBAL          reduce using rule 9 (declaration -> INT IDENTIFIER SEMICOLON .)
-    LOCAL           reduce using rule 9 (declaration -> INT IDENTIFIER SEMICOLON .)
-    INT             reduce using rule 9 (declaration -> INT IDENTIFIER SEMICOLON .)
-    IDENTIFIER      reduce using rule 9 (declaration -> INT IDENTIFIER SEMICOLON .)
-    WHILE           reduce using rule 9 (declaration -> INT IDENTIFIER SEMICOLON .)
-    NUMBER          reduce using rule 9 (declaration -> INT IDENTIFIER SEMICOLON .)
-    $end            reduce using rule 9 (declaration -> INT IDENTIFIER SEMICOLON .)
-    RBRACE          reduce using rule 9 (declaration -> INT IDENTIFIER SEMICOLON .)
+    GLOBAL          reduce using rule 9 (declaration -> MILITO IDENTIFIER SEMICOLON .)
+    LOCAL           reduce using rule 9 (declaration -> MILITO IDENTIFIER SEMICOLON .)
+    MILITO          reduce using rule 9 (declaration -> MILITO IDENTIFIER SEMICOLON .)
+    IDENTIFIER      reduce using rule 9 (declaration -> MILITO IDENTIFIER SEMICOLON .)
+    WALKER          reduce using rule 9 (declaration -> MILITO IDENTIFIER SEMICOLON .)
+    NUMBER          reduce using rule 9 (declaration -> MILITO IDENTIFIER SEMICOLON .)
+    $end            reduce using rule 9 (declaration -> MILITO IDENTIFIER SEMICOLON .)
+    RBRACE          reduce using rule 9 (declaration -> MILITO IDENTIFIER SEMICOLON .)
 
 
 state 31
 
-    (10) declaration -> INT IDENTIFIER EQUALS . expression SEMICOLON
-    (14) expression -> . expression PLUS term
-    (15) expression -> . expression MINUS term
+    (10) declaration -> MILITO IDENTIFIER EQUALS . expression SEMICOLON
+    (14) expression -> . expression CRISTIANO term
+    (15) expression -> . expression TCHOUAMENI term
     (16) expression -> . term
-    (17) term -> . term TIMES factor
-    (18) term -> . term DIVIDE factor
+    (17) term -> . term MESSI factor
+    (18) term -> . term PEPE factor
     (19) term -> . factor
     (20) factor -> . NUMBER
     (21) factor -> . IDENTIFIER
@@ -536,18 +536,18 @@ state 31
 state 32
 
     (13) assignment -> IDENTIFIER EQUALS expression . SEMICOLON
-    (14) expression -> expression . PLUS term
-    (15) expression -> expression . MINUS term
+    (14) expression -> expression . CRISTIANO term
+    (15) expression -> expression . TCHOUAMENI term
 
     SEMICOLON       shift and go to state 41
-    PLUS            shift and go to state 17
-    MINUS           shift and go to state 18
+    CRISTIANO       shift and go to state 17
+    TCHOUAMENI      shift and go to state 18
 
 
 state 33
 
-    (8) declaration -> LOCAL INT IDENTIFIER . SEMICOLON
-    (12) declaration -> LOCAL INT IDENTIFIER . EQUALS expression SEMICOLON
+    (8) declaration -> LOCAL MILITO IDENTIFIER . SEMICOLON
+    (12) declaration -> LOCAL MILITO IDENTIFIER . EQUALS expression SEMICOLON
 
     SEMICOLON       shift and go to state 42
     EQUALS          shift and go to state 43
@@ -555,7 +555,7 @@ state 33
 
 state 34
 
-    (23) while_loop -> WHILE LPAREN condition . RPAREN LBRACE program RBRACE
+    (23) while_loop -> WALKER LPAREN condition . RPAREN LBRACE program RBRACE
 
     RPAREN          shift and go to state 44
 
@@ -569,50 +569,50 @@ state 35
 
 state 36
 
-    (17) term -> term TIMES factor .
+    (17) term -> term MESSI factor .
 
-    TIMES           reduce using rule 17 (term -> term TIMES factor .)
-    DIVIDE          reduce using rule 17 (term -> term TIMES factor .)
-    SEMICOLON       reduce using rule 17 (term -> term TIMES factor .)
-    PLUS            reduce using rule 17 (term -> term TIMES factor .)
-    MINUS           reduce using rule 17 (term -> term TIMES factor .)
-    RPAREN          reduce using rule 17 (term -> term TIMES factor .)
+    MESSI           reduce using rule 17 (term -> term MESSI factor .)
+    PEPE            reduce using rule 17 (term -> term MESSI factor .)
+    SEMICOLON       reduce using rule 17 (term -> term MESSI factor .)
+    CRISTIANO       reduce using rule 17 (term -> term MESSI factor .)
+    TCHOUAMENI      reduce using rule 17 (term -> term MESSI factor .)
+    RPAREN          reduce using rule 17 (term -> term MESSI factor .)
 
 
 state 37
 
-    (18) term -> term DIVIDE factor .
+    (18) term -> term PEPE factor .
 
-    TIMES           reduce using rule 18 (term -> term DIVIDE factor .)
-    DIVIDE          reduce using rule 18 (term -> term DIVIDE factor .)
-    SEMICOLON       reduce using rule 18 (term -> term DIVIDE factor .)
-    PLUS            reduce using rule 18 (term -> term DIVIDE factor .)
-    MINUS           reduce using rule 18 (term -> term DIVIDE factor .)
-    RPAREN          reduce using rule 18 (term -> term DIVIDE factor .)
+    MESSI           reduce using rule 18 (term -> term PEPE factor .)
+    PEPE            reduce using rule 18 (term -> term PEPE factor .)
+    SEMICOLON       reduce using rule 18 (term -> term PEPE factor .)
+    CRISTIANO       reduce using rule 18 (term -> term PEPE factor .)
+    TCHOUAMENI      reduce using rule 18 (term -> term PEPE factor .)
+    RPAREN          reduce using rule 18 (term -> term PEPE factor .)
 
 
 state 38
 
-    (7) declaration -> GLOBAL INT IDENTIFIER SEMICOLON .
+    (7) declaration -> GLOBAL MILITO IDENTIFIER SEMICOLON .
 
-    GLOBAL          reduce using rule 7 (declaration -> GLOBAL INT IDENTIFIER SEMICOLON .)
-    LOCAL           reduce using rule 7 (declaration -> GLOBAL INT IDENTIFIER SEMICOLON .)
-    INT             reduce using rule 7 (declaration -> GLOBAL INT IDENTIFIER SEMICOLON .)
-    IDENTIFIER      reduce using rule 7 (declaration -> GLOBAL INT IDENTIFIER SEMICOLON .)
-    WHILE           reduce using rule 7 (declaration -> GLOBAL INT IDENTIFIER SEMICOLON .)
-    NUMBER          reduce using rule 7 (declaration -> GLOBAL INT IDENTIFIER SEMICOLON .)
-    $end            reduce using rule 7 (declaration -> GLOBAL INT IDENTIFIER SEMICOLON .)
-    RBRACE          reduce using rule 7 (declaration -> GLOBAL INT IDENTIFIER SEMICOLON .)
+    GLOBAL          reduce using rule 7 (declaration -> GLOBAL MILITO IDENTIFIER SEMICOLON .)
+    LOCAL           reduce using rule 7 (declaration -> GLOBAL MILITO IDENTIFIER SEMICOLON .)
+    MILITO          reduce using rule 7 (declaration -> GLOBAL MILITO IDENTIFIER SEMICOLON .)
+    IDENTIFIER      reduce using rule 7 (declaration -> GLOBAL MILITO IDENTIFIER SEMICOLON .)
+    WALKER          reduce using rule 7 (declaration -> GLOBAL MILITO IDENTIFIER SEMICOLON .)
+    NUMBER          reduce using rule 7 (declaration -> GLOBAL MILITO IDENTIFIER SEMICOLON .)
+    $end            reduce using rule 7 (declaration -> GLOBAL MILITO IDENTIFIER SEMICOLON .)
+    RBRACE          reduce using rule 7 (declaration -> GLOBAL MILITO IDENTIFIER SEMICOLON .)
 
 
 state 39
 
-    (11) declaration -> GLOBAL INT IDENTIFIER EQUALS . expression SEMICOLON
-    (14) expression -> . expression PLUS term
-    (15) expression -> . expression MINUS term
+    (11) declaration -> GLOBAL MILITO IDENTIFIER EQUALS . expression SEMICOLON
+    (14) expression -> . expression CRISTIANO term
+    (15) expression -> . expression TCHOUAMENI term
     (16) expression -> . term
-    (17) term -> . term TIMES factor
-    (18) term -> . term DIVIDE factor
+    (17) term -> . term MESSI factor
+    (18) term -> . term PEPE factor
     (19) term -> . factor
     (20) factor -> . NUMBER
     (21) factor -> . IDENTIFIER
@@ -626,13 +626,13 @@ state 39
 
 state 40
 
-    (10) declaration -> INT IDENTIFIER EQUALS expression . SEMICOLON
-    (14) expression -> expression . PLUS term
-    (15) expression -> expression . MINUS term
+    (10) declaration -> MILITO IDENTIFIER EQUALS expression . SEMICOLON
+    (14) expression -> expression . CRISTIANO term
+    (15) expression -> expression . TCHOUAMENI term
 
     SEMICOLON       shift and go to state 47
-    PLUS            shift and go to state 17
-    MINUS           shift and go to state 18
+    CRISTIANO       shift and go to state 17
+    TCHOUAMENI      shift and go to state 18
 
 
 state 41
@@ -641,9 +641,9 @@ state 41
 
     GLOBAL          reduce using rule 13 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
     LOCAL           reduce using rule 13 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
-    INT             reduce using rule 13 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
+    MILITO          reduce using rule 13 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
     IDENTIFIER      reduce using rule 13 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
-    WHILE           reduce using rule 13 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
+    WALKER          reduce using rule 13 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
     NUMBER          reduce using rule 13 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
     $end            reduce using rule 13 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
     RBRACE          reduce using rule 13 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
@@ -651,26 +651,26 @@ state 41
 
 state 42
 
-    (8) declaration -> LOCAL INT IDENTIFIER SEMICOLON .
+    (8) declaration -> LOCAL MILITO IDENTIFIER SEMICOLON .
 
-    GLOBAL          reduce using rule 8 (declaration -> LOCAL INT IDENTIFIER SEMICOLON .)
-    LOCAL           reduce using rule 8 (declaration -> LOCAL INT IDENTIFIER SEMICOLON .)
-    INT             reduce using rule 8 (declaration -> LOCAL INT IDENTIFIER SEMICOLON .)
-    IDENTIFIER      reduce using rule 8 (declaration -> LOCAL INT IDENTIFIER SEMICOLON .)
-    WHILE           reduce using rule 8 (declaration -> LOCAL INT IDENTIFIER SEMICOLON .)
-    NUMBER          reduce using rule 8 (declaration -> LOCAL INT IDENTIFIER SEMICOLON .)
-    $end            reduce using rule 8 (declaration -> LOCAL INT IDENTIFIER SEMICOLON .)
-    RBRACE          reduce using rule 8 (declaration -> LOCAL INT IDENTIFIER SEMICOLON .)
+    GLOBAL          reduce using rule 8 (declaration -> LOCAL MILITO IDENTIFIER SEMICOLON .)
+    LOCAL           reduce using rule 8 (declaration -> LOCAL MILITO IDENTIFIER SEMICOLON .)
+    MILITO          reduce using rule 8 (declaration -> LOCAL MILITO IDENTIFIER SEMICOLON .)
+    IDENTIFIER      reduce using rule 8 (declaration -> LOCAL MILITO IDENTIFIER SEMICOLON .)
+    WALKER          reduce using rule 8 (declaration -> LOCAL MILITO IDENTIFIER SEMICOLON .)
+    NUMBER          reduce using rule 8 (declaration -> LOCAL MILITO IDENTIFIER SEMICOLON .)
+    $end            reduce using rule 8 (declaration -> LOCAL MILITO IDENTIFIER SEMICOLON .)
+    RBRACE          reduce using rule 8 (declaration -> LOCAL MILITO IDENTIFIER SEMICOLON .)
 
 
 state 43
 
-    (12) declaration -> LOCAL INT IDENTIFIER EQUALS . expression SEMICOLON
-    (14) expression -> . expression PLUS term
-    (15) expression -> . expression MINUS term
+    (12) declaration -> LOCAL MILITO IDENTIFIER EQUALS . expression SEMICOLON
+    (14) expression -> . expression CRISTIANO term
+    (15) expression -> . expression TCHOUAMENI term
     (16) expression -> . term
-    (17) term -> . term TIMES factor
-    (18) term -> . term DIVIDE factor
+    (17) term -> . term MESSI factor
+    (18) term -> . term PEPE factor
     (19) term -> . factor
     (20) factor -> . NUMBER
     (21) factor -> . IDENTIFIER
@@ -684,7 +684,7 @@ state 43
 
 state 44
 
-    (23) while_loop -> WHILE LPAREN condition RPAREN . LBRACE program RBRACE
+    (23) while_loop -> WALKER LPAREN condition RPAREN . LBRACE program RBRACE
 
     LBRACE          shift and go to state 49
 
@@ -692,11 +692,11 @@ state 44
 state 45
 
     (22) condition -> IDENTIFIER RELOP . expression
-    (14) expression -> . expression PLUS term
-    (15) expression -> . expression MINUS term
+    (14) expression -> . expression CRISTIANO term
+    (15) expression -> . expression TCHOUAMENI term
     (16) expression -> . term
-    (17) term -> . term TIMES factor
-    (18) term -> . term DIVIDE factor
+    (17) term -> . term MESSI factor
+    (18) term -> . term PEPE factor
     (19) term -> . factor
     (20) factor -> . NUMBER
     (21) factor -> . IDENTIFIER
@@ -710,71 +710,71 @@ state 45
 
 state 46
 
-    (11) declaration -> GLOBAL INT IDENTIFIER EQUALS expression . SEMICOLON
-    (14) expression -> expression . PLUS term
-    (15) expression -> expression . MINUS term
+    (11) declaration -> GLOBAL MILITO IDENTIFIER EQUALS expression . SEMICOLON
+    (14) expression -> expression . CRISTIANO term
+    (15) expression -> expression . TCHOUAMENI term
 
     SEMICOLON       shift and go to state 51
-    PLUS            shift and go to state 17
-    MINUS           shift and go to state 18
+    CRISTIANO       shift and go to state 17
+    TCHOUAMENI      shift and go to state 18
 
 
 state 47
 
-    (10) declaration -> INT IDENTIFIER EQUALS expression SEMICOLON .
+    (10) declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .
 
-    GLOBAL          reduce using rule 10 (declaration -> INT IDENTIFIER EQUALS expression SEMICOLON .)
-    LOCAL           reduce using rule 10 (declaration -> INT IDENTIFIER EQUALS expression SEMICOLON .)
-    INT             reduce using rule 10 (declaration -> INT IDENTIFIER EQUALS expression SEMICOLON .)
-    IDENTIFIER      reduce using rule 10 (declaration -> INT IDENTIFIER EQUALS expression SEMICOLON .)
-    WHILE           reduce using rule 10 (declaration -> INT IDENTIFIER EQUALS expression SEMICOLON .)
-    NUMBER          reduce using rule 10 (declaration -> INT IDENTIFIER EQUALS expression SEMICOLON .)
-    $end            reduce using rule 10 (declaration -> INT IDENTIFIER EQUALS expression SEMICOLON .)
-    RBRACE          reduce using rule 10 (declaration -> INT IDENTIFIER EQUALS expression SEMICOLON .)
+    GLOBAL          reduce using rule 10 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    LOCAL           reduce using rule 10 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    MILITO          reduce using rule 10 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    IDENTIFIER      reduce using rule 10 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    WALKER          reduce using rule 10 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    NUMBER          reduce using rule 10 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    $end            reduce using rule 10 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    RBRACE          reduce using rule 10 (declaration -> MILITO IDENTIFIER EQUALS expression SEMICOLON .)
 
 
 state 48
 
-    (12) declaration -> LOCAL INT IDENTIFIER EQUALS expression . SEMICOLON
-    (14) expression -> expression . PLUS term
-    (15) expression -> expression . MINUS term
+    (12) declaration -> LOCAL MILITO IDENTIFIER EQUALS expression . SEMICOLON
+    (14) expression -> expression . CRISTIANO term
+    (15) expression -> expression . TCHOUAMENI term
 
     SEMICOLON       shift and go to state 52
-    PLUS            shift and go to state 17
-    MINUS           shift and go to state 18
+    CRISTIANO       shift and go to state 17
+    TCHOUAMENI      shift and go to state 18
 
 
 state 49
 
-    (23) while_loop -> WHILE LPAREN condition RPAREN LBRACE . program RBRACE
+    (23) while_loop -> WALKER LPAREN condition RPAREN LBRACE . program RBRACE
     (1) program -> . statement
     (2) program -> . program statement
     (3) statement -> . declaration
     (4) statement -> . assignment
     (5) statement -> . while_loop
     (6) statement -> . expression SEMICOLON
-    (7) declaration -> . GLOBAL INT IDENTIFIER SEMICOLON
-    (8) declaration -> . LOCAL INT IDENTIFIER SEMICOLON
-    (9) declaration -> . INT IDENTIFIER SEMICOLON
-    (10) declaration -> . INT IDENTIFIER EQUALS expression SEMICOLON
-    (11) declaration -> . GLOBAL INT IDENTIFIER EQUALS expression SEMICOLON
-    (12) declaration -> . LOCAL INT IDENTIFIER EQUALS expression SEMICOLON
+    (7) declaration -> . GLOBAL MILITO IDENTIFIER SEMICOLON
+    (8) declaration -> . LOCAL MILITO IDENTIFIER SEMICOLON
+    (9) declaration -> . MILITO IDENTIFIER SEMICOLON
+    (10) declaration -> . MILITO IDENTIFIER EQUALS expression SEMICOLON
+    (11) declaration -> . GLOBAL MILITO IDENTIFIER EQUALS expression SEMICOLON
+    (12) declaration -> . LOCAL MILITO IDENTIFIER EQUALS expression SEMICOLON
     (13) assignment -> . IDENTIFIER EQUALS expression SEMICOLON
-    (23) while_loop -> . WHILE LPAREN condition RPAREN LBRACE program RBRACE
-    (14) expression -> . expression PLUS term
-    (15) expression -> . expression MINUS term
+    (23) while_loop -> . WALKER LPAREN condition RPAREN LBRACE program RBRACE
+    (14) expression -> . expression CRISTIANO term
+    (15) expression -> . expression TCHOUAMENI term
     (16) expression -> . term
-    (17) term -> . term TIMES factor
-    (18) term -> . term DIVIDE factor
+    (17) term -> . term MESSI factor
+    (18) term -> . term PEPE factor
     (19) term -> . factor
     (20) factor -> . NUMBER
     (21) factor -> . IDENTIFIER
 
     GLOBAL          shift and go to state 7
     LOCAL           shift and go to state 10
-    INT             shift and go to state 8
+    MILITO          shift and go to state 8
     IDENTIFIER      shift and go to state 9
-    WHILE           shift and go to state 11
+    WALKER          shift and go to state 11
     NUMBER          shift and go to state 14
 
     program                        shift and go to state 53
@@ -789,63 +789,63 @@ state 49
 state 50
 
     (22) condition -> IDENTIFIER RELOP expression .
-    (14) expression -> expression . PLUS term
-    (15) expression -> expression . MINUS term
+    (14) expression -> expression . CRISTIANO term
+    (15) expression -> expression . TCHOUAMENI term
 
     RPAREN          reduce using rule 22 (condition -> IDENTIFIER RELOP expression .)
-    PLUS            shift and go to state 17
-    MINUS           shift and go to state 18
+    CRISTIANO       shift and go to state 17
+    TCHOUAMENI      shift and go to state 18
 
 
 state 51
 
-    (11) declaration -> GLOBAL INT IDENTIFIER EQUALS expression SEMICOLON .
+    (11) declaration -> GLOBAL MILITO IDENTIFIER EQUALS expression SEMICOLON .
 
-    GLOBAL          reduce using rule 11 (declaration -> GLOBAL INT IDENTIFIER EQUALS expression SEMICOLON .)
-    LOCAL           reduce using rule 11 (declaration -> GLOBAL INT IDENTIFIER EQUALS expression SEMICOLON .)
-    INT             reduce using rule 11 (declaration -> GLOBAL INT IDENTIFIER EQUALS expression SEMICOLON .)
-    IDENTIFIER      reduce using rule 11 (declaration -> GLOBAL INT IDENTIFIER EQUALS expression SEMICOLON .)
-    WHILE           reduce using rule 11 (declaration -> GLOBAL INT IDENTIFIER EQUALS expression SEMICOLON .)
-    NUMBER          reduce using rule 11 (declaration -> GLOBAL INT IDENTIFIER EQUALS expression SEMICOLON .)
-    $end            reduce using rule 11 (declaration -> GLOBAL INT IDENTIFIER EQUALS expression SEMICOLON .)
-    RBRACE          reduce using rule 11 (declaration -> GLOBAL INT IDENTIFIER EQUALS expression SEMICOLON .)
+    GLOBAL          reduce using rule 11 (declaration -> GLOBAL MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    LOCAL           reduce using rule 11 (declaration -> GLOBAL MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    MILITO          reduce using rule 11 (declaration -> GLOBAL MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    IDENTIFIER      reduce using rule 11 (declaration -> GLOBAL MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    WALKER          reduce using rule 11 (declaration -> GLOBAL MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    NUMBER          reduce using rule 11 (declaration -> GLOBAL MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    $end            reduce using rule 11 (declaration -> GLOBAL MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    RBRACE          reduce using rule 11 (declaration -> GLOBAL MILITO IDENTIFIER EQUALS expression SEMICOLON .)
 
 
 state 52
 
-    (12) declaration -> LOCAL INT IDENTIFIER EQUALS expression SEMICOLON .
+    (12) declaration -> LOCAL MILITO IDENTIFIER EQUALS expression SEMICOLON .
 
-    GLOBAL          reduce using rule 12 (declaration -> LOCAL INT IDENTIFIER EQUALS expression SEMICOLON .)
-    LOCAL           reduce using rule 12 (declaration -> LOCAL INT IDENTIFIER EQUALS expression SEMICOLON .)
-    INT             reduce using rule 12 (declaration -> LOCAL INT IDENTIFIER EQUALS expression SEMICOLON .)
-    IDENTIFIER      reduce using rule 12 (declaration -> LOCAL INT IDENTIFIER EQUALS expression SEMICOLON .)
-    WHILE           reduce using rule 12 (declaration -> LOCAL INT IDENTIFIER EQUALS expression SEMICOLON .)
-    NUMBER          reduce using rule 12 (declaration -> LOCAL INT IDENTIFIER EQUALS expression SEMICOLON .)
-    $end            reduce using rule 12 (declaration -> LOCAL INT IDENTIFIER EQUALS expression SEMICOLON .)
-    RBRACE          reduce using rule 12 (declaration -> LOCAL INT IDENTIFIER EQUALS expression SEMICOLON .)
+    GLOBAL          reduce using rule 12 (declaration -> LOCAL MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    LOCAL           reduce using rule 12 (declaration -> LOCAL MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    MILITO          reduce using rule 12 (declaration -> LOCAL MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    IDENTIFIER      reduce using rule 12 (declaration -> LOCAL MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    WALKER          reduce using rule 12 (declaration -> LOCAL MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    NUMBER          reduce using rule 12 (declaration -> LOCAL MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    $end            reduce using rule 12 (declaration -> LOCAL MILITO IDENTIFIER EQUALS expression SEMICOLON .)
+    RBRACE          reduce using rule 12 (declaration -> LOCAL MILITO IDENTIFIER EQUALS expression SEMICOLON .)
 
 
 state 53
 
-    (23) while_loop -> WHILE LPAREN condition RPAREN LBRACE program . RBRACE
+    (23) while_loop -> WALKER LPAREN condition RPAREN LBRACE program . RBRACE
     (2) program -> program . statement
     (3) statement -> . declaration
     (4) statement -> . assignment
     (5) statement -> . while_loop
     (6) statement -> . expression SEMICOLON
-    (7) declaration -> . GLOBAL INT IDENTIFIER SEMICOLON
-    (8) declaration -> . LOCAL INT IDENTIFIER SEMICOLON
-    (9) declaration -> . INT IDENTIFIER SEMICOLON
-    (10) declaration -> . INT IDENTIFIER EQUALS expression SEMICOLON
-    (11) declaration -> . GLOBAL INT IDENTIFIER EQUALS expression SEMICOLON
-    (12) declaration -> . LOCAL INT IDENTIFIER EQUALS expression SEMICOLON
+    (7) declaration -> . GLOBAL MILITO IDENTIFIER SEMICOLON
+    (8) declaration -> . LOCAL MILITO IDENTIFIER SEMICOLON
+    (9) declaration -> . MILITO IDENTIFIER SEMICOLON
+    (10) declaration -> . MILITO IDENTIFIER EQUALS expression SEMICOLON
+    (11) declaration -> . GLOBAL MILITO IDENTIFIER EQUALS expression SEMICOLON
+    (12) declaration -> . LOCAL MILITO IDENTIFIER EQUALS expression SEMICOLON
     (13) assignment -> . IDENTIFIER EQUALS expression SEMICOLON
-    (23) while_loop -> . WHILE LPAREN condition RPAREN LBRACE program RBRACE
-    (14) expression -> . expression PLUS term
-    (15) expression -> . expression MINUS term
+    (23) while_loop -> . WALKER LPAREN condition RPAREN LBRACE program RBRACE
+    (14) expression -> . expression CRISTIANO term
+    (15) expression -> . expression TCHOUAMENI term
     (16) expression -> . term
-    (17) term -> . term TIMES factor
-    (18) term -> . term DIVIDE factor
+    (17) term -> . term MESSI factor
+    (18) term -> . term PEPE factor
     (19) term -> . factor
     (20) factor -> . NUMBER
     (21) factor -> . IDENTIFIER
@@ -853,9 +853,9 @@ state 53
     RBRACE          shift and go to state 54
     GLOBAL          shift and go to state 7
     LOCAL           shift and go to state 10
-    INT             shift and go to state 8
+    MILITO          shift and go to state 8
     IDENTIFIER      shift and go to state 9
-    WHILE           shift and go to state 11
+    WALKER          shift and go to state 11
     NUMBER          shift and go to state 14
 
     statement                      shift and go to state 15
@@ -868,14 +868,14 @@ state 53
 
 state 54
 
-    (23) while_loop -> WHILE LPAREN condition RPAREN LBRACE program RBRACE .
+    (23) while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .
 
-    GLOBAL          reduce using rule 23 (while_loop -> WHILE LPAREN condition RPAREN LBRACE program RBRACE .)
-    LOCAL           reduce using rule 23 (while_loop -> WHILE LPAREN condition RPAREN LBRACE program RBRACE .)
-    INT             reduce using rule 23 (while_loop -> WHILE LPAREN condition RPAREN LBRACE program RBRACE .)
-    IDENTIFIER      reduce using rule 23 (while_loop -> WHILE LPAREN condition RPAREN LBRACE program RBRACE .)
-    WHILE           reduce using rule 23 (while_loop -> WHILE LPAREN condition RPAREN LBRACE program RBRACE .)
-    NUMBER          reduce using rule 23 (while_loop -> WHILE LPAREN condition RPAREN LBRACE program RBRACE .)
-    $end            reduce using rule 23 (while_loop -> WHILE LPAREN condition RPAREN LBRACE program RBRACE .)
-    RBRACE          reduce using rule 23 (while_loop -> WHILE LPAREN condition RPAREN LBRACE program RBRACE .)
+    GLOBAL          reduce using rule 23 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
+    LOCAL           reduce using rule 23 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
+    MILITO          reduce using rule 23 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
+    IDENTIFIER      reduce using rule 23 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
+    WALKER          reduce using rule 23 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
+    NUMBER          reduce using rule 23 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
+    $end            reduce using rule 23 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
+    RBRACE          reduce using rule 23 (while_loop -> WALKER LPAREN condition RPAREN LBRACE program RBRACE .)
 

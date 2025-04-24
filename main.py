@@ -13,26 +13,25 @@ class Main:
         """
         
         self.symbol_table = SymbolTable()  # Tabla de símbolos
-        self.tokens=Tokens() #Graficar tokens devueltos por el lexer
-        file = f("lenguaje.txt")
+        self.tokens = Tokens()  # Graficar tokens devueltos por el lexer
+        
+        file_path = input("Por favor, ingrese la ruta del archivo de entrada: ")
+        file = f(file_path)
         self.content, lines = file.read_file()
 
         if self.content:
             try:
                 self.lexic_errors = Errors(self.content)  # Errores léxicos -> Graficarlos HTML
                 self.sintatic_errors = Errors(self.content)  # Errores sintácticos -> Graficarlos HTML
-                self.semantic_errors=Errors(self.content)
+                self.semantic_errors = Errors(self.content)
                 self.lexer = Lexer(self.lexic_errors)
-                self.semantic=Semantic(self.symbol_table,self.semantic_errors,self.lexer) 
+                self.semantic = Semantic(self.symbol_table, self.semantic_errors, self.lexer) 
                 self.parser = Parser(self.lexer, self.sintatic_errors, self.semantic)
-
-                
                 
                 tokens = self.lexer.tokenize(self.content)
 
                 # Iniciar análisis sintáctico
                 self.parser.parse(self.content)
-                #Luego cambiar esto por botones en la interfaz
 
                 self.sintatic_errors.errorHtml('Sintácticos')
                 self.lexic_errors.errorHtml('Léxicos')

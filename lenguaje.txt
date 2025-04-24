@@ -1,16 +1,10 @@
-global milito x = 0;          
-while (x < 5) {               
-    x = x + 1;               
-}
-
+global milito x = 4;       
+p;
 local milito y = 10;          
 local milito z;               
-z = x / 2;                   
-while (y < 5) {               
-    y = x - 1;               
-}
+z = x pepe 2;                   
 
-local milito v;              
-v = x - 3;                
+              
+local milito v = x tchouameni 3;                
 
-local milito i = 0;           
+local milito z= x pepe 1;
