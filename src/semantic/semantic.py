@@ -1,13 +1,15 @@
+import time
+from threading import Event
 import json, os, tempfile
 from datetime import datetime
 
 class Semantic:
-    def __init__(self, symbol_table, errors, lexer, intercode_generator):
+    def __init__(self, symbol_table, errors, lexer, interCodeGenerator):
         self.symbol_table = symbol_table
         self.errors = errors
         self.lexer = lexer
         self.methods = {}
-        self.intercode_generator = intercode_generator
+        self.intercode_generator = interCodeGenerator
 
     def handle_declaration(self, name, var_type, scope, value=None):
         def action():
@@ -20,40 +22,45 @@ class Semantic:
         def action():
             print(f"Recibido en asignación para '{name}': {value}")
             try:
-                if isinstance(value, tuple) and len(value) == 3:
-                    value_eval = self.handle_expression(*value)
+                value_eval = None
+                if isinstance(value, tuple):
+                    if len(value) == 3:
+                        left, op, right = value
+                        left_val = self._get_value(left)
+                        right_val = self._get_value(right)
+
+                        if left_val is None or right_val is None:
+                            self.errors.encolar_error(f" Error: No se puede operar porque '{left}' o '{right}' es None. Asignación a '{name}' no realizada.")
+                            print(f" Asignación cancelada para '{name}' por valores inválidos.")
+                            return
+
+                        value_eval = self.handle_expression(left, op, right)
+                    else:
+                        self.errors.encolar_error(f" Error: La expresión para '{name}' debe tener 3 elementos (left, op, right), pero tiene {len(value)}.")
+                        print(f" Tupla inválida para '{name}': {value}")
+                        return
                 else:
                     value_eval = self._get_value(value)
 
                 if self.symbol_table.get_symbol(name) is not None:
                     self.symbol_table.update_symbol(name, value_eval)
                     print(f"Asignación: {name} = {value_eval}")
-                    self.intercode_generator.emit(f"{name} = {value_eval}")
                 else:
                     self.errors.encolar_error(f" Error: Variable '{name}' no declarada.")
             except Exception as e:
                 self.errors.encolar_error(f" Error al asignar a '{name}': {e}")
+                print(f" Error al asignar a '{name}': {e}")
         return action
-
-    def _map_operator(self, op):
-        return {
-            'cristiano': '+',
-            'tchouameni': '-',
-            'messi': '*',
-            'pepe': '/'
-        }.get(op, op)
 
     def handle_expression(self, left, operator, right):
         val1 = self._get_value(left)
         val2 = self._get_value(right)
-
         if val1 is None or val2 is None:
             self.errors.encolar_error(f" Error: Operación inválida: {left} {operator} {right}")
             return None
-
-        temp = self.intercode_generator.new_temp()
-        self.intercode_generator.emit(f"{temp} = {val1} {self._map_operator(operator)} {val2}")
-        return temp
+        result = self._apply_operator(val1, operator, val2)
+        print(f"Evaluación: {val1} {operator} {val2} = {result}")
+        return result
 
     def handle_term(self, left, operator, right):
         return self.handle_expression(left, operator, right)
@@ -64,126 +71,164 @@ class Semantic:
         return value
 
     def _get_value(self, item):
-        if isinstance(item, str) and item in self.symbol_table.symbols:
-            return self.symbol_table.get_symbol(item)
+        if isinstance(item, str):
+            value = self.symbol_table.get_symbol(item)
+            if value is None:
+                self.errors.encolar_error(f"Error: Variable '{item}' no tiene un valor válido (None).")
+            return value
         return item
 
-    def evaluate_condition_dynamic(self, left, op, right):
-        left_val = self._get_value(left)
-        right_val = self._get_value(right)
+    def _apply_operator(self, a, op, b):
+        try:
+            if a is None or b is None:
+                self.errors.encolar_error(f"Error: Operación inválida entre {a} y {b}")
+                return None
+            if op == 'cristiano':
+                return a + b if type(a) == type(b) else self._op_error(op, a, b)
+            if op == 'tchouameni':
+                return a - b if self._check_numeric(a, b) else self._op_error(op, a, b)
+            if op == 'messi':
+                return a * b if self._check_numeric(a, b) else self._op_error(op, a, b)
+            if op == 'pepe':
+                if b == 0:
+                    self.errors.encolar_error("Error: División por cero.")
+                    return None
+                return a / b if self._check_numeric(a, b) else self._op_error(op, a, b)
+        except Exception as e:
+            self.errors.encolar_error(f"Error en operación: {e}")
+        self.errors.encolar_error(f"Operador no válido: {op}")
+        return None
 
-        temp = self.intercode_generator.new_temp()
-        self.intercode_generator.emit(f"{temp} = {left_val} {op} {right_val}")
+    def _check_numeric(self, a, b):
+        return isinstance(a, (int, float)) and isinstance(b, (int, float))
+
+    def _op_error(self, op, a, b):
+        self.errors.encolar_error(f" No se puede aplicar '{op}' entre {type(a).__name__} y {type(b).__name__}")
+        return None
+
+    def evaluate_condition_dynamic(self, left, op, right):
+        def safe_get(val):
+            return self.symbol_table.get_symbol(val) if isinstance(val, str) and val in self.symbol_table.symbols else val
 
         def condition():
+            val1 = safe_get(left)
+            val2 = safe_get(right)
             try:
-                result = eval(f"{left_val} {op} {right_val}")
-                print(f" Evaluando condición: {left_val} {op} {right_val} → {result}")
+                result = eval(f"{val1} {op} {val2}")
+                print(f"Evaluando condición: {val1} {op} {val2} → {result}")
                 return result
             except Exception as e:
-                self.errors.encolar_error(f" Condición inválida: {left_val} {op} {right_val} → {e}")
+                self.errors.encolar_error(f"Condición inválida: {left} {op} {right} → {e}")
                 return False
 
-        return temp, condition
+        return condition
 
-    def handle_while(self, condition_data, body):
+    def handle_for(self, init_stmt, condition_fn, update_stmt, body):
         def action():
-            print(f" WHILE detectado, cuerpo recibido: {body}")
-            label_start = self.intercode_generator.new_label()
-            label_end = self.intercode_generator.new_label()
+            print("Iniciando ciclo FOR")
+            init_stmt()
 
-            self.intercode_generator.emit(f"{label_start}:")
+            start_label = self.intercode_generator.new_label()
+            true_label = self.intercode_generator.new_label()
+            end_label = self.intercode_generator.new_label()
 
-            cond_temp, real_condition = condition_data
-            self.intercode_generator.emit(f"ifFalse {cond_temp} goto {label_end}")
+            self.intercode_generator.emit(f"{start_label}:")
+            self.intercode_generator.emit(f"if {condition_fn.__name__} goto {true_label}")
+            self.intercode_generator.emit(f"goto {end_label}")
+            self.intercode_generator.emit(f"{true_label}:")
 
-            while real_condition():
-                for stmt in body:
+            iteration = 0
+            while condition_fn():
+                iteration += 1
+                print(f"Iteración #{iteration} del FOR")
+                for i, stmt in enumerate(body):
                     if callable(stmt):
                         stmt()
+                update_stmt()
+                self._save_iteration_state()
 
-                cond_temp, real_condition = self.evaluate_condition_dynamic(cond_temp, ">", 0)
-                self.intercode_generator.emit(f"ifFalse {cond_temp} goto {label_end}")
-
-            self.intercode_generator.emit(f"goto {label_start}")
-            self.intercode_generator.emit(f"{label_end}:")
+            self.intercode_generator.emit(f"goto {start_label}")
+            self.intercode_generator.emit(f"{end_label}:")
         return action
 
     def handle_do_while(self, condition_fn, body):
         def action():
-            label_start = self.intercode_generator.new_label()
-            self.intercode_generator.emit(f"{label_start}:")
+            print("Iniciando ciclo DO-WHILE")
+            start_label = self.intercode_generator.new_label()
+            self.intercode_generator.emit(f"{start_label}:")
+
+            iteration = 0
             while True:
-                for stmt in body:
+                iteration += 1
+                print(f"Iteración #{iteration} del DO-WHILE")
+                for i, stmt in enumerate(body):
                     if callable(stmt):
                         stmt()
+                self._save_iteration_state()
+
                 if not condition_fn():
                     break
-            self.intercode_generator.emit(f"goto {label_start}")
+            self.intercode_generator.emit(f"if condition goto {start_label}")
         return action
 
-    def handle_for(self, init_stmt, condition_data, update_stmt, body):
+    def handle_while(self, condition_fn, body):
         def action():
-            print(" Iniciando ciclo FOR")
-            init_stmt()
+            print("Iniciando ciclo WHILE")
+            start_label = self.intercode_generator.new_label()
+            true_label = self.intercode_generator.new_label()
+            end_label = self.intercode_generator.new_label()
 
-            label_start = self.intercode_generator.new_label()
-            label_end = self.intercode_generator.new_label()
+            self.intercode_generator.emit(f"{start_label}:")
+            self.intercode_generator.emit(f"if {condition_fn.__name__} goto {true_label}")
+            self.intercode_generator.emit(f"goto {end_label}")
+            self.intercode_generator.emit(f"{true_label}:")
 
-            self.intercode_generator.emit(f"{label_start}:")
+            iteration = 0
+            try:
+                while condition_fn():
+                    iteration += 1
+                    print(f"Iteración #{iteration} del WHILE")
+                    for i, stmt in enumerate(body):
+                        if callable(stmt):
+                            stmt()
+                    self._save_iteration_state()
+            except Exception as e:
+                self.errors.encolar_error(f"Error en ejecución de cuerpo WHILE: {e}")
+                print(f"Error en ejecución de cuerpo WHILE: {e}")
 
-            cond_temp, real_condition = condition_data
-            self.intercode_generator.emit(f"ifFalse {cond_temp} goto {label_end}")
-
-            while real_condition():
-                for stmt in body:
-                    if callable(stmt):
-                        stmt()
-                update_stmt()
-                cond_temp, real_condition = self.evaluate_condition_dynamic(cond_temp, ">", 0)
-                self.intercode_generator.emit(f"goto {label_start}")
-
-            self.intercode_generator.emit(f"{label_end}:")
-        return action
-
-    def handle_if(self, condition_data, if_body, else_body):
-        def action():
-            cond_temp, real_condition = condition_data
-            label_else = self.intercode_generator.new_label()
-            label_end = self.intercode_generator.new_label()
-
-            self.intercode_generator.emit(f"ifFalse {cond_temp} goto {label_else}")
-
-            if real_condition():
-                for stmt in if_body:
-                    if callable(stmt):
-                        stmt()
-            self.intercode_generator.emit(f"goto {label_end}")
-
-            self.intercode_generator.emit(f"{label_else}:")
-
-            if not real_condition():
-                for stmt in else_body:
-                    if callable(stmt):
-                        stmt()
-
-            self.intercode_generator.emit(f"{label_end}:")
+            self.intercode_generator.emit(f"goto {start_label}")
+            self.intercode_generator.emit(f"{end_label}:")
         return action
 
     def handle_method_declaration(self, name, body):
         def action():
             self.methods[name] = body
-            print(f" Método '{name}' definido.")
+            print(f"Método '{name}' definido.")
         return action
 
     def handle_method_call(self, name):
         def action():
             if name in self.methods:
+                print(f"Llamando a método '{name}'...")
                 for stmt in self.methods[name]:
                     if callable(stmt):
                         stmt()
             else:
-                self.errors.encolar_error(f" Error: Método '{name}' no está definido.")
+                self.errors.encolar_error(f"Error: Método '{name}' no está definido.")
+        return action
+
+    def handle_if(self, condition_fn, if_body, else_body):
+        def action():
+            if condition_fn():
+                print("IF verdadero: ejecutando bloque")
+                for stmt in if_body:
+                    if callable(stmt):
+                        stmt()
+            else:
+                print("IF falso: ejecutando ELSE")
+                for stmt in else_body:
+                    if callable(stmt):
+                        stmt()
         return action
 
     def handle_switch(self, var_name, cases, default_body):
@@ -193,12 +238,14 @@ class Semantic:
             print(f"🔀 SWITCH sobre '{var_name}' con valor '{val}'")
             for case_val, body in cases:
                 if val == case_val:
+                    print(f"🎯 Coincidencia con CASE: {case_val}")
                     for stmt in body:
                         if callable(stmt):
                             stmt()
                     matched = True
                     break
             if not matched and default_body:
+                print(f"⚠️ Ejecutando bloque DEFAULT")
                 for stmt in default_body:
                     if callable(stmt):
                         stmt()

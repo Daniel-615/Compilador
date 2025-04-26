@@ -8,6 +8,7 @@ class interCodeGenerator:
         self.temp_counter+=1
         return temp
     def emit(self,instruction):
+        print(f" [EMIT] {instruction}")
         self.code.append(instruction)
     def get_code(self):
         return self.code
