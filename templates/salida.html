@@ -9,10 +9,16 @@
             font-family: Arial, sans-serif;
             margin: 30px;
             background-color: #f4f4f4;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        body.dark-mode {
+            background-color: #1e1e1e;
+            color: #ddd;
         }
         h1 {
             text-align: center;
-            color: #333;
+            color: inherit;
         }
         .tab-buttons {
             text-align: center;
@@ -27,6 +33,7 @@
             cursor: pointer;
             border-radius: 5px;
             font-size: 16px;
+            transition: background-color 0.3s;
         }
         button:hover {
             background-color: #005f75;
@@ -37,6 +44,10 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        body.dark-mode .tab-content {
+            background-color: #2c2c2c;
+            box-shadow: 0 0 10px rgba(255,255,255,0.1);
         }
         .tab-content.active {
             display: block;
@@ -53,12 +64,18 @@
         th {
             background-color: #eee;
         }
+        body.dark-mode th {
+            background-color: #444;
+        }
     </style>
 </head>
 <body>
     <h1><img src="img/compilador.webp" alt="compilador" width="30">Resultados del Compilador</h1>
 
-    <!-- Botones para navegar entre secciones -->
+    <div style="text-align: center; margin-bottom: 20px;">
+        <button onclick="toggleTheme()">🌗 Cambiar tema</button>
+    </div>
+
     <div class="tab-buttons">
         <button onclick="showTab('symbolTable')">📄 Tabla de Símbolos</button>
         <button onclick="showTab('lexicalErrors')">❌ Errores Léxicos</button>
@@ -66,6 +83,7 @@
         <button onclick="showTab('tokens')">🔤 Tokens</button>
         <button onclick="showTab('whileHistory')">🔁 Historial de los Ciclos</button>
     </div>
+
     <div class="tab-code-intermedio">
         <details style="margin: 0 auto 20px; width: 80%; text-align: left;">
             <summary style="font-size: 20px; font-weight: bold; color: #c00; cursor: pointer; margin-bottom: 10px;">
@@ -95,13 +113,13 @@
                     font-family: Consolas, 'Courier New', monospace;
                     font-size: 14px;
                     white-space: pre-wrap;
-                ">t0 = promedio + 1.0<br>t1 = 10 + 5<br>goles = t1<br>t2 = t0 / 2<br>promedio = t2<br>t3 = t2 - 0.5<br>promedio = t3<br>t4 = 0 + 1<br>i = t4<br>promedio = 0<br>t5 = 0 + 1<br>x = t5</pre>
+                ">t0 = promedio + 1.0<br>t1 = goles > 10<br>t2 = goles > 11<br>t3 = i < 5<br>t4 = x < 3<br>t5 = 10 + 5<br>goles = t5<br>t6 = t0 / 2<br>promedio = t6<br>ifFalse t2 goto L0<br>goto L1<br>L0:<br>t7 = t6 - 0.5<br>promedio = t7<br>L1:<br>promedio = 0</pre>
             </div>
         </details>
     </div>
 
     <div id="symbolTable" class="tab-content">
-        <html><head><title>Tabla de Símbolos</title><link rel="stylesheet" href="./css/styles.css"></head><body><table border="1"><tr><th>Name</th><th>Type</th><th>Scope</th><th>Value</th></tr><tr><td>goles</td><td>milito</td><td>local</td><td>t1</td></tr><tr><td>promedio</td><td>zidane</td><td>local</td><td>0</td></tr><tr><td>inicial</td><td>saviola</td><td>local</td><td>M</td></tr><tr><td>nombre</td><td>iniesta</td><td>local</td><td>Messi</td></tr><tr><td>leyenda</td><td>valderrama</td><td>local</td><td>true</td></tr><tr><td>i</td><td>milito</td><td>local</td><td>t4</td></tr><tr><td>x</td><td>milito</td><td>local</td><td>t5</td></tr></table>
+        <html><head><title>Tabla de Símbolos</title><link rel="stylesheet" href="./css/styles.css"></head><body><table border="1"><tr><th>Name</th><th>Type</th><th>Scope</th><th>Value</th></tr><tr><td>goles</td><td>milito</td><td>local</td><td>t5</td></tr><tr><td>promedio</td><td>zidane</td><td>local</td><td>0</td></tr><tr><td>inicial</td><td>saviola</td><td>local</td><td>M</td></tr><tr><td>nombre</td><td>iniesta</td><td>local</td><td>Messi</td></tr><tr><td>leyenda</td><td>valderrama</td><td>local</td><td>true</td></tr><tr><td>i</td><td>milito</td><td>local</td><td>0</td></tr></table>
     </div>
 
     <div id="lexicalErrors" class="tab-content">
@@ -109,7 +127,7 @@
     </div>
 
     <div id="syntaxErrors" class="tab-content">
-        <p style='color: green;'>No se encontraron errores.</p>
+        <div class="error-section"><h2 style="color: red;">Errores Sintacticos</h2><table class="error-table"><tr><th>#</th><th>Descripción del Error</th></tr><tr><td>1</td><td>La condición del while no es válida.</td></tr><tr><td>2</td><td> La condición del do-while no es válida.</td></tr><tr><td>3</td><td> La condición del for no es válida.</td></tr></table></div>
     </div>
 
     <div id="tokens" class="tab-content">
@@ -117,7 +135,7 @@
     </div>
 
     <div id="whileHistory" class="tab-content">
-        <h2>🌀 Cambios durante los ciclos</h2><h4>Iteración #1 – 2025-04-24T02:44:02.975011</h4><table border='1'><tr><th>Variable</th><th>Valor</th></tr><tr><td>goles</td><td>{'type': 'milito', 'scope': 'local', 'value': 't1'}</td></tr><tr><td>promedio</td><td>{'type': 'zidane', 'scope': 'local', 'value': 't3'}</td></tr><tr><td>inicial</td><td>{'type': 'saviola', 'scope': 'local', 'value': 'M'}</td></tr><tr><td>nombre</td><td>{'type': 'iniesta', 'scope': 'local', 'value': 'Messi'}</td></tr><tr><td>leyenda</td><td>{'type': 'valderrama', 'scope': 'local', 'value': 'true'}</td></tr><tr><td>i</td><td>{'type': 'milito', 'scope': 'local', 'value': 't4'}</td></tr></table><br><h4>Iteración #2 – 2025-04-24T02:44:02.977010</h4><table border='1'><tr><th>Variable</th><th>Valor</th></tr><tr><td>goles</td><td>{'type': 'milito', 'scope': 'local', 'value': 't1'}</td></tr><tr><td>promedio</td><td>{'type': 'zidane', 'scope': 'local', 'value': 0}</td></tr><tr><td>inicial</td><td>{'type': 'saviola', 'scope': 'local', 'value': 'M'}</td></tr><tr><td>nombre</td><td>{'type': 'iniesta', 'scope': 'local', 'value': 'Messi'}</td></tr><tr><td>leyenda</td><td>{'type': 'valderrama', 'scope': 'local', 'value': 'true'}</td></tr><tr><td>i</td><td>{'type': 'milito', 'scope': 'local', 'value': 't4'}</td></tr><tr><td>x</td><td>{'type': 'milito', 'scope': 'local', 'value': 't5'}</td></tr></table><br>
+        <p>No se registraron cambios durante la ejecución del WHILE.</p>
     </div>
 
     <script>
@@ -126,9 +144,8 @@
             tabs.forEach(tab => tab.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
         }
-
-        // Mostrar por defecto la tabla de símbolos
         showTab('symbolTable');
+
         function copyCode() {
             const code = document.getElementById("intermediateCodeBlock").innerText;
             navigator.clipboard.writeText(code).then(() => {
@@ -137,10 +154,15 @@
                 alert(" Error al copiar: " + err);
             });
         }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+        }
     </script>
+
     <footer style="margin-top: 40px; text-align: center; font-size: 14px; color: #555;">
         <hr style="margin-bottom: 10px; border: none; height: 1px; background: #ccc;">
-        <p> Proyecto de Compiladores — <strong>Universidad Mariano Galvez</strong></p>
+        <p> Proyecto de Compiladores — <strong>Universidad Mariano Gálvez</strong></p>
         <p><img src="img/man_developer.webp" alt="Dev1" width="20"> Desarrollado por: <strong>Angel Garcia</strong></p>
         <p><img src="img/man_developer.webp" alt="Dev2" width="20"> Desarrollado por: <strong>Marcos Morales</strong></p>
         <p><img src="img/women_developer.webp" alt="Dev3" width="25"> Desarrollado por: <strong>Valeria Recinos</strong></p>
