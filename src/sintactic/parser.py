@@ -6,7 +6,7 @@ class Parser:
         self.errors = sintatic_errors
         self.semantic = semantic_handler
         self.tokens = lexer.tokens
-        self.parser = yacc.yacc(module=self, debug=True)
+        self.parser = yacc.yacc(module=self, debug=False, write_tables=False)
 
     precedence = (
         ('left', 'CRISTIANO', 'TCHOUAMENI'),  # + y -

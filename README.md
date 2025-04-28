@@ -31,7 +31,7 @@ Este proyecto es una implementación de un compilador para un lenguaje de progra
 ## Uso
 Para compilar un archivo fuente, ejecuta el siguiente comando:
 ```bash
-python main.py
+env\Scripts\python.exe main.py
 ```
 
 ## Estructura del Proyecto

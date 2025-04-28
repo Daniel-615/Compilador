@@ -15,6 +15,7 @@ from src.semantic.symbolTable import SymbolTable
 from src.semantic.semantic import Semantic
 from src.utils.tokens import Tokens
 from src.codegen.ccodeGen import ccodeGen
+from src.utils.generateExe import GenerateExe
 class Main:
     def __init__(self):
         self.symbol_table = SymbolTable()
@@ -115,4 +116,12 @@ class Main:
             print(" Error en análisis:", e)
 
 if __name__ == "__main__":
+    exe_generator = GenerateExe(
+        name="FutbolistasCompilador",
+        version="1.0",
+        description="Este es un compilador para el lenguaje de futbolistas.",
+        author="Grupo1",
+        author_email="grupo1@gmail.com"
+    )
+    exe_generator.generate_exe(entry_point="main.py", templates_folder="templates")
     Main()
