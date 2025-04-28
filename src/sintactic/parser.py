@@ -33,6 +33,7 @@ class Parser:
                      | method_declaration
                      | method_call SEMICOLON
                      | expression SEMICOLON
+                     | break_statement
                      | COUTINHO LPAREN expression RPAREN SEMICOLON'''
         if p[1] == 'coutinho':
             p[0] = self.semantic.handle_print(p[3])
@@ -196,13 +197,18 @@ class Parser:
         p[0] = []
 
     def p_cases(self, p):
-        '''cases : cases case
-                | case'''
-        p[0] = p[1] + [p[2]] if len(p) == 3 else [p[1]]
+        '''cases : case
+                | case cases'''
+        if len(p) == 2:
+            p[0] = [p[1]]
+        else:
+            p[0] = [p[1]] + p[2]
+
 
     def p_case(self, p):
         'case : SON value COLON program'
         p[0] = (p[2], p[4])
+
 
     def p_default_case(self, p):
         '''default_case : RONALDINHO COLON program
@@ -214,6 +220,9 @@ class Parser:
                  | STRING_LITERAL
                  | CHAR_LITERAL'''
         p[0] = p[1]
+    def p_break_statement(self, p):
+        'break_statement : ROMAN SEMICOLON'
+        p[0] = self.semantic.handle_break()
 
     def p_error(self, p):
         if p:

@@ -270,7 +270,6 @@ class Semantic:
             for (i, (case_val, _)) in enumerate(cases):
                 self.intercode_generator.emit(f"if {var_name} == {case_val} goto {case_labels[i]}")
 
-            # Si no coincide ningún caso, ir al default
             self.intercode_generator.emit(f"goto {default_label}")
 
             # Bloques de cada case
@@ -279,7 +278,7 @@ class Semantic:
                 for stmt in body:
                     if callable(stmt):
                         stmt()
-                self.intercode_generator.emit(f"goto {end_label}")
+                self.intercode_generator.emit(f"goto {end_label}")  # <- simula break con un salto al final
 
             # Bloque default
             self.intercode_generator.emit(f"{default_label}:")
@@ -288,8 +287,14 @@ class Semantic:
                     if callable(stmt):
                         stmt()
 
-            # Fin del switch
             self.intercode_generator.emit(f"{end_label}:")
+        return action
+
+    def handle_break(self):
+        def action():
+            print("Generando break")
+            end_label = "END_SWITCH_LABEL" 
+            self.intercode_generator.emit(f"goto {end_label}")
         return action
 
 

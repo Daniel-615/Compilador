@@ -30,10 +30,13 @@ ejecutarSwitch(){
     forlan (goles) {
     son 10:
         promedio = promedio cristiano 2.0;
+        roman;
     son 15:
         promedio = promedio cristiano 5.0;
+        roman;
     ronaldinho:
         promedio = 0;
+        roman;
     }
 }
 calcular(); 

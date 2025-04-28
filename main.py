@@ -54,7 +54,7 @@ class Main:
             self.thread.start()
     
     def generate_cpp_code(self, inter_code):
-        print("🛠️ Generando código C++...")
+        print("Generando código C++...")
         code_gen = ccodeGen(inter_code) 
         code_gen.generate()
 
@@ -64,7 +64,7 @@ class Main:
         with open("programa_generado.cpp", "w", encoding="utf-8") as archivo_cpp:
             archivo_cpp.write(cpp_code)
 
-        print("✅ Código C++ guardado exitosamente en 'programa_generado.cpp'")
+        print(" Código C++ guardado exitosamente en 'programa_generado.cpp'")
 
     def run_analysis(self):
         try:

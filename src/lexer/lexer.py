@@ -28,6 +28,7 @@ class Lexer:
         'coutinho': 'COUTINHO', #mostrar
         'aguero': 'AGUERO', #do
         'ramos': 'RAMOS', #For
+        'roman': 'ROMAN', #break
     }
 
     tokens += list(reserved.values())
