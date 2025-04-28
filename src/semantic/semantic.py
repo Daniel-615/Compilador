@@ -1,7 +1,6 @@
-import time
-from threading import Event
 import json, os, tempfile
 from datetime import datetime
+from src.intercode.optimize.optimize import Optimize  
 
 class Semantic:
     def __init__(self, symbol_table, errors, lexer, interCodeGenerator):
@@ -225,43 +224,93 @@ class Semantic:
 
     def handle_if(self, condition_fn, if_body, else_body):
         def action():
+            print("Iniciando IF con código intermedio")
+
+            true_label = self.intercode_generator.new_label()
+            false_label = self.intercode_generator.new_label()
+            end_label = self.intercode_generator.new_label()
+
+            # Emitir evaluación de condición
+            self.intercode_generator.emit(f"if {condition_fn.__name__} goto {true_label}")
+            self.intercode_generator.emit(f"goto {false_label}")
+
+            # Bloque IF verdadero
+            self.intercode_generator.emit(f"{true_label}:")
             if condition_fn():
-                print("IF verdadero: ejecutando bloque")
                 for stmt in if_body:
                     if callable(stmt):
                         stmt()
-            else:
-                print("IF falso: ejecutando ELSE")
+            self.intercode_generator.emit(f"goto {end_label}")
+
+            # Bloque ELSE
+            self.intercode_generator.emit(f"{false_label}:")
+            if else_body:
                 for stmt in else_body:
                     if callable(stmt):
                         stmt()
+
+            # Fin del IF
+            self.intercode_generator.emit(f"{end_label}:")
         return action
 
     def handle_switch(self, var_name, cases, default_body):
         def action():
+            print("Iniciando SWITCH con código intermedio")
+
             val = self._get_value(var_name)
-            matched = False
-            print(f"🔀 SWITCH sobre '{var_name}' con valor '{val}'")
-            for case_val, body in cases:
-                if val == case_val:
-                    print(f"🎯 Coincidencia con CASE: {case_val}")
-                    for stmt in body:
-                        if callable(stmt):
-                            stmt()
-                    matched = True
-                    break
-            if not matched and default_body:
-                print(f"⚠️ Ejecutando bloque DEFAULT")
+            if val is None:
+                self.errors.encolar_error(f"Error: Variable '{var_name}' no tiene valor para SWITCH.")
+                return
+
+            end_label = self.intercode_generator.new_label()
+            case_labels = [self.intercode_generator.new_label() for _ in cases]
+            default_label = self.intercode_generator.new_label()
+
+            # Comparaciones
+            for (i, (case_val, _)) in enumerate(cases):
+                self.intercode_generator.emit(f"if {var_name} == {case_val} goto {case_labels[i]}")
+
+            # Si no coincide ningún caso, ir al default
+            self.intercode_generator.emit(f"goto {default_label}")
+
+            # Bloques de cada case
+            for (i, (case_val, body)) in enumerate(cases):
+                self.intercode_generator.emit(f"{case_labels[i]}:")
+                for stmt in body:
+                    if callable(stmt):
+                        stmt()
+                self.intercode_generator.emit(f"goto {end_label}")
+
+            # Bloque default
+            self.intercode_generator.emit(f"{default_label}:")
+            if default_body:
                 for stmt in default_body:
                     if callable(stmt):
                         stmt()
+
+            # Fin del switch
+            self.intercode_generator.emit(f"{end_label}:")
         return action
+
 
     def handle_print(self, value):
         def action():
             val = self._get_value(value)
             print(f"Salida: {val}")
         return action
+    def getInterCode(self):
+        return self.intercode_generator.code
+    def optimize_intermediate_code(self):
+
+        print("🛠️ Ejecutando optimización del código intermedio...")
+        optimizer = Optimize(self.intercode_generator.code)  # el IR generado
+        optimizer.optimize()
+
+        # Reemplazamos el código intermedio antiguo con el optimizado
+        self.intercode_generator.code = optimizer.get_optimized_ir()
+        print("Código intermedio optimizado.")
+
+
 
     def _save_iteration_state(self):
         temp_dir = tempfile.gettempdir()
