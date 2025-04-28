@@ -4,7 +4,7 @@ class Optimize:
 
     def remove_redundant_temporaries(self):
         """
-        ✅ Fusión de temporales: convierte
+        Fusión de temporales: convierte
         t0 = goles cristiano 5
         goles = t0
         → goles = goles cristiano 5
@@ -30,7 +30,7 @@ class Optimize:
 
     def simplify_trivial_operations(self):
         """
-        ✅ Elimina operaciones triviales como + 0, - 0, * 1, / 1
+         Elimina operaciones triviales como + 0, - 0, * 1, / 1
         """
         optimized_ir = []
         for line in self.ir:
@@ -51,7 +51,7 @@ class Optimize:
 
     def optimize_conditionals(self):
         """
-        ✅ Mejora IFs: convierte
+         Mejora IFs: convierte
         if condition goto L1
         goto L2
         L1:
@@ -80,7 +80,7 @@ class Optimize:
 
     def remove_unreachable_labels(self):
         """
-        ✅ Elimina labels innecesarias (cuando están pegadas después de GOTO)
+         Elimina labels innecesarias (cuando están pegadas después de GOTO)
         """
         optimized_ir = []
         last_was_goto = False
@@ -91,17 +91,49 @@ class Optimize:
             optimized_ir.append(line)
             last_was_goto = line.strip().startswith('goto')
         self.ir = optimized_ir
+    def optimize_goto_chains(self):
+        """
+        Optimiza saltos innecesarios en cadena.
+        Ejemplo:
+        goto L1
+        L1:
+        goto L2
+        -->
+        goto L2
+        """
+        label_to_target = {}
+        # Primero: construir a qué label apunta cada label
+        for i in range(len(self.ir) - 1):
+            line = self.ir[i].strip()
+            next_line = self.ir[i + 1].strip()
+            if line.endswith(':') and next_line.startswith('goto'):
+                label = line[:-1].strip()
+                target = next_line.split('goto')[1].strip()
+                label_to_target[label] = target
+
+        optimized_ir = []
+        for line in self.ir:
+            if line.startswith('goto'):
+                dest = line.split('goto')[1].strip()
+                while dest in label_to_target:
+                    dest = label_to_target[dest]
+                optimized_ir.append(f"goto {dest}")
+            else:
+                optimized_ir.append(line)
+
+        self.ir = optimized_ir
 
     def optimize(self):
         """
         Método principal para ejecutar todas las optimizaciones.
         """
-        print("🔵 Iniciando optimización...")
+        print(" Iniciando optimización...")
         self.remove_redundant_temporaries()
         self.simplify_trivial_operations()
         self.optimize_conditionals()
         self.remove_unreachable_labels()
-        print("🟢 Optimización completada.")
+        self.optimize_goto_chains() 
+        print("Optimización completada.")
 
     def get_optimized_ir(self):
         """
