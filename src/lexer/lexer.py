@@ -68,11 +68,31 @@ class Lexer:
         r'[a-zA-Z_][a-zA-Z0-9_]*'
         t.type = self.reserved.get(t.value, 'IDENTIFIER')
         return t
+    def t_STRING_LITERAL_UNCLOSED(self, t):
+        r'"([^\\"]|\\.)*$'
+        fila = t.lexer.lexdata[:t.lexpos].count('\n') + 1
+        last_newline = t.lexer.lexdata.rfind('\n', 0, t.lexpos)
+        if last_newline < 0:
+            columna = t.lexpos + 1
+        else:
+            columna = t.lexpos - last_newline
+        self.errors.encolar_error(f"Error léxico: cadena de texto no cerrada en la fila {fila} y columna {columna}.")
+        t.lexer.skip(len(t.value))  # Salta todo el string mal cerrado
 
     def t_STRING_LITERAL(self, t):
         r'"([^\\"]|\\.)*"'
         t.value = t.value[1:-1]
         return t
+    def t_CHAR_LITERAL_UNCLOSED(self, t):
+        r"'([^\\'\n]|\\.)*$"
+        fila = t.lexer.lexdata[:t.lexpos].count('\n') + 1
+        last_newline = t.lexer.lexdata.rfind('\n', 0, t.lexpos)
+        if last_newline < 0:
+            columna = t.lexpos + 1
+        else:
+            columna = t.lexpos - last_newline
+        self.errors.encolar_error(f"Error léxico: carácter no cerrado en la fila {fila} y columna {columna}.")
+        t.lexer.skip(len(t.value))
 
     def t_CHAR_LITERAL(self, t):
         r'\'(.*?)\''
@@ -89,8 +109,23 @@ class Lexer:
         t.lexer.lineno += len(t.value)
 
     def t_error(self, t):
-        self.set_error(t.value[0], t.lexpos)
-        t.lexer.skip(1)
+        fila = t.lexer.lexdata[:t.lexpos].count('\n') + 1
+        last_newline = t.lexer.lexdata.rfind('\n', 0, t.lexpos)
+        if last_newline < 0:
+            columna = t.lexpos + 1
+        else:
+            columna = t.lexpos - last_newline
+        self.errors.encolar_error(f"Error léxico: carácter no reconocido '{t.value[0]}' en la fila {fila} y columna {columna}.")
+
+        # Saltamos al siguiente salto de línea directamente
+        while t.lexer.lexpos < len(t.lexer.lexdata):
+            if t.lexer.lexdata[t.lexer.lexpos] == '\n':
+                t.lexer.skip(1)
+                break
+            t.lexer.skip(1)
+
+
+
 
     def get_current_token(self):
         return self.lexer.token()
