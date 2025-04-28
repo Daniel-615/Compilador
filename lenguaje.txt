@@ -1,9 +1,8 @@
 milito goles = 10;
 zidane promedio = 7.5;
 saviola inicial = 'M';
-iniesta nombre = "Messi";
 valderrama leyenda = true;
-
+iniesta nombre = "Messi";
 calcular() {
     goles = goles cristiano 5;
     promedio = (promedio cristiano 1.0) pepe 2;

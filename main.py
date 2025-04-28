@@ -14,7 +14,7 @@ from src.utils.errors import Errors
 from src.semantic.symbolTable import SymbolTable
 from src.semantic.semantic import Semantic
 from src.utils.tokens import Tokens
-
+from src.codegen.ccodeGen import ccodeGen
 class Main:
     def __init__(self):
         self.symbol_table = SymbolTable()
@@ -52,6 +52,19 @@ class Main:
 
             self.thread = threading.Thread(target=self.run_analysis)
             self.thread.start()
+    
+    def generate_cpp_code(self, inter_code):
+        print("🛠️ Generando código C++...")
+        code_gen = ccodeGen(inter_code) 
+        code_gen.generate()
+
+        cpp_code = code_gen.get_cpp_code()
+
+        # Guardar el código C++ generado
+        with open("programa_generado.cpp", "w", encoding="utf-8") as archivo_cpp:
+            archivo_cpp.write(cpp_code)
+
+        print("✅ Código C++ guardado exitosamente en 'programa_generado.cpp'")
 
     def run_analysis(self):
         try:
@@ -62,8 +75,10 @@ class Main:
 
             tokens = self.lexer.tokenize(self.content)
             self.parser.parse(self.content)
+            #Optimizar codigo intermedio
+            self.semantic.optimize_intermediate_code()
+            self.generate_cpp_code(self.semantic.getInterCode())
             inter_code_html = "<br>".join(self.semantic.intercode_generator.get_code())
-
             with open("./templates/compilador.html", "r", encoding="utf-8") as tpl_file:
                 template = tpl_file.read()
 
