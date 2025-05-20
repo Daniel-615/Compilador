@@ -1,16 +1,22 @@
+// Declaraciones globales
 milito goles = 10;
-zidane promedio = 7.5;
-saviola inicial = 'M';
-valderrama leyenda = true;
-iniesta nombre = "Messi";
+milito promedio = 7.5;
+milito inicial = 'M';
+milito leyenda = true;
+milito nombre = "Messi";
+
+// Declaración de funciones
+
 calcular() {
     goles = goles cristiano 5;
     promedio = (promedio cristiano 1.0) pepe 2;
+
     walker (goles > 10) {
         promedio = promedio cristiano 0.5;
         goles = goles tchouameni 1;
     }
 }
+
 ejecutarIf() {
     ballack (goles > 11) {
         promedio = promedio cristiano 1.0;
@@ -19,38 +25,46 @@ ejecutarIf() {
     }
 }
 
-ejecutarDoWhile(){
+ejecutarDoWhile() {
     milito i = 0;
     aguero {
         coutinho(i);
         i = i cristiano 1;
     } walker (i < 5);
 }
-ejecutarSwitch(){
+
+ejecutarSwitch() {
     forlan (goles) {
-    son 10:
-        promedio = promedio cristiano 2.0;
-        roman;
-    son 15:
-        promedio = promedio cristiano 5.0;
-        roman;
-    ronaldinho:
-        promedio = 0;
-        roman;
+        son 10:
+            promedio = promedio cristiano 2.0;
+            roman;
+        son 15:
+            promedio = promedio cristiano 5.0;
+            roman;
+        ronaldinho:
+            promedio = 0;
+            roman;
     }
 }
-calcular(); 
-ejecutarIf();
-ejecutarDoWhile();
-ejecutarSwitch();
-/* Este es un
-   comentario multilínea
-   que no se ejecutará */
-// Este es un comentario de línea que no se ejecuta
-coutinho(nombre); //imprime messi
-ejecutarFor(){
+
+ejecutarFor() {
     ramos (milito x = 0; x < 3; x = x cristiano 1) {
         coutinho(x);
     }
 }
+
+// Llamadas a funciones
+calcular();
+ejecutarIf();
+ejecutarDoWhile();
+ejecutarSwitch();
 ejecutarFor();
+
+// Salida final
+coutinho(nombre);
+
+// Comentarios:
+// Este es un comentario de línea
+/* Este es un
+   comentario multilínea
+   que no se ejecutará */

@@ -15,36 +15,54 @@ class Semantic:
             evaluated_value = value if isinstance(value, (int, float, bool, str)) else self._get_value(value)
             self.symbol_table.add_symbol(name, var_type, scope, evaluated_value)
             print(f"Declaración: {name} = {evaluated_value}")
+        action._is_declaration = True  # 👈 Marca la función
         return action
+
 
     def handle_assignment(self, name, value):
         def action():
             print(f"Recibido en asignación para '{name}': {value}")
             try:
                 value_eval = None
-                if isinstance(value, tuple):
-                    if len(value) == 3:
-                        left, op, right = value
-                        left_val = self._get_value(left)
-                        right_val = self._get_value(right)
+
+                # 🔁 Resolver recursivamente cualquier tupla de expresiones anidadas
+                def resolve_expr(val):
+                    if isinstance(val, tuple) and len(val) == 3:
+                        left, op, right = val
+                        left_val = resolve_expr(left)
+                        right_val = resolve_expr(right)
 
                         if left_val is None or right_val is None:
-                            self.errors.encolar_error(f"Error: No se puede operar porque '{left}' o '{right}' es None. Asignación a '{name}' no realizada.")
-                            print(f"Asignación cancelada para '{name}' por valores inválidos.")
-                            return
+                            self.errors.encolar_error(f"Error: Subexpresión inválida: ({left} {op} {right})")
+                            return None
 
-                        temp = self.intercode_generator.new_temp()
-                        self.intercode_generator.emit(f"{temp} = {left} {op} {right}")
-                        self.intercode_generator.emit(f"{name} = {temp}")
+                        return self.handle_expression(left_val, op, right_val)
+                    elif isinstance(val, str):
+                        fetched = self.symbol_table.get_symbol(val)
+                        if fetched is None:
+                            self.errors.encolar_error(f"Error: Variable '{val}' no tiene valor válido.")
+                        return fetched
+                    return val
 
-                        value_eval = self.handle_expression(left, op, right)
-                    else:
-                        self.errors.encolar_error(f"Error: La expresión para '{name}' debe tener 3 elementos (left, op, right).")
-                        print(f"Tupla inválida para '{name}': {value}")
-                        return
+                if isinstance(value, tuple):
+                    # Evaluación real
+                    resolved = resolve_expr(value)
+                    value_eval = resolved
+
+                    # Código intermedio textual (representación simbólica de la operación)
+                    def expr_to_str(expr):
+                        if isinstance(expr, tuple):
+                            return f"({expr_to_str(expr[0])} {expr[1]} {expr_to_str(expr[2])})"
+                        return str(expr)
+
+                    temp = self.intercode_generator.new_temp()
+                    self.intercode_generator.emit(f"{temp} = {expr_to_str(value)}")
+                    self.intercode_generator.emit(f"{name} = {temp}")
                 else:
                     value_eval = self._get_value(value)
                     self.intercode_generator.emit(f"{name} = {value}")
+
+                print(f"📥 Resuelto '{name}' como valor final: {value_eval}")
 
                 if self.symbol_table.get_symbol(name) is not None:
                     self.symbol_table.update_symbol(name, value_eval)
@@ -55,6 +73,8 @@ class Semantic:
                 self.errors.encolar_error(f"Error al asignar a '{name}': {e}")
                 print(f"Error general al asignar a '{name}': {e}")
         return action
+
+
 
 
     def handle_expression(self, left, operator, right):
@@ -71,17 +91,20 @@ class Semantic:
         return self.handle_expression(left, operator, right)
 
     def handle_factor(self, value):
-        if isinstance(value, str) and value in self.symbol_table.symbols:
-            return self.symbol_table.get_symbol(value)
-        return value
+        return value  
+
+
 
     def _get_value(self, item):
+        if isinstance(item, (int, float, bool)):
+            return item  
         if isinstance(item, str):
             value = self.symbol_table.get_symbol(item)
             if value is None:
                 self.errors.encolar_error(f"Error: Variable '{item}' no tiene un valor válido (None).")
             return value
         return item
+
 
     def _apply_operator(self, a, op, b):
         try:
@@ -113,7 +136,8 @@ class Semantic:
 
     def evaluate_condition_dynamic(self, left, op, right):
         def safe_get(val):
-            return self.symbol_table.get_symbol(val) if isinstance(val, str) and val in self.symbol_table.symbols else val
+            return self.symbol_table.get_symbol(val) if isinstance(val, str) else val
+
 
         def condition():
             val1 = safe_get(left)
@@ -209,7 +233,9 @@ class Semantic:
         def action():
             self.methods[name] = body
             print(f"Método '{name}' definido.")
+        action._is_declaration = True  # 👈 Marca como declaración
         return action
+
 
     def handle_method_call(self, name):
         def action():
@@ -330,7 +356,10 @@ class Semantic:
         historial.append({
             "timestamp": datetime.now().isoformat(),
             "iteration": len(historial) + 1,
-            "tabla": self.symbol_table.symbols
+           "tabla": {
+                "global": self.symbol_table.global_scope,
+                "local_scopes": self.symbol_table.scope_stack
+            }
         })
 
         with open(path, "w", encoding="utf-8") as f:

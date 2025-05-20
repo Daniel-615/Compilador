@@ -55,11 +55,17 @@ class Parser:
                                     | SAVIOLA IDENTIFIER EQUALS expression
                                     | INIESTA IDENTIFIER EQUALS expression
                                     | VALDERRAMA IDENTIFIER EQUALS expression'''
-        scope = 'local'
+        type_ = p[1]
         identifier = p[2]
         value = p[4]
-        type_ = p[1]
-        p[0] = self.semantic.handle_declaration(identifier, type_, scope, value)
+
+        # 🔧 Scope dinámico
+        scope = 'global' if not self.semantic.symbol_table.scope_stack else 'local'
+
+        stmt = self.semantic.handle_declaration(identifier, type_, scope, value)
+        stmt._is_declaration = True  # Por si acaso
+        p[0] = stmt
+
 
     def p_for_loop(self, p):
         'for_loop : RAMOS LPAREN for_init SEMICOLON condition SEMICOLON assignment_no_semicolon RPAREN LBRACE program RBRACE'
@@ -73,11 +79,14 @@ class Parser:
             p[0] = lambda: None
             return
 
-        try:
-            p[0] = self.semantic.handle_for(init, condition, update, body)
-        except Exception as e:
-            self.errors.encolar_error(f" Error en el cuerpo del for: {e}")
-            p[0] = lambda: None
+        def scoped_for():
+            self.semantic.symbol_table.enter_scope()  # <--
+            result = self.semantic.handle_for(init, condition, update, body)
+            result()
+            self.semantic.symbol_table.exit_scope()   # <--
+
+        p[0] = scoped_for
+
 
     def p_do_while_loop(self, p):
         'do_while_loop : AGUERO LBRACE program RBRACE WALKER LPAREN condition RPAREN SEMICOLON'
@@ -89,28 +98,36 @@ class Parser:
             p[0] = lambda: None
             return
 
-        try:
-            p[0] = self.semantic.handle_do_while(condition, body)
-        except Exception as e:
-            self.errors.encolar_error(f" Error en el cuerpo del do-while: {e}")
-            p[0] = lambda: None
+        def scoped_do_while():
+            self.semantic.symbol_table.enter_scope()  # Crear nuevo ámbito local
+            action = self.semantic.handle_do_while(condition, body)
+            action()
+            self.semantic.symbol_table.exit_scope()   # Salir del ámbito local
+
+        p[0] = scoped_do_while
+
 
     def p_declaration(self, p):
         '''declaration : MILITO IDENTIFIER SEMICOLON
-                       | MILITO IDENTIFIER EQUALS expression SEMICOLON
-                       | ZIDANE IDENTIFIER SEMICOLON
-                       | ZIDANE IDENTIFIER EQUALS expression SEMICOLON
-                       | SAVIOLA IDENTIFIER SEMICOLON
-                       | SAVIOLA IDENTIFIER EQUALS expression SEMICOLON
-                       | INIESTA IDENTIFIER SEMICOLON
-                       | INIESTA IDENTIFIER EQUALS expression SEMICOLON
-                       | VALDERRAMA IDENTIFIER SEMICOLON
-                       | VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON'''
-        scope = 'local'
+                    | MILITO IDENTIFIER EQUALS expression SEMICOLON
+                    | ZIDANE IDENTIFIER SEMICOLON
+                    | ZIDANE IDENTIFIER EQUALS expression SEMICOLON
+                    | SAVIOLA IDENTIFIER SEMICOLON
+                    | SAVIOLA IDENTIFIER EQUALS expression SEMICOLON
+                    | INIESTA IDENTIFIER SEMICOLON
+                    | INIESTA IDENTIFIER EQUALS expression SEMICOLON
+                    | VALDERRAMA IDENTIFIER SEMICOLON
+                    | VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON'''
+        type_ = p[1]
         identifier = p[2]
         value = p[4] if len(p) > 4 else None
-        type_ = p[1]
-        p[0] = self.semantic.handle_declaration(identifier, type_, scope, value)
+
+        # 🔧 Fijar scope dinámicamente
+        scope = 'global' if not self.semantic.symbol_table.scope_stack else 'local'
+
+        stmt = self.semantic.handle_declaration(identifier, type_, scope, value)
+        stmt._is_declaration = True
+        p[0] = stmt
 
     def p_factor_grouped(self, p):
         'factor : LPAREN expression RPAREN'
@@ -127,10 +144,19 @@ class Parser:
 
     def p_expression(self, p):
         '''expression : expression CRISTIANO term
-                      | expression TCHOUAMENI term
-                      | term'''
+                    | expression TCHOUAMENI term
+                    | term'''
         if len(p) == 4:
-            p[0] = (p[1], p[2], p[3])
+            left = p[1]
+            right = p[3]
+
+            # Si ya son tuplas, evaluarlas con handle_expression
+            if isinstance(left, tuple):
+                left = self.semantic.handle_expression(*left)
+            if isinstance(right, tuple):
+                right = self.semantic.handle_expression(*right)
+
+            p[0] = (left, p[2], right)
         else:
             p[0] = p[1]
 
@@ -139,9 +165,18 @@ class Parser:
                 | term PEPE factor
                 | factor'''
         if len(p) == 4:
-            p[0] = (p[1], p[2], p[3])
+            left = p[1]
+            right = p[3]
+
+            if isinstance(left, tuple):
+                left = self.semantic.handle_expression(*left)
+            if isinstance(right, tuple):
+                right = self.semantic.handle_expression(*right)
+
+            p[0] = (left, p[2], right)
         else:
             p[0] = p[1]
+
 
     def p_factor(self, p):
         '''factor : NUMBER
@@ -157,7 +192,11 @@ class Parser:
                         | BALLACK LPAREN condition RPAREN LBRACE program RBRACE ROBBEN LBRACE program RBRACE'''
         condition = p[3]
         if_body = p[6]
-        else_body = p[10] if len(p) > 8 else []
+        if len(p) == 12:
+            else_body = p[11]
+        else:
+            else_body = []
+
         p[0] = self.semantic.handle_if(condition, if_body, else_body)
 
     def p_condition(self, p):
@@ -174,11 +213,13 @@ class Parser:
             p[0] = lambda: None
             return
 
-        try:
-            p[0] = self.semantic.handle_while(p[3], body)
-        except Exception as e:
-            self.errors.encolar_error(f"Error en cuerpo del while: {e}")
-            p[0] = lambda: None
+        def scoped_while():
+            self.semantic.symbol_table.enter_scope()  # Crear nuevo ámbito local
+            action = self.semantic.handle_while(p[3], body)
+            action()
+            self.semantic.symbol_table.exit_scope()   # Salir del ámbito local
+
+        p[0] = scoped_while
 
     def p_method_declaration(self, p):
         'method_declaration : IDENTIFIER LPAREN RPAREN LBRACE program RBRACE'
@@ -186,7 +227,17 @@ class Parser:
 
     def p_method_call(self, p):
         'method_call : IDENTIFIER LPAREN RPAREN'
-        p[0] = self.semantic.handle_method_call(p[1])
+        method_name = p[1]  
+
+        def call_with_scope():
+            self.semantic.symbol_table.enter_scope()
+            result = self.semantic.handle_method_call(method_name)
+            result()
+            self.semantic.symbol_table.exit_scope()
+
+        p[0] = call_with_scope
+
+
 
     def p_switch_statement(self, p):
         'statement : FORLAN LPAREN IDENTIFIER RPAREN LBRACE cases default_case RBRACE'
@@ -213,7 +264,11 @@ class Parser:
     def p_default_case(self, p):
         '''default_case : RONALDINHO COLON program
                         | empty'''
-        p[0] = p[3] if len(p) > 2 else []
+        if len(p) > 2:
+            p[0] = p[3]
+        else:
+            p[0] = []
+
 
     def p_value(self, p):
         '''value : NUMBER
@@ -239,9 +294,18 @@ class Parser:
         self.lexer.lexer.input(data)
         parsed = self.parser.parse(data, lexer=self.lexer.lexer)
         print(" Parsing completado. Ejecutando AST...")
+
         if parsed:
+            # 1. Ejecutar declaraciones (variables y métodos)
             for stmt in parsed:
-                print(f"STMT Desde el parser:{stmt}")
-                if callable(stmt):
+                if callable(stmt) and getattr(stmt, '_is_declaration', False):
+                    print(f"[EJECUTANDO DECLARACIÓN] {stmt}")
                     stmt()
+
+            # 2. Ejecutar todo lo demás (llamadas, estructuras, etc.)
+            for stmt in parsed:
+                if callable(stmt) and not getattr(stmt, '_is_declaration', False):
+                    print(f"[EJECUTANDO OTRAS INSTRUCCIONES] {stmt}")
+                    stmt()
+
         return parsed
