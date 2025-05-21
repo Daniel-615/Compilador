@@ -30,7 +30,7 @@ class Main:
         )
         
         if not file_path:
-            print("⚠️ No se seleccionó ningún archivo.")
+            print(" No se seleccionó ningún archivo.")
             return
 
         if not file_path.endswith(".txt"):
@@ -123,5 +123,10 @@ if __name__ == "__main__":
         author="Grupo1",
         author_email="grupo1@gmail.com"
     )
-    exe_generator.generate_exe(entry_point="main.py", templates_folder="templates")
-    Main()
+    root = tk.Tk()
+    root.withdraw()
+    respuesta = messagebox.askyesno("Generar ejecutable", "¿Desea generar un ejecutable?")
+    if respuesta:
+        exe_generator.generate_exe(entry_point="main.py", templates_folder="templates")
+    else:
+        Main()
