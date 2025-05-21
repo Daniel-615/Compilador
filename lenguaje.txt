@@ -6,7 +6,7 @@ iniesta nombre = "Messi";
 calcular() {
     goles = goles cristiano 5;
     promedio = (promedio cristiano 1.0) pepe 2;
-    walker (goles > 10) {
+    walker (goles  10) {
         promedio = promedio cristiano 0.5;
         goles = goles tchouameni 1;
     }
