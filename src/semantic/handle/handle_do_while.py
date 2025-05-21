@@ -8,12 +8,12 @@ def handle_do_while(self, condition_fn, body):
         while True:
             iteration += 1
             print(f"Iteración #{iteration} del DO-WHILE")
-            self.symbol_table.enter_scope()  # ✅ ámbito por iteración
+            self.symbol_table.enter_scope()  
             for stmt in body:
                 if callable(stmt):
                     stmt()
             self._save_iteration_state()
-            self.symbol_table.exit_scope()  # ✅ cerrar ámbito
+            self.symbol_table.exit_scope()  
 
             if not condition_fn():
                 break

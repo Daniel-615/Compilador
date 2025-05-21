@@ -40,7 +40,7 @@ class Parser:
                     | break_statement
                     | COUTINHO LPAREN expression RPAREN SEMICOLON'''
 
-        if isinstance(p[1], str) and p[1] == 'coutinho':
+        if p.slice[1].type == 'COUTINHO':
             p[0] = self.semantic.handle_print(p[3])
         else:
             p[0] = p[1] if p[1] is not None else (lambda: None)
@@ -203,7 +203,7 @@ class Parser:
 
         method_name = p[1]
         if not isinstance(method_name, str):
-            self.errors.encolar_error(f"❌ Error: nombre de método inválido: {method_name} (tipo: {type(method_name)})")
+            self.errors.encolar_error(f"Error: nombre de método inválido: {method_name} (tipo: {type(method_name)})")
             p[0] = lambda: None
             return
 
@@ -218,7 +218,7 @@ class Parser:
 
     def p_switch_statement(self, p):
         'statement : FORLAN LPAREN IDENTIFIER RPAREN LBRACE cases default_case RBRACE'
-        print(f"⚠️ Valor recibido para var_name en switch: {p[3]} | tipo: {type(p[3])}")
+        print(f"Valor recibido para var_name en switch: {p[3]} | tipo: {type(p[3])}")
         p[0] = self.semantic.handle_switch(p[3], p[6], p[7])
 
     def p_empty(self, p):
@@ -255,17 +255,105 @@ class Parser:
     def p_break_statement(self, p):
         'break_statement : ROMAN SEMICOLON'
         p[0] = self.semantic.handle_break()
-
     def p_error(self, p):
         if p:
             try:
                 col = self.errors.find_column(p)
                 row = self.errors.find_line(p)
-                self.errors.encolar_error(f" Error de sintaxis en '{p.value}' en la fila {row} y columna {col}")
+                token = p.value.lower() if isinstance(p.value, str) else str(p.value)
+
+                # Errores comunes relacionados con estructuras de control y delimitadores
+                if token in {'}', 'walker', 'ballack', 'robben', 'ramos', 'forlan', 'aguero', 'son', 'ronaldinho'}:
+                    self.errors.encolar_error(
+                        f"Error de sintaxis antes de '{p.value}' en la fila {row} y columna {col}. "
+                        f"¿Falta un ';' al final de la instrucción anterior o el bloque anterior no está cerrado?"
+                    )
+
+                elif token == '}':
+                    self.errors.encolar_error(
+                        f"Error de sintaxis en '}}' en la fila {row} y columna {col}. "
+                        f"¿Se cerró un bloque sin haberse abierto correctamente?"
+                    )
+                elif token == '{':
+                    self.errors.encolar_error(
+                        f"Error de sintaxis en '{{' en la fila {row} y columna {col}. "
+                        f"¿Está mal ubicado el inicio del bloque?"
+                    )
+                elif token == '(':
+                    self.errors.encolar_error(
+                        f"Error de sintaxis en '(' en la fila {row} y columna {col}. "
+                        f"¿Está cerrando correctamente con ')'?"
+                        )
+                elif token == ')':
+                    self.errors.encolar_error(
+                        f"Error de sintaxis en ')' en la fila {row} y columna {col}. "
+                        f"¿Se abrió correctamente con '('?"
+                    )
+                elif token == 'robben':
+                    self.errors.encolar_error(
+                        f"Error de sintaxis en 'robben' en la fila {row} y columna {col}. "
+                        f"¿El bloque 'if' anterior está cerrado correctamente con '}}'?"
+                    )
+                elif token == 'walker':
+                    self.errors.encolar_error(
+                        f"Error de sintaxis en 'walker' en la fila {row} y columna {col}. "
+                        f"¿Falta el bloque '{{}}' que contiene el cuerpo del ciclo?"
+                    )
+                elif token == 'ballack':
+                    self.errors.encolar_error(
+                        f"Error de sintaxis en 'ballack' en la fila {row} y columna {col}. "
+                        f"¿Falta el bloque '{{}}' que contiene el cuerpo del if?"
+                    )
+
+                # Errores comunes semánticos o de estilo
+                elif token == 'coutinho':
+                    self.errors.encolar_error(
+                        f"Error de sintaxis en 'coutinho' en la fila {row} y columna {col}. "
+                        f"¿Falta el paréntesis con la expresión a imprimir o el punto y coma final?"
+                    )
+                elif token.startswith('"') or token.startswith("'"):
+                    self.errors.encolar_error(
+                        f"Error: literal mal cerrado en la fila {row} y columna {col}."
+                    )
+                elif token.isdigit() and not p.type == 'NUMBER':
+                    self.errors.encolar_error(
+                        f"Error: identificador no válido '{p.value}' en la fila {row} y columna {col}. "
+                        f"Los identificadores no pueden comenzar con números."
+                    )
+                elif token in {'cristiano', 'tchouameni', 'messi', 'pepe'}:
+                    self.errors.encolar_error(
+                        f"Error de sintaxis: operador '{token}' usado incorrectamente o sin operandos en la fila {row} y columna {col}."
+                    )
+                elif token in {'milito', 'zidane', 'saviola', 'iniesta', 'valderrama'}:
+                    self.errors.encolar_error(
+                        f"Error: falta identificador después del tipo '{token}' en la fila {row} y columna {col}."
+                    )
+                elif token.isidentifier():
+                    self.errors.encolar_error(
+                        f"Error de sintaxis en '{p.value}' en la fila {row} y columna {col}. "
+                        f"¿Falta un ';' al final de la instrucción?"
+                    )
+                elif token.isidentifier():
+                    self.errors.encolar_error(
+                        f"Error de sintaxis antes de '{p.value}' en la fila {row} y columna {col}. "
+                        f"¿Falta un ';' al final de la instrucción anterior o el bloque anterior no está cerrado?"
+                    )
+                else:
+                    self.errors.encolar_error(
+                        f"Error de sintaxis en '{p.value}' en la fila {row} y columna {col}."
+                    )
+
             except Exception:
-                self.errors.encolar_error(f" Error de sintaxis en token inesperado.")
+                self.errors.encolar_error("Error de sintaxis en token inesperado.")
+
         else:
-            self.errors.encolar_error(" Error de sintaxis: expresión incompleta o final inesperado.")
+            # Fin del archivo: probablemente falta una llave de cierre
+            self.errors.encolar_error(
+                "Error de sintaxis: expresión incompleta o final inesperado. ¿Falta cerrar una llave '}' de alguna estructura?"
+            )
+
+
+
 
     def parse(self, data):
         self.lexer.lexer.input(data)

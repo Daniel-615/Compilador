@@ -88,9 +88,11 @@ class Semantic:
 
     def handle_print(self, value):
         def action():
+            print(f"[DEBUG] Recibido en handle_print: {value} (tipo: {type(value)})")
             val = self._get_value(value)
             print(f"Salida: {val}")
         return action
+
 
     def getInterCode(self):
         return self.intercode_generator.code

@@ -1,6 +1,3 @@
-import os
-import webbrowser
-
 class Errors:
     def __init__(self,content):
         self.errors = []  
