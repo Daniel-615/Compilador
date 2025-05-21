@@ -22,7 +22,9 @@ class Semantic:
         self.lexer = lexer
         self.methods = {}
         self.intercode_generator = interCodeGenerator
-
+        self.en_funcion = False
+        
+    
     def handle_declaration(self, name, var_type, scope, value=None):
         return handle_declaration(self, name, var_type, scope, value)
 
@@ -36,8 +38,7 @@ class Semantic:
         return self.handle_expression(left, operator, right)
 
     def handle_factor(self, value):
-        if isinstance(value, str) and self.symbol_table.get_symbol(value) is not None:
-            return self.symbol_table.get_symbol(value)
+        # No evaluamos aquí. Solo retornamos el identificador o literal.
         return value
 
     def _get_value(self, item):

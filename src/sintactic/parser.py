@@ -9,13 +9,13 @@ class Parser:
         self.parser = yacc.yacc(module=self, debug=False, write_tables=False)
 
     precedence = (
-        ('left', 'CRISTIANO', 'TCHOUAMENI'),  # + y -
-        ('left', 'MESSI', 'PEPE'),            # * y /
+        ('left', 'CRISTIANO', 'TCHOUAMENI'),
+        ('left', 'MESSI', 'PEPE'),
     )
 
     def p_program(self, p):
         '''program : statement
-                   | program statement'''
+                | program statement'''
         if len(p) == 2:
             p[0] = [p[1]] if p[1] is not None else []
         else:
@@ -23,19 +23,24 @@ class Parser:
             list2 = [p[2]] if p[2] is not None else []
             p[0] = list1 + list2
 
+    def p_program_empty(self, p):
+        'program : '
+        p[0] = []
+
     def p_statement(self, p):
-        '''statement : declaration
-                     | assignment
-                     | while_loop
-                     | do_while_loop
-                     | for_loop
-                     | if_statement
-                     | method_declaration
-                     | method_call SEMICOLON
-                     | expression SEMICOLON
-                     | break_statement
-                     | COUTINHO LPAREN expression RPAREN SEMICOLON'''
-        if p[1] == 'coutinho':
+        '''statement : method_declaration
+                    | declaration
+                    | assignment
+                    | while_loop
+                    | do_while_loop
+                    | for_loop
+                    | if_statement
+                    | method_call SEMICOLON
+                    | expression SEMICOLON
+                    | break_statement
+                    | COUTINHO LPAREN expression RPAREN SEMICOLON'''
+
+        if isinstance(p[1], str) and p[1] == 'coutinho':
             p[0] = self.semantic.handle_print(p[3])
         else:
             p[0] = p[1] if p[1] is not None else (lambda: None)
@@ -55,7 +60,7 @@ class Parser:
                                     | SAVIOLA IDENTIFIER EQUALS expression
                                     | INIESTA IDENTIFIER EQUALS expression
                                     | VALDERRAMA IDENTIFIER EQUALS expression'''
-        scope = 'local'
+        scope = 'global' if not self.semantic.symbol_table.scope_stack else 'local'
         identifier = p[2]
         value = p[4]
         type_ = p[1]
@@ -73,11 +78,8 @@ class Parser:
             p[0] = lambda: None
             return
 
-        try:
-            p[0] = self.semantic.handle_for(init, condition, update, body)
-        except Exception as e:
-            self.errors.encolar_error(f" Error en el cuerpo del for: {e}")
-            p[0] = lambda: None
+        p[0] = self.semantic.handle_for(init, condition, update, body)
+
 
     def p_do_while_loop(self, p):
         'do_while_loop : AGUERO LBRACE program RBRACE WALKER LPAREN condition RPAREN SEMICOLON'
@@ -89,11 +91,8 @@ class Parser:
             p[0] = lambda: None
             return
 
-        try:
-            p[0] = self.semantic.handle_do_while(condition, body)
-        except Exception as e:
-            self.errors.encolar_error(f" Error en el cuerpo del do-while: {e}")
-            p[0] = lambda: None
+        p[0] = self.semantic.handle_do_while(condition, body)
+
 
     def p_declaration(self, p):
         '''declaration : MILITO IDENTIFIER SEMICOLON
@@ -106,7 +105,7 @@ class Parser:
                        | INIESTA IDENTIFIER EQUALS expression SEMICOLON
                        | VALDERRAMA IDENTIFIER SEMICOLON
                        | VALDERRAMA IDENTIFIER EQUALS expression SEMICOLON'''
-        scope = 'local'
+        scope = 'global' if not self.semantic.symbol_table.scope_stack else 'local'
         identifier = p[2]
         value = p[4] if len(p) > 4 else None
         type_ = p[1]
@@ -114,12 +113,10 @@ class Parser:
 
     def p_factor_grouped(self, p):
         'factor : LPAREN expression RPAREN'
-        #En este caso la expresion es una tupla entonces la convertimos en código intermedio
         if isinstance(p[2], tuple) and len(p[2]) == 3:
             p[0] = self.semantic.handle_expression(*p[2])
         else:
             p[0] = p[2]
-
 
     def p_assignment(self, p):
         'assignment : IDENTIFIER EQUALS expression SEMICOLON'
@@ -145,12 +142,15 @@ class Parser:
 
     def p_factor(self, p):
         '''factor : NUMBER
-                  | IDENTIFIER
-                  | STRING_LITERAL
-                  | CHAR_LITERAL
-                  | method_call'''
+                | IDENTIFIER
+                | STRING_LITERAL
+                | CHAR_LITERAL'''
         print(f" Factor detectado: {p[1]}")
         p[0] = self.semantic.handle_factor(p[1])
+
+    def p_factor_method_call(self, p):
+        'factor : method_call'
+        p[0] = p[1]  # esto es una función callable, no se debe pasar por handle_factor
 
     def p_if_statement(self, p):
         '''if_statement : BALLACK LPAREN condition RPAREN LBRACE program RBRACE
@@ -158,7 +158,14 @@ class Parser:
         condition = p[3]
         if_body = p[6]
         else_body = p[10] if len(p) > 8 else []
-        p[0] = self.semantic.handle_if(condition, if_body, else_body)
+
+        def scoped_if():
+            self.semantic.symbol_table.enter_scope()
+            action = self.semantic.handle_if(condition, if_body, else_body)
+            action()
+            self.semantic.symbol_table.exit_scope()
+
+        p[0] = scoped_if
 
     def p_condition(self, p):
         'condition : IDENTIFIER RELOP expression'
@@ -167,29 +174,51 @@ class Parser:
 
     def p_while_loop(self, p):
         'while_loop : WALKER LPAREN condition RPAREN LBRACE program RBRACE'
-        body = p[6] if isinstance(p[6], list) else ([] if p[6] is None else [p[6]])
+        body = p[6] if isinstance(p[6], list) else []
 
         if not callable(p[3]):
             self.errors.encolar_error("La condición del while no es válida.")
             p[0] = lambda: None
             return
 
-        try:
-            p[0] = self.semantic.handle_while(p[3], body)
-        except Exception as e:
-            self.errors.encolar_error(f"Error en cuerpo del while: {e}")
-            p[0] = lambda: None
+        # Ya no usamos scoped_while, devolvemos directamente la acción
+        p[0] = self.semantic.handle_while(p[3], body)
+
 
     def p_method_declaration(self, p):
         'method_declaration : IDENTIFIER LPAREN RPAREN LBRACE program RBRACE'
-        p[0] = self.semantic.handle_method_declaration(p[1], p[5])
+
+        method_name = p[1]
+        method_body = p[5]
+
+        def define():
+            print(f"✅ Definiendo método '{method_name}' (tipo: {type(method_name)})")
+            print(f"🔍 Body del método (tipo: {type(method_body)}): {method_body}")
+            self.semantic.handle_method_declaration(method_name, method_body)()
+
+        p[0] = define
 
     def p_method_call(self, p):
         'method_call : IDENTIFIER LPAREN RPAREN'
-        p[0] = self.semantic.handle_method_call(p[1])
+
+        method_name = p[1]
+        if not isinstance(method_name, str):
+            self.errors.encolar_error(f"❌ Error: nombre de método inválido: {method_name} (tipo: {type(method_name)})")
+            p[0] = lambda: None
+            return
+
+        def call_with_scope():
+            self.semantic.symbol_table.enter_scope()
+            action = self.semantic.handle_method_call(method_name)
+            action()
+            self.semantic.symbol_table.exit_scope()
+
+        p[0] = call_with_scope
+
 
     def p_switch_statement(self, p):
         'statement : FORLAN LPAREN IDENTIFIER RPAREN LBRACE cases default_case RBRACE'
+        print(f"⚠️ Valor recibido para var_name en switch: {p[3]} | tipo: {type(p[3])}")
         p[0] = self.semantic.handle_switch(p[3], p[6], p[7])
 
     def p_empty(self, p):
@@ -198,28 +227,31 @@ class Parser:
 
     def p_cases(self, p):
         '''cases : case
-                | case cases'''
+                | cases case'''
         if len(p) == 2:
             p[0] = [p[1]]
         else:
-            p[0] = [p[1]] + p[2]
-
+            p[0] = p[1] + [p[2]]
 
     def p_case(self, p):
         'case : SON value COLON program'
-        p[0] = (p[2], p[4])
-
+        body = p[4] if isinstance(p[4], list) else [p[4]]
+        p[0] = (p[2], body)
 
     def p_default_case(self, p):
         '''default_case : RONALDINHO COLON program
                         | empty'''
-        p[0] = p[3] if len(p) > 2 else []
+        if len(p) > 2:
+            p[0] = p[3] if isinstance(p[3], list) else [p[3]]
+        else:
+            p[0] = []
 
     def p_value(self, p):
         '''value : NUMBER
                  | STRING_LITERAL
                  | CHAR_LITERAL'''
         p[0] = p[1]
+
     def p_break_statement(self, p):
         'break_statement : ROMAN SEMICOLON'
         p[0] = self.semantic.handle_break()
@@ -239,9 +271,13 @@ class Parser:
         self.lexer.lexer.input(data)
         parsed = self.parser.parse(data, lexer=self.lexer.lexer)
         print(" Parsing completado. Ejecutando AST...")
+        self.semantic.symbol_table.enter_scope()
         if parsed:
             for stmt in parsed:
                 print(f"STMT Desde el parser:{stmt}")
                 if callable(stmt):
                     stmt()
+        self.semantic.symbol_table.guardar_snapshot_final()
+        self.semantic.symbol_table.toHtml()
+        self.semantic.symbol_table.exit_scope()
         return parsed

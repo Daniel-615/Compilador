@@ -1,5 +1,6 @@
 goles = goles + 5;
-while (condition) {
+promedio = <function handle_expression.<locals>.action at 0x00000213B1E365C0> / 2;
+while (condition_fn) {
     promedio = promedio + 0.5;
     goles = goles - 1;
     promedio = promedio + 0.5;
@@ -11,7 +12,7 @@ while (condition) {
     promedio = promedio + 0.5;
     goles = goles - 1;
 } // fin while
-while (condition) {
+while (condition_fn) {
 } // fin if
 promedio = promedio - 0.5;
 i = i + 1;
@@ -30,7 +31,7 @@ while (condition) {
 } // fin while
 promedio = 0;
 } // fin while
-while (condition) {
+while (condition_fn) {
 x = x + 1;
 x = x + 1;
 x = x + 1;

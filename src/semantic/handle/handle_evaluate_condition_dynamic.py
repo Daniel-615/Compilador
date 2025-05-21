@@ -1,16 +1,35 @@
 def evaluate_condition_dynamic(self, left, op, right):
-        def safe_get(val):
-            return self.symbol_table.get_symbol(val) if isinstance(val, str) and val in self.symbol_table.symbols else val
+    def condition_fn():
+        left_sym = self.symbol_table.get_symbol(left)
+        if left_sym is None:
+            self.errors.encolar_error(f"Error: Variable '{left}' no declarada en la condición.")
+            return False
 
-        def condition():
-            val1 = safe_get(left)
-            val2 = safe_get(right)
-            try:
-                result = eval(f"{val1} {op} {val2}")
-                print(f"Evaluando condición: {val1} {op} {val2} → {result}")
-                return result
-            except Exception as e:
-                self.errors.encolar_error(f"Condición inválida: {left} {op} {right} → {e}")
+        left_val = left_sym['value']
+        right_val = self._get_value(right)
+
+        if left_val is None or right_val is None:
+            self.errors.encolar_error("Error: condición con operandos no evaluables.")
+            return False
+
+        try:
+            if op == '>':
+                return left_val > right_val
+            elif op == '<':
+                return left_val < right_val
+            elif op == '==':
+                return left_val == right_val
+            elif op == '!=':
+                return left_val != right_val
+            elif op == '>=':
+                return left_val >= right_val
+            elif op == '<=':
+                return left_val <= right_val
+            else:
+                self.errors.encolar_error(f"Operador relacional no soportado: {op}")
                 return False
+        except Exception as e:
+            self.errors.encolar_error(f"Error en evaluación de condición: {e}")
+            return False
 
-        return condition
+    return condition_fn

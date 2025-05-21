@@ -1,77 +1,121 @@
 import os
-import webbrowser
+import copy
 
 class SymbolTable:
     def __init__(self):
-        self.symbols = {}
+        self.global_scope = {}
+        self.scope_stack = [{}]
+        self.final_snapshot = None  # <- snapshot persistente para la tabla final
+        self.closed_scopes = []  # Guarda solo ámbitos locales cerrados
+
+    def enter_scope(self):
+        self.scope_stack.append({})
+        print("Nuevo ámbito local creado.")
+
+    def exit_scope(self):
+        if len(self.scope_stack) > 1:
+            closed = self.scope_stack.pop()
+            if closed:  # ✅ Solo guardar si el ámbito tiene variables
+                self.closed_scopes.append(closed)
+            print("Ámbito local cerrado.")
+        else:
+            print("Advertencia: No se puede salir del ámbito global.")
+
+    def current_scope(self):
+        return self.scope_stack[-1] if self.scope_stack else None
 
     def add_symbol(self, name, type_, scope, value=None):
-        if name in self.symbols:
-            print(f"Error: Variable '{name}' ya está declarada en el alcance '{self.symbols[name]['scope']}'.")
-        else:
-            self.symbols[name] = {'type': type_, 'scope': scope, 'value': value}
-            print(f"Variable '{name}' añadida con tipo '{type_}', alcance '{scope}' y valor '{value}'")
+        if scope == 'global':
+            if name in self.global_scope:
+                print(f"Error: Variable global '{name}' ya declarada.")
+            else:
+                self.global_scope[name] = {'type': type_, 'scope': 'global', 'value': value}
+                print(f" [GLOBAL] Variable '{name}' añadida con valor '{value}'")
+        elif scope == 'local':
+            current = self.current_scope()
+            if current is None:
+                print(f" Error: No hay un contexto local activo para declarar '{name}'.")
+                return
+            if name in current:
+                print(f" Error: Variable local '{name}' ya declarada en este ámbito.")
+            else:
+                current[name] = {'type': type_, 'scope': 'local', 'value': value}
+                print(f" [LOCAL] Variable '{name}' añadida con valor '{value}'")
 
-    def update_symbol(self, identifier, value):
-        """Actualiza el valor de un símbolo existente en la tabla."""
-        if identifier in self.symbols:
-            self.symbols[identifier]['value'] = value
-            print(f"Actualizado {identifier} a {value}")
-            #self.toHtml()  
-        else:
-            print(f"Error: La variable '{identifier}' no ha sido declarada.")
+    def update_symbol(self, name, value):
+        for scope in reversed(self.scope_stack):
+            if name in scope:
+                scope[name]['value'] = value
+                print(f" Actualizado local '{name}' a {value}")
+                return True
+        if name in self.global_scope:
+            self.global_scope[name]['value'] = value
+            print(f"Actualizado global '{name}' a {value}")
+            return True
+        print(f"Error: La variable '{name}' no ha sido declarada.")
+        return False
 
-    def get_symbol(self, identifier):
-        """Obtiene el valor de una variable si existe en la tabla."""
-        if identifier in self.symbols:
-            print(f"Valor del simbolo en la tabla de simbolos: {self.symbols[identifier]['value']}")
-            return self.symbols[identifier]['value']
-        else:
-            print(f"Error: La variable '{identifier}' no ha sido declarada.")
-            return None
+    def get_symbol(self, name):
+        for scope in reversed(self.scope_stack):
+            if name in scope:
+                print(f" Valor local de '{name}': {scope[name]['value']}")
+                return scope[name]
+        if name in self.global_scope:
+            print(f" Valor global de '{name}': {self.global_scope[name]['value']}")
+            return self.global_scope[name]
+        print(f" Error: La variable '{name}' no ha sido declarada.")
+        return None
 
-    def exists(self, name, scope="local"):
-        return (name, scope) in self.symbols
-    
-    def get_value(self, name, scope="local"):
-        return self.symbols.get((name, scope), {}).get("value")
-    
-    def set_value(self, name, value, scope="local"):
-        if (name, scope) in self.symbols:
-            self.symbols[(name, scope)]["value"] = value
-
-    def show_table(self):
-        """Imprime la tabla de símbolos actual."""
-        print("\nTabla de Símbolos:")
-        for identifier, data in self.symbols.items():
-            print(f"{identifier}: Tipo={data['type']}, Alcance={data['scope']}, Valor={data['value']}")
+    def guardar_snapshot_final(self):
+        """Copia el estado final de la tabla para graficar después de cerrar ámbitos"""
+        self.final_snapshot = {
+            'global_scope': copy.deepcopy(self.global_scope),
+            'scope_stack': copy.deepcopy(self.scope_stack)
+        }
 
     def toHtml(self):
-        """Retorna la tabla de símbolos como HTML."""
-        html = '<html><head><title>Tabla de Símbolos</title><link rel="stylesheet" href="./css/styles.css"></head><body>'
-        html += '<table border="1">'
-        html += '<tr><th>Name</th><th>Type</th><th>Scope</th><th>Value</th></tr>'
-        
-        # Generar las filas de la tabla con la información de los símbolos
-        for identifier, data in self.symbols.items():
-            html += '<tr>'
-            html += f'<td>{identifier}</td>'
-            html += f'<td>{data["type"]}</td>'
-            html += f'<td>{data["scope"]}</td>'
-            html += f'<td>{str(data["value"])}</td>'  # Asegúrate de convertir a string el valor
-            html += '</tr>'
-        
-        html += '</table>'
-        
-        # Crear el directorio 'templates' si no existe
+        html = '''
+        <html>
+        <head>
+            <title>Tabla de Símbolos</title>
+            <link rel="stylesheet" href="./css/styles.css">
+            <style>
+                body { font-family: Arial, sans-serif; padding: 20px; }
+                h1 { color: #333; }
+                table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+                th { background-color: #f2f2f2; }
+            </style>
+        </head>
+        <body>
+            <h1>Tabla de Símbolos</h1>
+            <table>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Tipo</th>
+                    <th>Ámbito</th>
+                    <th>Valor</th>
+                </tr>
+        '''
+
+        # Variables globales
+        for identifier, data in self.global_scope.items():
+            html += f"<tr><td>{identifier}</td><td>{data['type']}</td><td>global</td><td>{data['value']}</td></tr>"
+
+        # Variables locales (último valor del ámbito cerrado)
+        for scope in self.scope_stack + getattr(self, "closed_scopes", []):
+            for identifier, data in scope.items():
+                html += f"<tr><td>{identifier}</td><td>{data['type']}</td><td>local</td><td>{data['value']}</td></tr>"
+
+        html += '''
+            </table>
+        </body>
+        </html>
+        '''
+
         os.makedirs('templates', exist_ok=True)
-        
-        # Unir la plantilla y la tabla de símbolos HTML
         file_path = os.path.join('templates', 'symbol_table.html')
-        with open(file_path, 'w') as file:
+        with open(file_path, 'w', encoding='utf-8') as file:
             file.write(html)
-        
-        # Abrir el archivo en el navegador
-        #webbrowser.open('file://' + os.path.realpath(file_path))
-        
+
         return html
