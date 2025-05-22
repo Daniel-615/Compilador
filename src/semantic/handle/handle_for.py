@@ -4,26 +4,29 @@ def handle_for(self, init_stmt, condition_fn, update_stmt, body):
         init_stmt()
 
         start_label = self.intercode_generator.new_label()
-        true_label = self.intercode_generator.new_label()
+        body_label = self.intercode_generator.new_label()
         end_label = self.intercode_generator.new_label()
 
+        self.intercode_generator.emit(f"// INICIO FOR")
         self.intercode_generator.emit(f"{start_label}:")
-        self.intercode_generator.emit(f"if {condition_fn.__name__} goto {true_label}")
+        self.intercode_generator.emit(f"if {condition_fn.__name__} goto {body_label}")
         self.intercode_generator.emit(f"goto {end_label}")
-        self.intercode_generator.emit(f"{true_label}:")
+        self.intercode_generator.emit(f"{body_label}:")
 
         iteration = 0
         while condition_fn():
             iteration += 1
             print(f"Iteración #{iteration} del FOR")
-            self.symbol_table.enter_scope()  # ✅
+            self.symbol_table.enter_scope()
             for stmt in body:
                 if callable(stmt):
                     stmt()
-            self.symbol_table.exit_scope()  # ✅
+            self.symbol_table.exit_scope()
             update_stmt()
             self._save_iteration_state()
 
         self.intercode_generator.emit(f"goto {start_label}")
         self.intercode_generator.emit(f"{end_label}:")
+        self.intercode_generator.emit(f"// FIN FOR")
+
     return action
