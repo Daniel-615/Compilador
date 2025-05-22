@@ -16,7 +16,8 @@ int main() {
     nombre = "Messi";
     goles = goles + 5;
     // INICIO WHILE;
-    while (!(condition_fn)) {
+    // INICIO WHILE;
+    while (!(0)) {
         promedio = promedio + 0.5;
         goles = goles - 1;
         promedio = promedio + 0.5;
@@ -27,13 +28,16 @@ int main() {
         goles = goles - 1;
         promedio = promedio + 0.5;
         goles = goles - 1;
-    } // fin while
+    } // FIN while
     // FIN WHILE;
-    end;
-    while (!(condition_fn)) {
-    } // fin if
+    // INICIO IF;
+    // INICIO WHILE;
+    while (!(cond_if_0)) {
+        promedio = promedio + 1.0;
+    } // FIN while
+    // ELSE;
     promedio = promedio - 0.5;
-    end;
+    // FIN IF;
     i = 0;
     //INICIO DO-WHILE;
     i = i + 1;
@@ -41,33 +45,38 @@ int main() {
     i = i + 1;
     i = i + 1;
     i = i + 1;
-    while (condition_fn) {
+    // INICIO WHILE;
+    while (1) {
         //FIN DO-WHILE;
-        end;
-        if (goles == 10) {
-            while (!(goles == 15)) {
-                promedio = promedio + 2.0;
-            } // fin while
-        } // fin while
-        promedio = promedio + 5.0;
-    } // fin while
-    } // fin while
+        // SWITCH_START goles;
+        // CASE 10;
+        promedio = promedio + 2.0;
+    } // FIN while
+    // BREAK;
+    // CASE 15;
+    promedio = promedio + 5.0;
+    // BREAK;
+    // DEFAULT;
     promedio = 0;
-    } // fin while
-    end;
+    // SWITCH_END;
     goles = goles + 5;
     // INICIO WHILE;
-    while (!(condition_fn)) {
+    // INICIO WHILE;
+    while (!(2)) {
         goles = goles - 1;
         goles = goles - 1;
         goles = goles - 1;
         goles = goles - 1;
         goles = goles - 1;
-    } // fin while
+    } // FIN while
     // FIN WHILE;
-    while (!(condition_fn)) {
-    } // fin if
+    // INICIO IF;
+    // INICIO WHILE;
+    while (!(cond_if_1)) {
+    } // FIN while
+    // ELSE;
     promedio = promedio - 0.5;
+    // FIN IF;
     i = 0;
     //INICIO DO-WHILE;
     i = i + 1;
@@ -75,35 +84,37 @@ int main() {
     i = i + 1;
     i = i + 1;
     i = i + 1;
-    while (condition_fn) {
+    // INICIO WHILE;
+    while (3) {
         //FIN DO-WHILE;
-        if (goles == 10) {
-            while (!(goles == 15)) {
-                promedio = promedio + 2.0;
-            } // fin while
-        } // fin while
-        promedio = promedio + 5.0;
-    } // fin while
-    } // fin while
+        // SWITCH_START goles;
+        // CASE 10;
+        promedio = promedio + 2.0;
+    } // FIN while
+    // BREAK;
+    // CASE 15;
+    promedio = promedio + 5.0;
+    // BREAK;
+    // DEFAULT;
     promedio = 0;
-    } // fin while
+    // SWITCH_END;
     x = 0;
     // INICIO FOR;
-    while (!(condition_fn)) {
+    // INICIO WHILE;
+    while (!(4)) {
         x = x + 1;
         x = x + 1;
         x = x + 1;
-    } // fin while
+    } // FIN while
     // FIN FOR;
-    end;
     x = 0;
     // INICIO FOR;
-    while (!(condition_fn)) {
+    // INICIO WHILE;
+    while (!(5)) {
         x = x + 1;
         x = x + 1;
         x = x + 1;
-    } // fin while
+    } // FIN while
     // FIN FOR;
-}
     return 0;
 }

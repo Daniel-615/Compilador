@@ -4,6 +4,6 @@
 env/
 FutbolistasCompilador.spec
 .env
-salida.html
-tokens.html
-symbol_table.html
+templates/salida.html
+templates/tokens.html
+templates/symbol_table.html

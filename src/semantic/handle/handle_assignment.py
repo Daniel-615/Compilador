@@ -4,7 +4,7 @@ def handle_assignment(self, name, value):
         try:
             value_eval = None
 
-            # 🧠 Evaluar expresiones (tuplas) de manera recursiva
+            # Evaluar expresiones (tuplas) de manera recursiva
             def evaluar_exp(val):
                 if isinstance(val, tuple) and len(val) == 3:
                     left, op, right = val
@@ -23,14 +23,14 @@ def handle_assignment(self, name, value):
                 else:
                     return self._get_value(val)
 
-            # 🔧 Evaluar el valor final
+            # Evaluar el valor final
             value_eval = evaluar_exp(value)
 
             if value_eval is None:
                 self.errors.encolar_error(f"Error: Asignación a '{name}' fallida por valor inválido.")
                 return
 
-            # 🔨 Generar código intermedio
+            # Generar código intermedio
             if isinstance(value, tuple) and len(value) == 3:
                 left, op, right = value
                 temp = self.intercode_generator.new_temp()
@@ -39,7 +39,7 @@ def handle_assignment(self, name, value):
             else:
                 self.intercode_generator.emit(f"{name} = {value}")
 
-            # 💾 Asignar en la tabla de símbolos
+            # Asignar en la tabla de símbolos
             if self.symbol_table.get_symbol(name) is not None:
                 self.symbol_table.update_symbol(name, value_eval)
                 print(f"Asignación: {name} = {value_eval}")

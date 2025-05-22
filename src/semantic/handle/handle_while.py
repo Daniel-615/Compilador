@@ -1,16 +1,24 @@
 def handle_while(self, condition_fn, body):
     def action():
         print("Iniciando ciclo WHILE")
+
+        # Generar nombre único para la condición
+        base_name = condition_fn.__name__ if hasattr(condition_fn, "__name__") else "cond"
+        cond_name = self.intercode_generator.get_cond_index(base_name)
+        self.intercode_generator.register_condition(cond_name, condition_fn)
+
+        # Crear etiquetas
         start_label = self.intercode_generator.new_label()
         body_label = self.intercode_generator.new_label()
         end_label = self.intercode_generator.new_label()
 
         self.intercode_generator.emit(f"// INICIO WHILE")
         self.intercode_generator.emit(f"{start_label}:")
-        self.intercode_generator.emit(f"if {condition_fn.__name__} goto {body_label}")
+        self.intercode_generator.emit(f"if {cond_name} goto {body_label}")
         self.intercode_generator.emit(f"goto {end_label}")
         self.intercode_generator.emit(f"{body_label}:")
 
+        # Ejecutar cuerpo del ciclo
         iteration = 0
         try:
             while condition_fn():

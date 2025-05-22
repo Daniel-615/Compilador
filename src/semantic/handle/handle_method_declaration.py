@@ -13,7 +13,7 @@ def handle_method_declaration(self, name, body):
             self.errors.encolar_error(
                 f"Error interno: el nombre del método debe ser string, recibido {type(name)}"
             )
-            print(f"❌ Nombre de método inválido: {name}")
+            print(f"Nombre de método inválido: {name}")
             return
 
         flat_body = flatten(body)
@@ -28,7 +28,7 @@ def handle_method_declaration(self, name, body):
 
         for i, stmt in enumerate(flat_body):
             if callable(stmt):
-                print(f"⚙️ Ejecutando instrucción {i} de '{name}'")
+                print(f"Ejecutando instrucción {i} de '{name}'")
                 stmt()
 
         self.en_funcion = False
@@ -37,5 +37,5 @@ def handle_method_declaration(self, name, body):
         # Emitir cierre de función
         self.intercode_generator.emit("end")
 
-        print(f"✅ Método '{name}' definido y procesado con código intermedio.")
+        print(f"Método '{name}' definido y procesado con código intermedio.")
     return action

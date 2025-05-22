@@ -5,6 +5,21 @@ def p_error(self, p):
             row = self.errors.find_line(p)
             token = p.value.lower() if isinstance(p.value, str) else str(p.value)
 
+            # 0. Revisión de línea anterior por posible falta de punto y coma
+            if p.lexer and hasattr(p.lexer, 'lexdata'):
+                prev_text = p.lexer.lexdata[:p.lexpos].splitlines()
+                if prev_text:
+                    prev_line = prev_text[-1].strip()
+                    if (
+                        prev_line and
+                        not prev_line.endswith(';') and
+                        ('=' in prev_line or any(kw in prev_line for kw in {'milito', 'zidane', 'saviola', 'valderrama', 'iniesta'}))
+                    ):
+                        self.errors.encolar_error(
+                            f"Error: probablemente falta ';' al final de la línea anterior a '{token}' en fila {row}, col {col}."
+                        )
+                        return
+
             # 1. Estructuras de control
             if token == 'walker':
                 self.errors.encolar_error(
@@ -26,7 +41,7 @@ def p_error(self, p):
                     f"¿Faltan los ';' o los paréntesis con los parámetros del bucle?"
                 )
 
-            # 2. Switch-case (forlan, son, ronaldinho)
+            # 2. Switch-case
             elif token == 'son':
                 self.errors.encolar_error(
                     f"Error: falta ':' después de 'son {p.value}' en la fila {row}, col {col}."
@@ -83,7 +98,7 @@ def p_error(self, p):
                     f"Error: falta paréntesis o punto y coma después de 'coutinho' en fila {row}, col {col}."
                 )
 
-            # 8. Identificadores inesperados (probablemente falta ';')
+            # 8. Identificadores inesperados
             elif token.isidentifier():
                 self.errors.encolar_error(
                     f"Error: identificador inesperado '{token}' en fila {row}, col {col}. "
@@ -97,14 +112,14 @@ def p_error(self, p):
                     f"¿Se esperaba un operador antes?"
                 )
 
-            # 10. Fallback general
+            # 10. Fallback
             else:
                 self.errors.encolar_error(
                     f"Error de sintaxis en '{token}' en fila {row}, col {col}."
                 )
 
         except Exception as e:
-            self.errors.encolar_error("Error de sintaxis en token inesperado. Detalle interno: " + str(e))
+            self.errors.encolar_error("Error interno analizando token inesperado: " + str(e))
 
     else:
         self.errors.encolar_error(

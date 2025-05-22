@@ -4,5 +4,5 @@ def _get_value(self, item):
         if symbol is None:
             self.errors.encolar_error(f"Error: Variable '{item}' no ha sido declarada.")
             return None
-        return symbol['value']  # ✅ accede correctamente
+        return symbol['value']
     return item

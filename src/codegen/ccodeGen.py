@@ -16,8 +16,9 @@ class ccodeGen:
         declared = set()
         variables = {}
         used_vars = set()
+        open_blocks = []
 
-        # Detección de variables usadas
+        # Detectar variables usadas
         for line in self.ir:
             tokens = line.replace(';', '').replace('(', ' ').replace(')', ' ').split()
             for tok in tokens:
@@ -41,8 +42,8 @@ class ccodeGen:
                 else:
                     variables[left] = "auto"
 
-        # Cabecera C++
-        self.cpp_code += [
+        # Cabecera
+        self.cpp_code = [
             "#include <iostream>",
             "#include <string>",
             "using namespace std;",
@@ -59,7 +60,6 @@ class ccodeGen:
             "x": "int",
         }
 
-        # Declaraciones
         for var in sorted(declared):
             if var.replace('.', '', 1).isdigit() or var in ('true', 'false'):
                 continue
@@ -70,6 +70,7 @@ class ccodeGen:
             tipo = tipo_explicit.get(var, variables.get(var, "auto"))
             self.cpp_code.append(f"    {tipo} {var};")
 
+        # Cuerpo del programa
         self.indent_level = 1
         for i, line in enumerate(self.ir):
             line = line.strip()
@@ -79,25 +80,33 @@ class ccodeGen:
                 condition = line[5:].split(') goto')[0]
                 target = line.split('goto')[1].strip()
                 block_type = "if" if self.label_to_index.get(target, 0) > i else "while"
+                self.cpp_code.append(f"{self.indent()}// INICIO {block_type.upper()};")
                 self.cpp_code.append(f"{self.indent()}{block_type} (!({condition})) {{")
                 self.indent_level += 1
+                open_blocks.append(block_type)
             elif line.startswith("if"):
                 condition = line[3:].split('goto')[0].strip()
                 target = line.split('goto')[1].strip()
                 block_type = "if" if self.label_to_index.get(target, 0) > i else "while"
+                self.cpp_code.append(f"{self.indent()}// INICIO {block_type.upper()};")
                 self.cpp_code.append(f"{self.indent()}{block_type} ({condition}) {{")
                 self.indent_level += 1
+                open_blocks.append(block_type)
             elif line.startswith("goto"):
-                target = line.split('goto')[1].strip()
-                self.indent_level = max(1, self.indent_level - 1)
-                closing = "while" if self.label_to_index.get(target, 0) < i else "if"
-                self.cpp_code.append(f"{self.indent()}}} // fin {closing}")
+                if open_blocks:
+                    block = open_blocks.pop()
+                    self.indent_level -= 1
+                    self.cpp_code.append(f"{self.indent()}}} // FIN {block}")
             else:
-                self.cpp_code.append(f"{self.indent()}{self._translate_expression(line)};")
+                expr = self._translate_expression(line)
+                if expr != "end":
+                    self.cpp_code.append(f"{self.indent()}{expr};")
 
-        while self.indent_level > 0:
+        # Cierre de cualquier bloque restante
+        while open_blocks:
+            block = open_blocks.pop()
             self.indent_level -= 1
-            self.cpp_code.append(f"{self.indent()}}}")
+            self.cpp_code.append(f"{self.indent()}}} // FIN {block}")
 
         self.cpp_code.append("    return 0;")
         self.cpp_code.append("}")

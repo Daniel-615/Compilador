@@ -2,15 +2,13 @@ class Optimize:
     def __init__(self, ir):
         self.ir = ir  # Lista de instrucciones en código intermedio
 
+    def remove_end_statements(self):
+        """
+        Elimina las instrucciones 'end' o 'end;' que no pertenecen al código C++.
+        """
+        self.ir = [line for line in self.ir if line.strip() not in {'end', 'end;'}]
+
     def remove_redundant_temporaries(self):
-        """
-        Elimina temporales innecesarios:
-        Ejemplo:
-            t1 = goles + 5
-            goles = t1
-        Se convierte en:
-            goles = goles + 5
-        """
         optimized_ir = []
         i = 0
         while i < len(self.ir):
@@ -29,11 +27,6 @@ class Optimize:
         self.ir = optimized_ir
 
     def simplify_trivial_operations(self):
-        """
-        Elimina operaciones triviales como:
-            t = x + 0 → t = x
-            t = x * 1 → t = x
-        """
         optimized_ir = []
         for line in self.ir:
             if '+ 0' in line or '- 0' in line:
@@ -52,14 +45,6 @@ class Optimize:
         self.ir = optimized_ir
 
     def optimize_conditionals(self):
-        """
-        Simplifica estructuras if + goto:
-            if cond goto L1
-            goto L2
-            L1:
-        Se convierte en:
-            if !(cond) goto L2
-        """
         optimized_ir = []
         i = 0
         while i < len(self.ir):
@@ -79,9 +64,6 @@ class Optimize:
         self.ir = optimized_ir
 
     def remove_unreachable_labels(self):
-        """
-        Elimina etiquetas inmediatamente después de un goto (no son alcanzables).
-        """
         optimized_ir = []
         last_was_goto = False
         for line in self.ir:
@@ -92,13 +74,6 @@ class Optimize:
         self.ir = optimized_ir
 
     def optimize_goto_chains(self):
-        """
-        Elimina cadenas de saltos:
-            L1:
-            goto L2
-            ...
-            goto L1 → se convierte en → goto L2
-        """
         label_to_target = {}
         for i in range(len(self.ir) - 1):
             line = self.ir[i].strip()
@@ -120,13 +95,10 @@ class Optimize:
         self.ir = optimized_ir
 
     def remove_unused_temporaries(self):
-        """
-        Elimina asignaciones a temporales que nunca se usan.
-        """
         used = set()
         for line in self.ir:
             parts = line.replace(';', '').replace('(', ' ').replace(')', ' ').split()
-            for part in parts[1:]:  # Ignorar el lado izquierdo
+            for part in parts[1:]:
                 if part.startswith('t') and part[1:].isdigit():
                     used.add(part)
 
@@ -140,10 +112,8 @@ class Optimize:
         self.ir = optimized_ir
 
     def optimize(self):
-        """
-        Ejecuta todas las optimizaciones.
-        """
         print("🔧 Iniciando optimización...")
+        self.remove_end_statements()
         self.remove_redundant_temporaries()
         self.simplify_trivial_operations()
         self.optimize_conditionals()
