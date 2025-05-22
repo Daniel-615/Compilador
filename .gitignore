@@ -3,7 +3,7 @@
 **dist/
 env/
 FutbolistasCompilador.spec
+.env
 salida.html
 tokens.html
 symbol_table.html
-.env
