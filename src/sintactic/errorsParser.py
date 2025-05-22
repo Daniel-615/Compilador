@@ -5,116 +5,109 @@ def p_error(self, p):
             row = self.errors.find_line(p)
             token = p.value.lower() if isinstance(p.value, str) else str(p.value)
 
-            # Bloques mal cerrados o mal abiertos
-            if token == '}':
+            # 1. Estructuras de control
+            if token == 'walker':
                 self.errors.encolar_error(
-                    f"Error de sintaxis en '}}' en la fila {row} y columna {col}. "
-                    f"¿Se cerró un bloque sin haberse abierto correctamente?"
-                )
-            elif token == '{':
-                self.errors.encolar_error(
-                    f"Error de sintaxis en '{{' en la fila {row} y columna {col}. "
-                    f"¿Está mal ubicado el inicio del bloque?"
-                )
-
-            # Paréntesis
-            elif token == '(':
-                self.errors.encolar_error(
-                    f"Error de sintaxis en '(' en la fila {row} y columna {col}. "
-                    f"¿Está cerrando correctamente con ')'? "
-                )
-            elif token == ')':
-                self.errors.encolar_error(
-                    f"Error de sintaxis en ')' en la fila {row} y columna {col}. "
-                    f"¿Se abrió correctamente con '('?"
-                )
-
-            # Estructuras de control
-            elif token == 'walker':
-                self.errors.encolar_error(
-                    f"Error de sintaxis en 'walker' en la fila {row} y columna {col}. "
-                    f"¿Falta el bloque '{{}}' o la condición está mal formada?"
+                    f"Error: se esperaba '(' después de 'walker' en la fila {row} y columna {col}. "
+                    f"¿Faltan los paréntesis con la condición?"
                 )
             elif token == 'ballack':
                 self.errors.encolar_error(
-                    f"Error de sintaxis en 'ballack' en la fila {row} y columna {col}. "
-                    f"¿Falta el bloque '{{}}' que contiene el cuerpo del if?"
+                    f"Error: se esperaba condición entre paréntesis después de 'ballack' en la fila {row}, col {col}."
                 )
             elif token == 'robben':
                 self.errors.encolar_error(
-                    f"Error de sintaxis en 'robben' en la fila {row} y columna {col}. "
-                    f"¿El bloque 'if' anterior está cerrado correctamente con '}}'?"
+                    f"Error: 'robben' fuera de lugar en la fila {row}, col {col}. "
+                    f"¿Está cerrando correctamente el 'if' anterior con '}}'?"
                 )
             elif token == 'ramos':
                 self.errors.encolar_error(
-                    f"Error de sintaxis en 'ramos' en la fila {row} y columna {col}. "
-                    f"¿La sintaxis del for está completa? Verifica los ';' y el cuerpo con '{{}}'."
+                    f"Error: for mal formado con 'ramos' en la fila {row}, col {col}. "
+                    f"¿Faltan los ';' o los paréntesis con los parámetros del bucle?"
                 )
-            elif token == 'aguero':
+
+            # 2. Switch-case (forlan, son, ronaldinho)
+            elif token == 'son':
                 self.errors.encolar_error(
-                    f"Error de sintaxis en 'aguero' en la fila {row} y columna {col}. "
-                    f"¿Falta abrir el bloque del do-while con '{{'? "
+                    f"Error: falta ':' después de 'son {p.value}' en la fila {row}, col {col}."
+                )
+            elif token == 'ronaldinho':
+                self.errors.encolar_error(
+                    f"Error: 'ronaldinho' debe usarse al final del switch en la fila {row}, col {col}."
                 )
             elif token == 'forlan':
                 self.errors.encolar_error(
-                    f"Error de sintaxis en 'forlan' en la fila {row} y columna {col}. "
-                    f"¿Falta el bloque '{{}}' para los casos del switch?"
-                )
-            elif token in {'son', 'ronaldinho'}:
-                self.errors.encolar_error(
-                    f"Error de sintaxis en '{p.value}' en la fila {row} y columna {col}. "
-                    f"¿Estás dentro de un switch con '{{}}'? Verifica la apertura correcta del bloque."
+                    f"Error: estructura de switch 'forlan' mal formada en fila {row}, col {col}. "
+                    f"¿Faltan las llaves '{{}}' o los casos 'son X:'?"
                 )
 
-            # Operadores mal usados (condición mal formada)
-            elif p.type == 'NUMBER':
-                self.errors.encolar_error(
-                    f"Error de sintaxis: número '{p.value}' inesperado en la fila {row} y columna {col}. "
-                    f"¿Falta un operador relacional antes del número?"
-                )
-
-            # Literales mal cerrados
-            elif token.startswith('"') or token.startswith("'"):
-                self.errors.encolar_error(
-                    f"Error: literal mal cerrado en la fila {row} y columna {col}."
-                )
-
-            # Operadores sin operandos
+            # 3. Operadores sin operandos
             elif token in {'cristiano', 'tchouameni', 'messi', 'pepe'}:
                 self.errors.encolar_error(
-                    f"Error de sintaxis: operador '{token}' usado incorrectamente o sin operandos en la fila {row} y columna {col}."
+                    f"Error: operador '{token}' usado sin operandos válidos en fila {row}, col {col}."
                 )
 
-            # Tipos sin identificador
+            # 4. Tipos sin identificador
             elif token in {'milito', 'zidane', 'saviola', 'iniesta', 'valderrama'}:
                 self.errors.encolar_error(
-                    f"Error: falta identificador después del tipo '{token}' en la fila {row} y columna {col}."
+                    f"Error: después del tipo '{token}' se esperaba un identificador en fila {row}, col {col}."
                 )
 
-            # Mal uso de coutinho
+            # 5. Literales mal cerrados
+            elif token.startswith('"') or token.startswith("'"):
+                self.errors.encolar_error(
+                    f"Error: literal no cerrado correctamente en fila {row}, col {col}."
+                )
+
+            # 6. Paréntesis y llaves
+            elif token == '{':
+                self.errors.encolar_error(
+                    f"Error: bloque '{{' mal ubicado o sin estructura anterior válida en fila {row}, col {col}."
+                )
+            elif token == '}':
+                self.errors.encolar_error(
+                    f"Error: llave de cierre '}}' sin apertura correspondiente en fila {row}, col {col}."
+                )
+            elif token == '(':
+                self.errors.encolar_error(
+                    f"Error: paréntesis de apertura '(' sin cierre en fila {row}, col {col}."
+                )
+            elif token == ')':
+                self.errors.encolar_error(
+                    f"Error: paréntesis de cierre ')' sin apertura en fila {row}, col {col}."
+                )
+
+            # 7. Uso incorrecto de coutinho
             elif token == 'coutinho':
                 self.errors.encolar_error(
-                    f"Error de sintaxis en 'coutinho' en la fila {row} y columna {col}. "
-                    f"¿Falta el paréntesis con la expresión a imprimir o el punto y coma final?"
+                    f"Error: falta paréntesis o punto y coma después de 'coutinho' en fila {row}, col {col}."
                 )
 
-            # Identificadores mal colocados
+            # 8. Identificadores inesperados (probablemente falta ';')
             elif token.isidentifier():
                 self.errors.encolar_error(
-                    f"Error de sintaxis antes de '{p.value}' en la fila {row} y columna {col}. "
-                    f"¿Falta un ';' al final de la instrucción anterior o el bloque anterior no está cerrado?"
+                    f"Error: identificador inesperado '{token}' en fila {row}, col {col}. "
+                    f"¿Falta un ';' en la línea anterior o se cerró mal un bloque?"
                 )
 
-            # Fallback general
+            # 9. Números fuera de contexto
+            elif p.type == 'NUMBER':
+                self.errors.encolar_error(
+                    f"Error: número inesperado '{p.value}' en fila {row}, col {col}. "
+                    f"¿Se esperaba un operador antes?"
+                )
+
+            # 10. Fallback general
             else:
                 self.errors.encolar_error(
-                    f"Error de sintaxis en '{p.value}' en la fila {row} y columna {col}."
+                    f"Error de sintaxis en '{token}' en fila {row}, col {col}."
                 )
 
-        except Exception:
-            self.errors.encolar_error("Error de sintaxis en token inesperado.")
+        except Exception as e:
+            self.errors.encolar_error("Error de sintaxis en token inesperado. Detalle interno: " + str(e))
+
     else:
         self.errors.encolar_error(
-            "Error de sintaxis: expresión incompleta o final inesperado. "
-            "¿Falta cerrar una llave '}' o completar una estructura?"
+            "Error de sintaxis: final inesperado del archivo. "
+            "¿Falta cerrar una llave '}' o completar una instrucción?"
         )
