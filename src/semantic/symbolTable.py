@@ -98,14 +98,21 @@ class SymbolTable:
                 </tr>
         '''
 
-        # Variables globales
-        for identifier, data in self.global_scope.items():
-            html += f"<tr><td>{identifier}</td><td>{data['type']}</td><td>global</td><td>{data['value']}</td></tr>"
+        seen = set()  
 
-        # Variables locales (último valor del ámbito cerrado)
-        for scope in self.scope_stack + getattr(self, "closed_scopes", []):
+        for identifier, data in self.global_scope.items():
+            clave = (identifier, 'global')
+            if clave not in seen:
+                seen.add(clave)
+                html += f"<tr><td>{identifier}</td><td>{data['type']}</td><td>global</td><td>{data['value']}</td></tr>"
+
+        # 🟢 Variables locales (stack actual + ámbitos cerrados)
+        for scope in self.scope_stack + self.closed_scopes:
             for identifier, data in scope.items():
-                html += f"<tr><td>{identifier}</td><td>{data['type']}</td><td>local</td><td>{data['value']}</td></tr>"
+                clave = (identifier, 'local')
+                if clave not in seen:
+                    seen.add(clave)
+                    html += f"<tr><td>{identifier}</td><td>{data['type']}</td><td>local</td><td>{data['value']}</td></tr>"
 
         html += '''
             </table>
