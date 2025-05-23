@@ -20,6 +20,20 @@ def p_error(self, p):
                         )
                         return
 
+            # 0.5. Asignación sin expresión: caso como 'milito goles = ;'
+            if token == ';' and p.lexer and hasattr(p.lexer, 'lexdata'):
+                texto_previo = p.lexer.lexdata[:p.lexpos]
+                ult_linea = texto_previo.splitlines()[-1] if texto_previo.splitlines() else ''
+                if '=' in ult_linea:
+                    pos_igual = ult_linea.find('=')
+                    despues_igual = ult_linea[pos_igual + 1:].strip()
+                    if despues_igual == '':
+                        self.errors.encolar_error(
+                            f"Error: asignación sin expresión después del '=' antes de ';' en fila {row}, col {col}. "
+                            f"¿Falta el valor asignado?"
+                        )
+                        return
+
             # 1. Estructuras de control
             if token == 'walker':
                 self.errors.encolar_error(

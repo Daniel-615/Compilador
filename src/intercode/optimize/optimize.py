@@ -112,7 +112,7 @@ class Optimize:
         self.ir = optimized_ir
 
     def optimize(self):
-        print("🔧 Iniciando optimización...")
+        print("Iniciando optimización...")
         self.remove_end_statements()
         self.remove_redundant_temporaries()
         self.simplify_trivial_operations()
@@ -120,7 +120,7 @@ class Optimize:
         self.remove_unreachable_labels()
         self.optimize_goto_chains()
         self.remove_unused_temporaries()
-        print("✅ Optimización completada.")
+        print("Optimización completada.")
 
     def get_optimized_ir(self):
         return self.ir
