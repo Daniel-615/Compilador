@@ -22,16 +22,15 @@ class Main:
         self.symbol_table = SymbolTable()
         self.tokens = Tokens()
 
-        # Interfaz gráfica para elegir archivo
         root = tk.Tk()
         root.withdraw()
         file_path = filedialog.askopenfilename(
             title="Selecciona un archivo .txt de entrada",
             filetypes=[("Archivos de texto", "*.txt")]
         )
-        
+
         if not file_path:
-            print(" No se seleccionó ningún archivo.")
+            print("No se seleccionó ningún archivo.")
             return
 
         if not file_path.endswith(".txt"):
@@ -45,7 +44,7 @@ class Main:
             self.lexic_errors = Errors(self.content)
             self.sintatic_errors = Errors(self.content)
             self.semantic_errors = Errors(self.content)
-            
+
             inter_code_generator = interCodeGenerator()
             self.lexer = Lexer(self.lexic_errors)
             self.semantic = Semantic(self.symbol_table, self.semantic_errors, self.lexer, inter_code_generator)
@@ -58,13 +57,12 @@ class Main:
         print("Generando código C++...")
         code_gen = ccodeGen(inter_code)
         code_gen.generate()
-
         cpp_code = code_gen.get_cpp_code()
 
         with open("programa_generado.cpp", "w", encoding="utf-8") as archivo_cpp:
             archivo_cpp.write(cpp_code)
 
-        print(" Código C++ guardado exitosamente en 'programa_generado.cpp'")
+        print("Código C++ guardado exitosamente en 'programa_generado.cpp'")
 
     def run_analysis(self):
         try:
@@ -74,18 +72,19 @@ class Main:
 
             tokens = self.lexer.tokenize(self.content)
             self.parser.parse(self.content)
-            self.semantic.optimize_intermediate_code()
-            self.generate_cpp_code(self.semantic.getInterCode())
 
-            inter_code_html = "<br>".join(self.semantic.intercode_generator.get_code())
+            # Código intermedio antes y después
+            inter_code_before = self.semantic.intercode_generator.get_code()
+            inter_code_before_html = "<br>".join(inter_code_before)
+
+            self.semantic.optimize_intermediate_code()
+            inter_code_after = self.semantic.intercode_generator.get_code()
+            inter_code_after_html = "<br>".join(inter_code_after)
+
+            self.generate_cpp_code(inter_code_after)
+
             with open("./templates/compilador.html", "r", encoding="utf-8") as tpl_file:
                 template = tpl_file.read()
-
-            html = template.replace("{{LEXICAL_ERRORS}}", self.lexic_errors.errorHtml('lexicos')) \
-                           .replace("{{SYNTAX_ERRORS}}", self.sintatic_errors.errorHtml('sintacticos')) \
-                           .replace("{{SYMBOL_TABLE}}", self.symbol_table.toHtml()) \
-                           .replace("{{TOKENS}}", self.tokens.toHtml(tokens)) \
-                           .replace("{{INTER_CODE}}", inter_code_html)
 
             # Historial WHILE
             if os.path.exists(path):
@@ -96,17 +95,13 @@ class Main:
                 for entry in historial:
                     historial_html += f"<h4>Iteración #{entry['iteration']} – {entry['timestamp']}</h4>"
 
-                    # Globales
-                    historial_html += "<h5>Variables Globales</h5>"
-                    historial_html += "<table border='1'><tr><th>Variable</th><th>Valor</th></tr>"
+                    historial_html += "<h5>Variables Globales</h5><table border='1'><tr><th>Variable</th><th>Valor</th></tr>"
                     for k, v in entry["tabla"]["global"].items():
                         historial_html += f"<tr><td>{k}</td><td>{v}</td></tr>"
                     historial_html += "</table>"
 
-                    # Locales
                     for idx, scope in enumerate(entry["tabla"]["local_scopes"]):
-                        historial_html += f"<h5>Ámbito Local #{idx+1}</h5>"
-                        historial_html += "<table border='1'><tr><th>Variable</th><th>Valor</th></tr>"
+                        historial_html += f"<h5>Ámbito Local #{idx + 1}</h5><table border='1'><tr><th>Variable</th><th>Valor</th></tr>"
                         for var, val in scope.items():
                             historial_html += f"<tr><td>{var}</td><td>{val}</td></tr>"
                         historial_html += "</table>"
@@ -115,7 +110,14 @@ class Main:
             else:
                 historial_html = "<p>No se registraron cambios durante la ejecución del WHILE.</p>"
 
-            html = html.replace("{{WHILE_HISTORY}}", historial_html)
+            # Reemplazo final en la plantilla HTML
+            html = template.replace("{{LEXICAL_ERRORS}}", self.lexic_errors.errorHtml('lexicos')) \
+                           .replace("{{SYNTAX_ERRORS}}", self.sintatic_errors.errorHtml('sintacticos')) \
+                           .replace("{{SYMBOL_TABLE}}", self.symbol_table.toHtml()) \
+                           .replace("{{TOKENS}}", self.tokens.toHtml(tokens)) \
+                           .replace("{{INTER_CODE_BEFORE}}", inter_code_before_html) \
+                           .replace("{{INTER_CODE_AFTER}}", inter_code_after_html) \
+                           .replace("{{WHILE_HISTORY}}", historial_html)
 
             with open("./templates/salida.html", "w", encoding="utf-8") as output_file:
                 output_file.write(html)
@@ -124,7 +126,7 @@ class Main:
             webbrowser.open(f"file://{ruta_absoluta}")
 
         except Exception as e:
-            print(" Error en análisis:", e)
+            print("Error en análisis:", e)
 
 if __name__ == "__main__":
     exe_generator = GenerateExe(

@@ -12,6 +12,7 @@
         <button onclick="toggleTheme()">🌗 Cambiar tema</button>
     </div>
 
+    <!-- Botones para cambiar de pestaña -->
     <div class="tab-buttons">
         <button onclick="showTab('symbolTable')">📄 Tabla de Símbolos</button>
         <button onclick="showTab('lexicalErrors')">❌ Errores Léxicos</button>
@@ -21,36 +22,44 @@
     </div>
 
     <!-- Código intermedio -->
-    <div class="tab-code-intermedio">
-        <details style="margin: 0 auto 20px; width: 80%; text-align: left;">
+    <div class="tab-code-intermedio" style="margin: 0 auto 20px; width: 90%;">
+        <details open>
             <summary style="font-size: 20px; font-weight: bold; color: #c00; cursor: pointer; margin-bottom: 10px;">
-                💻 Código intermedio generado
+                💻 Comparación de Código Intermedio (Antes vs. Después de Optimizar)
             </summary>
-            <div style="position: relative;">
-                <button onclick="copyCode()" style="
-                    position: absolute;
-                    top: 10px;
-                    right: 10px;
-                    background-color: #444;
-                    color: white;
-                    border: none;
-                    padding: 6px 12px;
-                    font-size: 14px;
-                    border-radius: 4px;
-                    cursor: pointer;
-                    z-index: 2;
-                ">📋 Copiar código</button>
-                <pre id="intermediateCodeBlock" style="
-                    background: #1e1e1e;
-                    color: #dcdcdc;
-                    padding: 1.5em;
-                    border-radius: 8px;
-                    border: 1px solid #333;
-                    overflow-x: auto;
-                    font-family: Consolas, 'Courier New', monospace;
-                    font-size: 14px;
-                    white-space: pre-wrap;
-                "></pre>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+                <!-- Código antes de optimizar -->
+                <div class="intermediateCodeBlock" style="flex: 1 1 45%;">
+                    <h3 style="margin-top: 0;">🔧 Antes de Optimizar</h3>
+                    <pre id="intermediateCodeBlockBefore" style="
+                        background: #1e1e1e;
+                        color: #dcdcdc;
+                        padding: 1.5em;
+                        border-radius: 8px;
+                        border: 1px solid #333;
+                        overflow-x: auto;
+                        font-family: Consolas, 'Courier New', monospace;
+                        font-size: 14px;
+                        white-space: pre-wrap;
+                    "></pre>
+                </div>
+
+                <!-- Código después de optimizar -->
+                <div class="intermediateCodeBlock" style="flex: 1 1 45%;">
+                    <h3 style="margin-top: 0;">✅ Después de Optimizar</h3>
+                    <pre id="intermediateCodeBlockAfter" style="
+                        background: #1e1e1e;
+                        color: #dcdcdc;
+                        padding: 1.5em;
+                        border-radius: 8px;
+                        border: 1px solid #333;
+                        overflow-x: auto;
+                        font-family: Consolas, 'Courier New', monospace;
+                        font-size: 14px;
+                        white-space: pre-wrap;
+                    "></pre>
+                </div>
             </div>
         </details>
     </div>
@@ -83,30 +92,34 @@
             tabs.forEach(tab => tab.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
         }
-        showTab('symbolTable');
 
-        function copyCode() {
-            const code = document.getElementById("intermediateCodeBlock").innerText;
-            navigator.clipboard.writeText(code).then(() => {
-                alert(" Código intermedio copiado al portapapeles.");
-            }).catch(err => {
-                alert(" Error al copiar: " + err);
-            });
-        }
+        showTab('symbolTable'); // Muestra la primera por defecto
 
         function toggleTheme() {
             document.body.classList.toggle('dark-mode');
         }
-        document.addEventListener("DOMContentLoaded", function() {
-            const codigo = `{{INTER_CODE}}`;
-            const cleanCode = codigo
-                .replaceAll('<br>', '\n')  
-                .replace(/\[|\]/g, '')   
+
+        // Mostrar código intermedio antes y después de optimizar
+        document.addEventListener("DOMContentLoaded", function () {
+            const rawCodeBefore = `{{INTER_CODE_BEFORE}}`;
+            const rawCodeAfter = `{{INTER_CODE_AFTER}}`;
+
+            const cleanCodeBefore = rawCodeBefore
+                .replaceAll('<br>', '\n')
+                .replace(/^\[|\]$/g, '')
                 .trim();
-                document.getElementById("intermediateCodeBlock").innerText = cleanCode;
+
+            const cleanCodeAfter = rawCodeAfter
+                .replaceAll('<br>', '\n')
+                .replace(/^\[|\]$/g, '')
+                .trim();
+
+            document.getElementById("intermediateCodeBlockBefore").innerText = cleanCodeBefore;
+            document.getElementById("intermediateCodeBlockAfter").innerText = cleanCodeAfter;
         });
     </script>
 
+    <!-- Footer -->
     <footer style="margin-top: 40px; text-align: center; font-size: 14px; color: #555;">
         <hr style="margin-bottom: 10px; border: none; height: 1px; background: #ccc;">
         <p> Proyecto de Compiladores — <strong>Universidad Mariano Gálvez</strong></p>
