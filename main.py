@@ -55,7 +55,8 @@ class Main:
 
     def generate_cpp_code(self, inter_code):
         print("Generando código C++...")
-        code_gen = ccodeGen(inter_code)
+        flat_symbol_table = self.symbol_table.to_flat_dict()
+        code_gen = ccodeGen(inter_code,flat_symbol_table)
         code_gen.generate()
         cpp_code = code_gen.get_cpp_code()
 

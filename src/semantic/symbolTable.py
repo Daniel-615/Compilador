@@ -72,7 +72,21 @@ class SymbolTable:
             'global_scope': copy.deepcopy(self.global_scope),
             'scope_stack': copy.deepcopy(self.scope_stack)
         }
+    #Sirve únicamente en el código ccodeGen.py
+    def to_flat_dict(self):
+        result = {}
 
+        # Agregar variables globales
+        for name, info in self.global_scope.items():
+            result[name] = {"type": info["type"], "value": info.get("value", None)}
+
+        # Agregar variables locales (último stack + cerrados)
+        for scope in self.scope_stack + self.closed_scopes:
+            for name, info in scope.items():
+                if name not in result:
+                    result[name] = {"type": info["type"], "value": info.get("value", None)}
+
+        return result
     def toHtml(self):
         html = '''
         <html>

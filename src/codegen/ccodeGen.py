@@ -1,8 +1,10 @@
 class ccodeGen:
-    def __init__(self, ir):
+    def __init__(self, ir, symbol_table=None):
         self.ir = ir
+        self.symbol_table = symbol_table or {}
         self.cpp_code = []
         self.indent_level = 0
+        self.temp_conditions = {}  # Almacena tX = condicion
         self.label_to_index = {
             line.strip()[:-1]: idx
             for idx, line in enumerate(self.ir)
@@ -14,7 +16,6 @@ class ccodeGen:
 
     def generate(self):
         declared = set()
-        variables = {}
         used_vars = set()
         open_blocks = []
 
@@ -25,22 +26,17 @@ class ccodeGen:
                 if tok.isidentifier():
                     used_vars.add(tok)
 
-        # Inferencia de tipos
+        # Detectar variables declaradas y guardar condiciones temporales
+        filtered_ir = []
         for line in self.ir:
             line = line.strip()
             if '=' in line and not line.startswith(("if", "goto")) and not line.endswith(":"):
                 left, right = map(str.strip, line.split('=', 1))
                 declared.add(left)
-                if right.replace('.', '', 1).isdigit():
-                    variables[left] = "int" if '.' not in right else "float"
-                elif right.startswith('"') and right.endswith('"'):
-                    variables[left] = "string"
-                elif right.startswith("'") and right.endswith("'"):
-                    variables[left] = "char"
-                elif right in ("true", "false"):
-                    variables[left] = "bool"
-                else:
-                    variables[left] = "auto"
+                if left.startswith('t') and left[1:].isdigit() and any(op in right for op in ['<', '>', '==', '!=', '<=', '>=']):
+                    self.temp_conditions[left] = right
+                    continue  # No agregues esta línea al código final
+            filtered_ir.append(line)
 
         # Cabecera
         self.cpp_code = [
@@ -50,46 +46,49 @@ class ccodeGen:
             "int main() {"
         ]
 
-        tipo_explicit = {
-            "goles": "int",
-            "promedio": "float",
-            "inicial": "char",
-            "leyenda": "bool",
-            "nombre": "string",
-            "i": "int",
-            "x": "int",
-        }
-
+        # Declarar variables (excluyendo temporales)
         for var in sorted(declared):
-            if var.replace('.', '', 1).isdigit() or var in ('true', 'false'):
+            if var.startswith('t') and var[1:].isdigit():
                 continue
             if var not in used_vars:
                 continue
-            if any(op in var for op in ['+', '-', '*', '/', '>', '<', '==', '!=']):
-                continue
-            tipo = tipo_explicit.get(var, variables.get(var, "auto"))
+            tipo = self.symbol_table.get(var, {}).get("type", "auto")
+
+            if tipo == "milito":
+                tipo = "int"
+            elif tipo == "zidane":
+                tipo = "float"
+            elif tipo == "saviola":
+                tipo = "char"
+            elif tipo == "valderrama":
+                tipo = "bool"
+            elif tipo == "iniesta":
+                tipo = "string"
+
             self.cpp_code.append(f"    {tipo} {var};")
 
         # Cuerpo del programa
         self.indent_level = 1
-        for i, line in enumerate(self.ir):
+        for i, line in enumerate(filtered_ir):
             line = line.strip()
             if line.endswith(":"):
                 continue
             elif line.startswith("if !("):
-                condition = line[5:].split(') goto')[0]
+                condition = line[5:].split(') goto')[0].strip()
+                condition_real = self.temp_conditions.get(condition, condition)
                 target = line.split('goto')[1].strip()
                 block_type = "if" if self.label_to_index.get(target, 0) > i else "while"
                 self.cpp_code.append(f"{self.indent()}// INICIO {block_type.upper()};")
-                self.cpp_code.append(f"{self.indent()}{block_type} (!({condition})) {{")
+                self.cpp_code.append(f"{self.indent()}{block_type} (!({condition_real})) {{")
                 self.indent_level += 1
                 open_blocks.append(block_type)
             elif line.startswith("if"):
                 condition = line[3:].split('goto')[0].strip()
+                condition_real = self.temp_conditions.get(condition, condition)
                 target = line.split('goto')[1].strip()
                 block_type = "if" if self.label_to_index.get(target, 0) > i else "while"
                 self.cpp_code.append(f"{self.indent()}// INICIO {block_type.upper()};")
-                self.cpp_code.append(f"{self.indent()}{block_type} ({condition}) {{")
+                self.cpp_code.append(f"{self.indent()}{block_type} ({condition_real}) {{")
                 self.indent_level += 1
                 open_blocks.append(block_type)
             elif line.startswith("goto"):
@@ -102,7 +101,6 @@ class ccodeGen:
                 if expr != "end":
                     self.cpp_code.append(f"{self.indent()}{expr};")
 
-        # Cierre de cualquier bloque restante
         while open_blocks:
             block = open_blocks.pop()
             self.indent_level -= 1
@@ -123,12 +121,18 @@ class ccodeGen:
 
         if '=' in line:
             left, right = map(str.strip, line.split('=', 1))
-            if right == "M":
-                right = "'M'"
-            elif right == "Messi":
-                right = '"Messi"'
-            elif right.startswith("call"):
+            tipo_simbolo = self.symbol_table.get(left, {}).get("type", "")
+
+            if tipo_simbolo == "saviola":
+                right = f"'{right}'" if not (right.startswith("'") and right.endswith("'")) else right
+            elif tipo_simbolo == "iniesta":
+                right = f'"{right}"' if not (right.startswith('"') and right.endswith('"')) else right
+            elif tipo_simbolo == "valderrama" and right.lower() in ["true", "false"]:
+                right = right.lower()
+
+            if right.startswith("call"):
                 return f"{left} = {right.replace('call', '').strip()}()"
+
             return f"{left} = {right}"
 
         if line.startswith("call "):
