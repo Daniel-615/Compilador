@@ -93,6 +93,41 @@ class Optimize:
             else:
                 optimized_ir.append(line)
         self.ir = optimized_ir
+    def optimize_redundant_for_conditions(self):
+        """
+        Elimina evaluaciones de condición duplicadas dentro del cuerpo de los ciclos for.
+        Detecta patrones donde se vuelve a evaluar la misma condición antes de un 'goto' al inicio del ciclo.
+        """
+        optimized_ir = []
+        i = 0
+        while i < len(self.ir):
+            # Patrón: tX = ... / if !(tX) goto L / etiqueta Lloop / cuerpo / tY = ... / if !(tY) goto L / goto Lloop
+            if (i + 5 < len(self.ir) and
+                "=" in self.ir[i] and
+                self.ir[i + 1].strip().startswith("if !(") and
+                self.ir[i + 2].strip().endswith(":") and
+                "=" in self.ir[i + 3] and
+                self.ir[i + 4].strip().startswith("if !(") and
+                self.ir[i + 5].strip().startswith("goto")):
+
+                first_temp = self.ir[i].split('=')[0].strip()
+                second_temp = self.ir[i + 3].split('=')[0].strip()
+                first_goto = self.ir[i + 1].split('goto')[1].strip()
+                second_goto = self.ir[i + 4].split('goto')[1].strip()
+                loop_back = self.ir[i + 5].split('goto')[1].strip()
+
+                if first_goto == second_goto and loop_back == self.ir[i + 2].strip()[:-1]:
+                    # Mantén solo la primera condición, elimina la duplicada
+                    optimized_ir.extend(self.ir[i:i+3])  # keep tX, if !(tX), label
+                    optimized_ir.append(self.ir[i + 3 + 1])  # x = x cristiano 1 (omit tY)
+                    optimized_ir.append(f"goto {loop_back}")  # ir directo al inicio
+                    i += 6
+                    continue
+
+            optimized_ir.append(self.ir[i])
+            i += 1
+
+        self.ir = optimized_ir
 
     def remove_unused_temporaries(self):
         used = set()
@@ -120,6 +155,7 @@ class Optimize:
         self.remove_unreachable_labels()
         self.optimize_goto_chains()
         self.remove_unused_temporaries()
+        self.optimize_redundant_for_conditions()
         print("Optimización completada.")
 
     def get_optimized_ir(self):

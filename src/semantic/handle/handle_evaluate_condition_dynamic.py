@@ -1,9 +1,10 @@
 def evaluate_condition_dynamic(self, left, op, right):
     def condition_fn():
-        # Obtener valores reales para la evaluación inmediata (por si se usa)
+        # Obtener valores reales
         left_sym = self.symbol_table.get_symbol(left)
         if left_sym is None:
             self.errors.encolar_error(f"Error: Variable '{left}' no declarada en la condición.")
+            condition_fn.temp_result = "0"
             return False
 
         left_val = left_sym['value']
@@ -11,15 +12,15 @@ def evaluate_condition_dynamic(self, left, op, right):
 
         if left_val is None or right_val is None:
             self.errors.encolar_error("Error: condición con operandos no evaluables.")
+            condition_fn.temp_result = "0"
             return False
 
-        # Generar código intermedio: tX = left op right
+        # Generar el temporal para código intermedio
         temp = self.intercode_generator.new_temp()
         self.intercode_generator.emit(f"{temp} = {left} {op} {right}")
+        condition_fn.temp_result = temp  # Guardamos el temporal para emitir luego: if !temp goto
 
-        # Guarda el temporal como si fuera el resultado de la condición
-        condition_fn.temp_result = temp  # Esto permite acceder al temp externamente si lo necesitas
-
+        # Evaluación booleana inmediata para el flujo lógico
         try:
             if op == '>':
                 return left_val > right_val
