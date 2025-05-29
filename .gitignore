@@ -7,3 +7,8 @@ FutbolistasCompilador.spec
 templates/salida.html
 templates/tokens.html
 templates/symbol_table.html
+programa_generado.exe
+launch.json
+settings.json
+.vscode/
+ccodeGen.py
