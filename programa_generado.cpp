@@ -9,6 +9,20 @@ int main() {
     string nombre;
     float promedio;
     int x;
+    bool t18 = goles > 11;
+    bool t2 = goles > 10;
+    bool t22 = i < 5;
+    bool t28 = goles > 10;
+    bool t40 = goles > 11;
+    bool t44 = i < 5;
+    bool t48 = x < 3;
+    bool t50 = x < 3;
+    bool t52 = x < 3;
+    bool t54 = x < 3;
+    bool t56 = x < 3;
+    bool t58 = x < 3;
+    bool t60 = x < 3;
+    bool t62 = x < 3;
     goles = 10;
     promedio = 7.5;
     inicial = 'M';
@@ -126,5 +140,7 @@ int main() {
             } // FIN if
         } // FIN while
     } // FIN if
+    cout << goles << endl;
+    
     return 0;
 }

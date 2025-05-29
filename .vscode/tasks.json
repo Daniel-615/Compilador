@@ -1,0 +1,21 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Compilar programa_generado",
+      "type": "shell",
+      "command": "g++",
+      "args": [
+        "-g",
+        "programa_generado.cpp",
+        "-o",
+        "programa_generado.exe"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": ["$gcc"]
+    }
+  ]
+}

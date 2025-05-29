@@ -67,6 +67,10 @@ class ccodeGen:
 
             self.cpp_code.append(f"    {tipo} {var};")
 
+        # ✅ Declarar condiciones temporales tX = expresión
+        for tvar, expr in sorted(self.temp_conditions.items()):
+            self.cpp_code.append(f"    bool {tvar} = {self._translate_expression(expr)};")
+
         # Cuerpo del programa
         self.indent_level = 1
         for i, line in enumerate(filtered_ir):
