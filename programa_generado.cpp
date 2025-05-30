@@ -140,7 +140,5 @@ int main() {
             } // FIN if
         } // FIN while
     } // FIN if
-    cout << goles << endl;
-    
     return 0;
 }
